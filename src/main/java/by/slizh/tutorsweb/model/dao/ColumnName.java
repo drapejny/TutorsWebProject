@@ -18,10 +18,8 @@ public class ColumnName {
     //feedback table
     public static final String FEEDBACK_ID = "feedback_id";
     public static final String TEXT = "text";
-    public static final String TIME = "time";
+    public static final String DATE = "date";
     public static final String RATING = "rating";
-    public static final String USER_SENDER_ID = "user_sender_id";
-    public static final String USER_RECEIVER_ID = "user_receiver_id";
 
     //tutors table
     public static final String TUTOR_ID = "tutor_id";
