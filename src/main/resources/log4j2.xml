@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <property name="pattern_console">%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5p] - %m%n</property>
+        <property name="pattern_file">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%-5level] %logger{5}- %msg%n</property>
+    </Properties>
+    <Appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern_console}"/>
+        </Console>
+        <RollingFile name="RollingFile" fileName="logs/log4j2.log"
+                     filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>${pattern_file}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="5 KB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+<!--        <Logger name="Log_Console" level="debug" additivity="true">-->
+<!--            <AppenderRef ref="Console"/>-->
+<!--        </Logger>-->
+
+<!--        <Logger name="Rolling_File" level="debug" additivity="false">-->
+<!--            <AppenderRef ref="FileRolling"/>-->
+<!--        </Logger>-->
+        <Logger name="Log_Console" level="debug" additivity="true">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="Rolling_File" level="debug" additivity="false">
+            <AppenderRef ref="FileRolling"/>
+        </Logger>
+        <Root level="debug">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+    </Loggers>
+</Configuration>
