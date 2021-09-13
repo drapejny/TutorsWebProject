@@ -1,6 +1,6 @@
 package by.slizh.tutorsweb.model.dao.impl;
 
-import by.slizh.tutorsweb.entity.Subject;
+import by.slizh.tutorsweb.model.entity.Subject;
 import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.model.dao.ColumnName;
 import by.slizh.tutorsweb.model.dao.SubjectDao;

@@ -20,11 +20,10 @@
     <input type="hidden" name="command" value="login"/>
     <fmt:message key="login.email"/><input type="text" name="email"><br>
     <fmt:message key="login.password"/><input type="text" name="password"><br>
+    ${errorBlockedMessage}
+    ${errorNonActivetedMessage}
     ${errorLogInMessage}<br>
     <input type="submit" value="<fmt:message key="login.button.signin"/>">
 </form>
-
-
-
 </body>
 </html>

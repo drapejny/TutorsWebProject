@@ -26,7 +26,7 @@ public class ColumnName {
     public static final String EDUCATION = "education";
     public static final String INFO = "info";
     public static final String PRICE_PER_HOUR = "price_per_hour";
-    public static final String REJECTION_MESSAGE = "rejection_message";
+    public static final String IS_ACTIVE = "is_active";
 
     //subject table
     public static final String SUBJECT_ID = "subject_id";

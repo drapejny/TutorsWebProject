@@ -1,6 +1,6 @@
 package by.slizh.tutorsweb.model.dao;
 
-import by.slizh.tutorsweb.entity.Entity;
+import by.slizh.tutorsweb.model.entity.Entity;
 import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.model.connection.ProxyConnection;
 

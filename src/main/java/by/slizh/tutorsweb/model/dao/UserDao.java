@@ -1,6 +1,6 @@
 package by.slizh.tutorsweb.model.dao;
 
-import by.slizh.tutorsweb.entity.User;
+import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.exception.DaoException;
 
 import java.util.Optional;

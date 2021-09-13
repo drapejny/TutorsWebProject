@@ -1,11 +1,9 @@
 package by.slizh.tutorsweb.model.dao.impl;
 
-import by.slizh.tutorsweb.entity.Feedback;
-import by.slizh.tutorsweb.entity.User;
+import by.slizh.tutorsweb.model.entity.Feedback;
 import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.model.dao.ColumnName;
 import by.slizh.tutorsweb.model.dao.FeedbackDao;
-import by.slizh.tutorsweb.util.PasswordEncoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

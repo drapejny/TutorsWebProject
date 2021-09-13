@@ -1,7 +1,7 @@
 package by.slizh.tutorsweb.model.dao.impl;
 
-import by.slizh.tutorsweb.entity.Tutor;
-import by.slizh.tutorsweb.entity.User;
+import by.slizh.tutorsweb.model.entity.Tutor;
+import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.model.dao.ColumnName;
 import by.slizh.tutorsweb.model.dao.TutorDao;
@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 public class TutorDaoImpl extends TutorDao {
@@ -22,7 +21,7 @@ public class TutorDaoImpl extends TutorDao {
     private static final Logger logger = LogManager.getLogger();
 
     private static final String SQL_FIND_ALL_TUTORS = """
-             SELECT tutor_id, education, info, price_per_hour,
+             SELECT tutor_id, education, info, price_per_hour, is_active,
                                 users.user_id, first_name, last_name, email, phone, city, photo, role_name, status_name
              FROM tutors
              JOIN users ON tutors.user_id = users.user_id
@@ -30,7 +29,7 @@ public class TutorDaoImpl extends TutorDao {
              JOIN status ON users.status_id = status.status_id;
             """;
     private static final String SQL_FIND_TUTOR_BY_ID = """
-            SELECT tutor_id, education, info, price_per_hour,
+            SELECT tutor_id, education, info, price_per_hour, is_active,
                                 users.user_id, first_name, last_name, email, phone, city, photo, role_name, status_name
              FROM tutors
              JOIN users ON tutors.user_id = users.user_id
@@ -42,12 +41,12 @@ public class TutorDaoImpl extends TutorDao {
             DELETE FROM tutors WHERE tutor_id = ?;
             """;
     private static final String SQL_CREATE_TUTOR = """
-            INSERT INTO tutors(user_id, education, info, price_per_hour)
-            VALUES (?, ?, ?, ?);
+            INSERT INTO tutors(user_id, education, info, price_per_hour, is_active)
+            VALUES (?, ?, ?, ?, ?);
             """;
     private static final String SQL_UPDATE_TUTOR = """
             UPDATE tutors
-            SET education = ?, info = ?, price_per_hour = ?
+            SET education = ?, info = ?, price_per_hour = ?, is_active = ?
             WHERE tutor_id = ?;
             """;
 
@@ -106,6 +105,7 @@ public class TutorDaoImpl extends TutorDao {
             statement.setString(2, tutor.getEducation());
             statement.setString(3, tutor.getInfo());
             statement.setBigDecimal(4, tutor.getPricePerHour());
+            statement.setByte(5, (byte) (tutor.isActive() ? 1 : 0));
             boolean result = statement.executeUpdate() == 1;
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {
@@ -130,7 +130,9 @@ public class TutorDaoImpl extends TutorDao {
             statement.setString(1, tutor.getEducation());
             statement.setString(2, tutor.getInfo());
             statement.setBigDecimal(3, tutor.getPricePerHour());
-            statement.setInt(4, tutor.getTutorId());
+            statement.setByte(4, (byte) (tutor.isActive() ? 1 : 0));
+            statement.setInt(5, tutor.getTutorId());
+
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Failed to update tutor", e);
@@ -145,6 +147,7 @@ public class TutorDaoImpl extends TutorDao {
                 .setEducation(resultSet.getString(ColumnName.EDUCATION))
                 .setInfo(resultSet.getString(ColumnName.INFO))
                 .setPricePerHour(resultSet.getBigDecimal(ColumnName.PRICE_PER_HOUR))
+                .setActive(resultSet.getByte(ColumnName.IS_ACTIVE) == 1 ? true : false)
                 .setUserId(resultSet.getInt(ColumnName.USER_ID))
                 .setFirstName(resultSet.getString(ColumnName.FIRST_NAME))
                 .setLastName(resultSet.getString(ColumnName.LAST_NAME))
@@ -152,8 +155,8 @@ public class TutorDaoImpl extends TutorDao {
                 .setPhone(resultSet.getString(ColumnName.PHONE))
                 .setCity(resultSet.getString(ColumnName.CITY))
                 .setPhoto(resultSet.getBinaryStream(ColumnName.PHOTO))
-                .setRole(User.Role.valueOf(resultSet.getString(ColumnName.ROLE_NAME).toUpperCase(Locale.ROOT)))
-                .setStatus(User.Status.valueOf(resultSet.getString(ColumnName.STATUS_NAME).toUpperCase(Locale.ROOT)))
+                .setRole(User.Role.valueOf(resultSet.getString(ColumnName.ROLE_NAME).toUpperCase()))
+                .setStatus(User.Status.valueOf(resultSet.getString(ColumnName.STATUS_NAME).toUpperCase()))
                 .createTutor();
         return tutor;
     }
