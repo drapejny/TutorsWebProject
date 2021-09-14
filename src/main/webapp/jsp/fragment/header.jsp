@@ -33,7 +33,7 @@
             <div id="myDropdown" class="dropdown-content">
                 <a href="${pageContext.request.contextPath}/controller?command=profile_page">Профиль</a>
                 <a href="#">Редактировать</a>
-                <a href="#">Выйти</a>
+                <a href="${pageContext.request.contextPath}/controller?command=logout">Выйти</a>
             </div>
         </div>
     </c:if>

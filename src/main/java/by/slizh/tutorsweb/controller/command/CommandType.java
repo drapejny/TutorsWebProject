@@ -11,6 +11,7 @@ public enum CommandType {
     REGISTRATION_PAGE(new GoToRegistrationPage()),
     REGISTRATION(new RegistrationCommand()),
     MAIN_PAGE(new GoToMainPage()),
+    LOGOUT(new LogOutCommand()),
     VERIFICATION(new VerificationCommand());
 
     private Command command;
