@@ -1,4 +1,4 @@
 .idea/
 target
 TutorsWebProject.iml
-src/main/resources/mail/mail.properties
+src/main/resources/mail/
