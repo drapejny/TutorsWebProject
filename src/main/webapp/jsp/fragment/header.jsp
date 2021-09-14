@@ -10,6 +10,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="prop.pagecontent"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/mycss.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/myjs.js"></script>
 
 <header>
     <nav>
@@ -25,8 +27,15 @@
         <a href="${pageContext.request.contextPath}/controller?command=login_page"><fmt:message key="header.login"/></a>
     </c:if>
     <c:if test="${not empty sessionScope.user}">
-        <a href="${pageContext.request.contextPath}/controller?command=profile_page">${sessionScope.user.firstName} ${sessionScope.user.lastName}</a>
         <br>
+        <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">${sessionScope.user.firstName} ${sessionScope.user.lastName}</button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="${pageContext.request.contextPath}/controller?command=profile_page">Профиль</a>
+                <a href="#">Редактировать</a>
+                <a href="#">Выйти</a>
+            </div>
+        </div>
     </c:if>
 
     <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=ru_RU">RU</a>
