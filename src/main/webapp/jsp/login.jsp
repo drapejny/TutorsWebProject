@@ -20,6 +20,7 @@
     <input type="hidden" name="command" value="login"/>
     <fmt:message key="login.email"/><input type="text" name="email"><br>
     <fmt:message key="login.password"/><input type="text" name="password"><br>
+    <a href="${pageContext.request.contextPath}/controller?command=registration_page" method="post"><fmt:message key="header.registration"/></a>
     ${errorBlockedMessage}
     ${errorNonActivetedMessage}
     ${errorLogInMessage}<br>

@@ -18,8 +18,7 @@ public class VerificationCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException("Executing verify command error", e);
         }
-        request.getSession().removeAttribute(SessionAttribute.USER);
-        return new Router(PagePath.LOGIN_PAGE, Router.RouteType.REDIRECT);
+        return new Router(PagePath.MAIN_PAGE, Router.RouteType.REDIRECT);
 
     }
 }
