@@ -21,7 +21,7 @@ public class ConnectionPool {
     private BlockingQueue<ProxyConnection> freeConnections;
     private BlockingQueue<ProxyConnection> givenAwayConnections;
     private static final String PATH_TO_PROPERTIES = "database/database.properties";
-    private static final int DEFAULT_POOL_SIZE = 32;
+    private static final int DEFAULT_POOL_SIZE = 4;
 
     private ConnectionPool() {
         freeConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);

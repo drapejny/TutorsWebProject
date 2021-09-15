@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 public class Tutor extends User {
     private int tutorId;
+    private String phone;
     private String education;
     private String info;
     private BigDecimal pricePerHour;
@@ -19,6 +20,14 @@ public class Tutor extends User {
 
     public void setTutorId(int tutorId) {
         this.tutorId = tutorId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getEducation() {

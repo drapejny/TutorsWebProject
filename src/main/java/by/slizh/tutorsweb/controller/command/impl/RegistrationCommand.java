@@ -24,7 +24,6 @@ public class RegistrationCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         String locale = (String) session.getAttribute(SessionAttribute.LOCALE);
-        UserValidator validator = UserValidatorImpl.getInstance();
 
         Map<String, String> userMap = new HashMap<>();
         userMap.put(FIRST_NAME, request.getParameter(FIRST_NAME));
