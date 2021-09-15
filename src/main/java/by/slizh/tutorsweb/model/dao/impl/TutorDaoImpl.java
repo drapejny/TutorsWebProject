@@ -21,16 +21,16 @@ public class TutorDaoImpl extends TutorDao {
     private static final Logger logger = LogManager.getLogger();
 
     private static final String SQL_FIND_ALL_TUTORS = """
-             SELECT tutor_id, education, info, price_per_hour, is_active,
-                                users.user_id, first_name, last_name, email, phone, city, photo, role_name, status_name
+             SELECT tutor_id, phone, education, info, price_per_hour, is_active,
+                                users.user_id, first_name, last_name, email, city, photo, role_name, status_name
              FROM tutors
              JOIN users ON tutors.user_id = users.user_id
              JOIN role ON users.role_id = role.role_id
              JOIN status ON users.status_id = status.status_id;
             """;
     private static final String SQL_FIND_TUTOR_BY_ID = """
-            SELECT tutor_id, education, info, price_per_hour, is_active,
-                                users.user_id, first_name, last_name, email, phone, city, photo, role_name, status_name
+            SELECT tutor_id, phone, education, info, price_per_hour, is_active,
+                                users.user_id, first_name, last_name, email, city, photo, role_name, status_name
              FROM tutors
              JOIN users ON tutors.user_id = users.user_id
              JOIN role ON users.role_id = role.role_id
@@ -41,12 +41,12 @@ public class TutorDaoImpl extends TutorDao {
             DELETE FROM tutors WHERE tutor_id = ?;
             """;
     private static final String SQL_CREATE_TUTOR = """
-            INSERT INTO tutors(user_id, education, info, price_per_hour, is_active)
-            VALUES (?, ?, ?, ?, ?);
+            INSERT INTO tutors(user_id, phone, education, info, price_per_hour, is_active)
+            VALUES (?, ?, ?, ?, ?, ?);
             """;
     private static final String SQL_UPDATE_TUTOR = """
             UPDATE tutors
-            SET education = ?, info = ?, price_per_hour = ?, is_active = ?
+            SET phone = ?, education = ?, info = ?, price_per_hour = ?, is_active = ?
             WHERE tutor_id = ?;
             """;
 
@@ -102,10 +102,11 @@ public class TutorDaoImpl extends TutorDao {
     public boolean create(Tutor tutor) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_TUTOR, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, tutor.getUserId());
-            statement.setString(2, tutor.getEducation());
-            statement.setString(3, tutor.getInfo());
-            statement.setBigDecimal(4, tutor.getPricePerHour());
-            statement.setByte(5, (byte) (tutor.isActive() ? 1 : 0));
+            statement.setString(2, tutor.getPhone());
+            statement.setString(3, tutor.getEducation());
+            statement.setString(4, tutor.getInfo());
+            statement.setBigDecimal(5, tutor.getPricePerHour());
+            statement.setByte(6, (byte) (tutor.isActive() ? 1 : 0));
             boolean result = statement.executeUpdate() == 1;
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {
@@ -127,11 +128,12 @@ public class TutorDaoImpl extends TutorDao {
                         new DaoException("Failed to update tutor, tutorId not found")
                 );
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_TUTOR)) {
-            statement.setString(1, tutor.getEducation());
-            statement.setString(2, tutor.getInfo());
-            statement.setBigDecimal(3, tutor.getPricePerHour());
-            statement.setByte(4, (byte) (tutor.isActive() ? 1 : 0));
-            statement.setInt(5, tutor.getTutorId());
+            statement.setString(1, tutor.getPhone());
+            statement.setString(2, tutor.getEducation());
+            statement.setString(3, tutor.getInfo());
+            statement.setBigDecimal(4, tutor.getPricePerHour());
+            statement.setByte(5, (byte) (tutor.isActive() ? 1 : 0));
+            statement.setInt(6, tutor.getTutorId());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -144,6 +146,7 @@ public class TutorDaoImpl extends TutorDao {
     private Tutor buildTutor(ResultSet resultSet) throws SQLException {
         Tutor tutor = new Tutor.TutorBuilder()
                 .setTutorId(resultSet.getInt(ColumnName.TUTOR_ID))
+                .setPhone(ColumnName.PHONE)
                 .setEducation(resultSet.getString(ColumnName.EDUCATION))
                 .setInfo(resultSet.getString(ColumnName.INFO))
                 .setPricePerHour(resultSet.getBigDecimal(ColumnName.PRICE_PER_HOUR))
@@ -152,7 +155,6 @@ public class TutorDaoImpl extends TutorDao {
                 .setFirstName(resultSet.getString(ColumnName.FIRST_NAME))
                 .setLastName(resultSet.getString(ColumnName.LAST_NAME))
                 .setEmail(resultSet.getString(ColumnName.EMAIL))
-                .setPhone(resultSet.getString(ColumnName.PHONE))
                 .setCity(resultSet.getString(ColumnName.CITY))
                 .setPhoto(resultSet.getBinaryStream(ColumnName.PHOTO))
                 .setRole(User.Role.valueOf(resultSet.getString(ColumnName.ROLE_NAME).toUpperCase()))

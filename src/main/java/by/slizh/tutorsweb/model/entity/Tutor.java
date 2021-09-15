@@ -90,11 +90,6 @@ public class Tutor extends User {
             return this;
         }
 
-        public TutorBuilder setPhone(String phone) {
-            tutor.setPhone(phone);
-            return this;
-        }
-
         public TutorBuilder setCity(String city) {
             tutor.setCity(city);
             return this;
@@ -117,6 +112,11 @@ public class Tutor extends User {
 
         public TutorBuilder setTutorId(int tutorId) {
             tutor.setTutorId(tutorId);
+            return this;
+        }
+
+        public TutorBuilder setPhone(String phone){
+            tutor.setPhone(phone);
             return this;
         }
 

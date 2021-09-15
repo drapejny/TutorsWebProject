@@ -14,8 +14,6 @@ public interface UserValidator {
 
     boolean validatePassword(String password);
 
-    boolean validatePhone(String phone);
-
     boolean validateCity(String city);
 
 }

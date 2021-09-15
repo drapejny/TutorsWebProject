@@ -30,7 +30,6 @@ public class RegistrationCommand implements Command {
         userMap.put(LAST_NAME, request.getParameter(LAST_NAME));
         userMap.put(EMAIL, request.getParameter(EMAIL));
         userMap.put(PASSWORD, request.getParameter(PASSWORD));
-        userMap.put(PHONE, request.getParameter(PHONE));
         userMap.put(CITY, request.getParameter(CITY));
 
         UserService service = UserServiceImpl.getInstance();

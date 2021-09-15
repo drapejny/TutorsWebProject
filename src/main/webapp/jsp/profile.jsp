@@ -20,7 +20,6 @@
 <c:import url="fragment/header.jsp"/>
 <h3>${sessionScope.user.firstName} ${sessionScope.user.lastName}</h3><br>
 <fmt:message key="profile.email"/> ${sessionScope.user.email}<br>
-<fmt:message key="profile.phone"/> ${sessionScope.user.phone}<br>
 <fmt:message key="profile.city"/> ${sessionScope.user.city}<br>
 </body>
 </html>

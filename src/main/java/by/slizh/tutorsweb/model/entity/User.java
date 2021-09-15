@@ -7,7 +7,6 @@ public class User extends Entity {
     private String firstName;
     private String lastName;
     private String email;
-    private String phone;
     private String city;
     private InputStream photo;
     private Role role;
@@ -16,17 +15,6 @@ public class User extends Entity {
     public User(){
     }
 
-    public User(int userId, String firstName, String lastName, String email, String phone, String city, InputStream photo, Role role, Status status){
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.city = city;
-        this.photo = photo;
-        this.role = role;
-        this.status = status;
-    }
 
     public int getUserId() {
         return userId;
@@ -58,14 +46,6 @@ public class User extends Entity {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getCity() {
@@ -169,11 +149,6 @@ public class User extends Entity {
 
         public UserBuilder setEmail(String email) {
             user.setEmail(email);
-            return this;
-        }
-
-        public UserBuilder setPhone(String phone){
-            user.setPhone(phone);
             return this;
         }
 
