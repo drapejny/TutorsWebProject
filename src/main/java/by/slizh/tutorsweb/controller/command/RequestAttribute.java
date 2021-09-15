@@ -1,6 +1,6 @@
 package by.slizh.tutorsweb.controller.command;
 
-public class RequestAttribute {
+public final class RequestAttribute {
 
     public static String REGISTRATION_USER_DATA = "userMap";
 
