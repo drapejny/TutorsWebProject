@@ -31,15 +31,16 @@
         <div class="dropdown">
             <button onclick="myFunction()" class="dropbtn">${sessionScope.user.firstName} ${sessionScope.user.lastName}</button>
             <div id="myDropdown" class="dropdown-content">
-                <a href="${pageContext.request.contextPath}/controller?command=profile_page">Профиль</a>
-                <a href="#">Редактировать</a>
-                <a href="${pageContext.request.contextPath}/controller?command=logout">Выйти</a>
+                <a href="${pageContext.request.contextPath}/controller?command=profile_page"><fmt:message key="header.dropdown.profile"/></a>
+                <a href="#"><fmt:message key="header.dropdown.bookmarks"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=edit_profile_page"><fmt:message key="header.dropdown.edit"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=logout"><fmt:message key="header.dropdown.logout"/></a>
             </div>
         </div>
     </c:if>
 
-    <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=ru_RU">RU</a>
-    <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=en_EN">EN</a>
+    <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=ru_RU"><img src="${pageContext.request.contextPath}/img/ru.png" alt="ru"></a>
+    <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=en_EN"><img src="${pageContext.request.contextPath}/img/en.png" alt="en"></a>
     <hr>
 
 </header>

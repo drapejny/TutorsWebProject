@@ -20,7 +20,6 @@
 <c:import url="fragment/header.jsp"/>
 <form action="${pageContext.request.contextPath}/controller" method="post">
     <input type="hidden" name="command" value="registration">
-    <input type="file" name="photo" multiple accept="image/*,image/jpeg"><br>
     <fmt:message key="registration.first_name"/><input type="text" name="first_name" value="${requestScope.userMap["first_name"]}"><br>
     <fmt:message key="registration.last_name"/><input type="text" name="last_name" value="${requestScope.userMap["last_name"]}"><br>
     <fmt:message key="registration.email"/><input type="text" name="email"value="${requestScope.userMap["email"]}"><br>

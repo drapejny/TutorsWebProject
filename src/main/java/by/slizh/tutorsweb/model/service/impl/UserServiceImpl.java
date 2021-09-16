@@ -1,6 +1,5 @@
 package by.slizh.tutorsweb.model.service.impl;
 
-import by.slizh.tutorsweb.model.dao.ColumnName;
 import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.exception.ServiceException;
@@ -16,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import static by.slizh.tutorsweb.controller.command.RequestParameter.*;
 
-import java.util.Locale;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.Optional;
 
@@ -137,7 +136,7 @@ public class UserServiceImpl implements UserService {
                 }
             }
         } catch (DaoException e) {
-            throw new ServiceException("Failed to make transaction verify method");
+            throw new ServiceException("Failed to make transaction in verify method", e);
         } finally {
             try {
                 transaction.end();
@@ -146,5 +145,24 @@ public class UserServiceImpl implements UserService {
             }
         }
         return false;
+    }
+
+    @Override
+    public void updatePhoto(User user, InputStream inputStream) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
+        user.setPhoto(inputStream);
+        try {
+            transaction.init(userDao);
+            userDao.update(user);
+        } catch (DaoException e) {
+            throw new ServiceException("Failed to make transaction in updatePhoto method", e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in updatePhoto method", e);
+            }
+        }
     }
 }

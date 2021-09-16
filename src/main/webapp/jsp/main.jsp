@@ -16,6 +16,6 @@
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
-MAIN PAGE !!!
+MIAN PAGE! !!! ! !
 </body>
 </html>

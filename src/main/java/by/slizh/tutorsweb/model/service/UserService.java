@@ -3,6 +3,7 @@ package by.slizh.tutorsweb.model.service;
 import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.exception.ServiceException;
 
+import java.io.InputStream;
 import java.util.Map;
 import java.util.Optional;
 
@@ -17,5 +18,7 @@ public interface UserService {
     boolean isEmailExist(String email) throws ServiceException;
 
     boolean verify(String userId) throws ServiceException;
+
+    void updatePhoto(User user, InputStream inputStream) throws ServiceException;
 
 }
