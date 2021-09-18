@@ -8,6 +8,7 @@ import by.slizh.tutorsweb.model.dao.UserDao;
 import by.slizh.tutorsweb.model.dao.impl.UserDaoImpl;
 import by.slizh.tutorsweb.model.service.UserService;
 import by.slizh.tutorsweb.model.validator.impl.UserValidatorImpl;
+import by.slizh.tutorsweb.util.Base64Coder;
 import by.slizh.tutorsweb.util.mail.MailSender;
 import by.slizh.tutorsweb.util.security.PasswordEncoder;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,8 @@ import org.apache.logging.log4j.Logger;
 
 import static by.slizh.tutorsweb.controller.command.RequestParameter.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Optional;
@@ -65,11 +68,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registrate(Map<String, String> userMap) throws ServiceException {
+
         User user = new User.UserBuilder()
                 .setFirstName(userMap.get(FIRST_NAME))
                 .setLastName(userMap.get(LAST_NAME))
                 .setEmail(userMap.get(EMAIL))
                 .setCity(userMap.get(CITY))
+                .setPhoto(userMap.get(PHOTO))
                 .setRole(User.Role.USER)
                 .setStatus(User.Status.NON_ACTIVATED)
                 .createUser();
@@ -151,7 +156,7 @@ public class UserServiceImpl implements UserService {
     public void updatePhoto(User user, InputStream inputStream) throws ServiceException {
         EntityTransaction transaction = new EntityTransaction();
         UserDao userDao = new UserDaoImpl();
-        user.setPhoto(inputStream);
+        user.setPhoto(Base64Coder.encode(inputStream));
         try {
             transaction.init(userDao);
             userDao.update(user);

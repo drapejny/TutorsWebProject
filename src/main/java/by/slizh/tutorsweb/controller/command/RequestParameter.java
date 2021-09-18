@@ -17,6 +17,7 @@ public final class RequestParameter {
     public static final String LAST_NAME = "last_name";
     public static final String PASSWORD_REPEAT = "password_repeat";
     public static final String PHONE = "phone";
+    public static final String PHOTO = "photo";
     public static final String CITY = "city";
 
     //verification

@@ -18,7 +18,7 @@
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
-<img src="data:image/jpg;base64,${userPhoto}" width="200" height="200"><br>
+<img src="data:image/jpg;base64,${sessionScope.user.photo}" width="200" height="200"><br>
 <h3>${sessionScope.user.firstName} ${sessionScope.user.lastName}</h3><br>
 <fmt:message key="profile.email"/> ${sessionScope.user.email}<br>
 <fmt:message key="profile.city"/> ${sessionScope.user.city}<br>

@@ -4,15 +4,14 @@ import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.model.dao.ColumnName;
 import by.slizh.tutorsweb.model.dao.UserDao;
+import by.slizh.tutorsweb.util.Base64Coder;
 import by.slizh.tutorsweb.util.security.PasswordEncoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static by.slizh.tutorsweb.model.dao.ColumnName.*;
 import java.sql.*;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 public class UserDaoImpl extends UserDao {
 
@@ -117,12 +116,13 @@ public class UserDaoImpl extends UserDao {
     @Override
     public boolean create(User user, String password) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_USER, Statement.RETURN_GENERATED_KEYS)) {
+            System.out.println(user.getPhoto());
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getEmail());
             statement.setString(4, PasswordEncoder.encodePassword(password));
             statement.setString(5, user.getCity());
-            statement.setBinaryStream(6, user.getPhoto());
+            statement.setBlob(6, Base64Coder.decode(user.getPhoto()));
             statement.setInt(7, user.getRole().getId());
             statement.setInt(8, user.getStatus().getId());
             boolean result = statement.executeUpdate() == 1;
@@ -146,7 +146,7 @@ public class UserDaoImpl extends UserDao {
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getCity());
-            statement.setBinaryStream(4, user.getPhoto());
+            statement.setBlob(4, Base64Coder.decode(user.getPhoto()));
             statement.setInt(5, user.getRole().getId());
             statement.setInt(6, user.getStatus().getId());
             statement.setInt(7, user.getUserId());
@@ -211,14 +211,14 @@ public class UserDaoImpl extends UserDao {
 
     private User buildUser(ResultSet resultSet) throws SQLException {
         User user = new User.UserBuilder()
-                .setUserId(resultSet.getInt(ColumnName.USER_ID))
-                .setFirstName(resultSet.getString(ColumnName.FIRST_NAME))
-                .setLastName(resultSet.getString(ColumnName.LAST_NAME))
-                .setEmail(resultSet.getString(ColumnName.EMAIL))
-                .setCity(resultSet.getString(ColumnName.CITY))
-                .setPhoto(resultSet.getBinaryStream(ColumnName.PHOTO))
-                .setRole(User.Role.valueOf(resultSet.getString(ColumnName.ROLE_NAME).toUpperCase(Locale.ROOT)))
-                .setStatus(User.Status.valueOf(resultSet.getString(ColumnName.STATUS_NAME).toUpperCase(Locale.ROOT)))
+                .setUserId(resultSet.getInt(USER_ID))
+                .setFirstName(resultSet.getString(FIRST_NAME))
+                .setLastName(resultSet.getString(LAST_NAME))
+                .setEmail(resultSet.getString(EMAIL))
+                .setCity(resultSet.getString(CITY))
+                .setPhoto(resultSet.getBlob(PHOTO) == null ? "" : Base64Coder.encode(resultSet.getBlob(PHOTO).getBinaryStream()))
+                .setRole(User.Role.valueOf(resultSet.getString(ROLE_NAME).toUpperCase(Locale.ROOT)))
+                .setStatus(User.Status.valueOf(resultSet.getString(STATUS_NAME).toUpperCase(Locale.ROOT)))
                 .createUser();
         return user;
     }

@@ -8,6 +8,7 @@ import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.exception.ServiceException;
 import by.slizh.tutorsweb.model.service.UserService;
 import by.slizh.tutorsweb.model.service.impl.UserServiceImpl;
+import by.slizh.tutorsweb.util.Base64Coder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +23,7 @@ public class LoginCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
+        System.out.println(request.getServletContext().getRealPath(""));
         HttpSession session = request.getSession();
         String locale = (String) session.getAttribute(SessionAttribute.LOCALE);
         Router router = null;
@@ -40,6 +42,7 @@ public class LoginCommand implements Command {
                     return new Router(PagePath.LOGIN_PAGE, Router.RouteType.FORWARD);
                 }
                 session.setAttribute(SessionAttribute.USER, user.get());
+                //session.setAttribute(SessionAttribute.USER_PHOTO, base64UserPhoto);
                 router = new Router(PagePath.MAIN_PAGE, Router.RouteType.REDIRECT);
             } else {
                 request.setAttribute(WRONG_PASSWORD_OR_EMAIL, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(WRONG_PASSWORD_OR_EMAIL));

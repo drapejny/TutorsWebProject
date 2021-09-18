@@ -17,7 +17,7 @@
 <body>
 <c:import url="fragment/header.jsp"/>
 dsf
-<img src="data:image/jpg;base64,${userPhoto}" width="200" height="200"><br>
+<img src="data:image/jpg;base64,${sessionScope.user.photo}" width="200" height="200"><br>
 <form action="${pageContext.request.contextPath}/uploadServlet" method="post" enctype="multipart/form-data">
     <input type="file" name="photo" multiple accept="image/*,image/jpeg"><br>
     <input type="submit" value="Изменить">

@@ -5,6 +5,7 @@ import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.model.dao.ColumnName;
 import by.slizh.tutorsweb.model.dao.TutorDao;
+import by.slizh.tutorsweb.util.Base64Coder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,6 +16,8 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+
+import static by.slizh.tutorsweb.model.dao.ColumnName.PHOTO;
 
 public class TutorDaoImpl extends TutorDao {
 
@@ -156,7 +159,7 @@ public class TutorDaoImpl extends TutorDao {
                 .setLastName(resultSet.getString(ColumnName.LAST_NAME))
                 .setEmail(resultSet.getString(ColumnName.EMAIL))
                 .setCity(resultSet.getString(ColumnName.CITY))
-                .setPhoto(resultSet.getBinaryStream(ColumnName.PHOTO))
+                .setPhoto(Base64Coder.encode(resultSet.getBlob(PHOTO).getBinaryStream()))
                 .setRole(User.Role.valueOf(resultSet.getString(ColumnName.ROLE_NAME).toUpperCase()))
                 .setStatus(User.Status.valueOf(resultSet.getString(ColumnName.STATUS_NAME).toUpperCase()))
                 .createTutor();

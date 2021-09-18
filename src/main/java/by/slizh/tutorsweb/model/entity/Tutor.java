@@ -95,7 +95,7 @@ public class Tutor extends User {
             return this;
         }
 
-        public TutorBuilder setPhoto(InputStream photo) {
+        public TutorBuilder setPhoto(String photo) {
             tutor.setPhoto(photo);
             return this;
         }

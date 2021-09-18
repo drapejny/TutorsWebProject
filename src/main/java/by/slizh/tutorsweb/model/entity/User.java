@@ -8,7 +8,7 @@ public class User extends Entity {
     private String lastName;
     private String email;
     private String city;
-    private InputStream photo;
+    private String photo;
     private Role role;
     private Status status;
 
@@ -56,11 +56,11 @@ public class User extends Entity {
         this.city = city;
     }
 
-    public InputStream getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(InputStream photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
@@ -157,7 +157,7 @@ public class User extends Entity {
             return this;
         }
 
-        public UserBuilder setPhoto(InputStream photo) {
+        public UserBuilder setPhoto(String photo) {
             user.setPhoto(photo);
             return this;
         }

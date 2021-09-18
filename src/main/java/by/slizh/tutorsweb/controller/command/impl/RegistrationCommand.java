@@ -3,14 +3,17 @@ package by.slizh.tutorsweb.controller.command.impl;
 import by.slizh.tutorsweb.controller.command.*;
 import by.slizh.tutorsweb.exception.CommandException;
 import by.slizh.tutorsweb.exception.ServiceException;
-import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.model.service.UserService;
 import by.slizh.tutorsweb.model.service.impl.UserServiceImpl;
-import by.slizh.tutorsweb.model.validator.UserValidator;
-import by.slizh.tutorsweb.model.validator.impl.UserValidatorImpl;
+import by.slizh.tutorsweb.util.Base64Coder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -19,6 +22,9 @@ import static by.slizh.tutorsweb.controller.command.RequestParameter.*;
 import static by.slizh.tutorsweb.controller.command.RequestAttribute.*;
 
 public class RegistrationCommand implements Command {
+
+    private static final Logger logger = LogManager.getLogger();
+    private static final String BASE_PHOTO_PATH = "/img/user.png";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
@@ -42,6 +48,7 @@ public class RegistrationCommand implements Command {
             }
 
         } catch (ServiceException e) {
+            logger.error("Executing registration command error", e);
             throw new CommandException("Executing registration command error", e);
         }
 
@@ -50,8 +57,10 @@ public class RegistrationCommand implements Command {
 
         if (service.validateUserData(userMap) && password.equals(passwordRepeat)) {
             try {
+                userMap.put(PHOTO,loadBaseUserPhoto(request.getServletContext().getRealPath("") + BASE_PHOTO_PATH));
                 service.registrate(userMap);
             } catch (ServiceException e) {
+                logger.error("Executing registration command error", e);
                 throw new CommandException("Executing registration command error", e);
             }
             return new Router(PagePath.CONFIRMATION_PAGE, Router.RouteType.REDIRECT);
@@ -60,7 +69,17 @@ public class RegistrationCommand implements Command {
             request.setAttribute(WRONG_REGISTRATION_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(WRONG_REGISTRATION_DATA));
             return new Router(PagePath.REGISTRATION_PAGE, Router.RouteType.FORWARD);
         }
+    }
 
-
+    private String loadBaseUserPhoto(String path) {
+        String result = "";
+        try (FileInputStream fis = new FileInputStream(path)) {
+            result = Base64Coder.encode(fis);
+        } catch (FileNotFoundException e) {
+            logger.error("Can't find base user photo file",e);
+        } catch (IOException e) {
+            logger.error("Can't load base user photo file",e);
+        }
+        return result;
     }
 }
