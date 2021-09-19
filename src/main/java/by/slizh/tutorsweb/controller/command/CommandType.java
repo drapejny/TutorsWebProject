@@ -13,7 +13,9 @@ public enum CommandType {
     MAIN_PAGE(new GoToMainPage()),
     LOGOUT(new LogOutCommand()),
     VERIFICATION(new VerificationCommand()),
-    EDIT_PROFILE_PAGE(new GoToEditProfilePage());
+    EDIT_PROFILE_PAGE(new GoToEditProfilePage()),
+    EDIT_PROFILE(new EditProfileCommand()),
+    EDIT_PASSWORD(new EditPasswordCommand());
 
     private Command command;
 

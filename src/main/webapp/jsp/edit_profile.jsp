@@ -16,7 +16,6 @@
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
-dsf
 <img src="data:image/jpg;base64,${sessionScope.user.photo}" width="200" height="200"><br>
 <form action="${pageContext.request.contextPath}/uploadServlet" method="post" enctype="multipart/form-data">
     <input type="file" name="photo" multiple accept="image/*,image/jpeg"><br>
@@ -24,14 +23,20 @@ dsf
 </form>
 <form action="${pageContext.request.contextPath}/controller" method="post">
     <input type="hidden" name="command" value="edit_profile">
-    <fmt:message key="profile.first_name"/><input type="text" value="${sessionScope.user.firstName}"><br>
-    <fmt:message key="profile.last_name"/><input type="text" value="${sessionScope.user.lastName}"><br>
-    <fmt:message key="profile.city"/><input type="text" value="${sessionScope.user.city}"><br>
-    <input type="submit" value="<fmt:message key="edit.profile.button"/>">
-
+    <fmt:message key="profile.first_name"/><input type="text" name="first_name" value="${sessionScope.user.firstName}"><br>
+    <fmt:message key="profile.last_name"/><input type="text" name="last_name" value="${sessionScope.user.lastName}"><br>
+    <fmt:message key="profile.city"/><input type="text" name="city" value="${sessionScope.user.city}"><br>
+    <input type="submit" value="<fmt:message key="edit.profile.button"/>"><hr>
 </form>
-
-
-
+${errorWrongDataMessage}
+${succesEditMessage}
+<form action="${pageContext.request.contextPath}/controller" method="post">
+    <input type="hidden" name="command" value="edit_password">
+    <fmt:message key="profile.password"/><input name="password" type="text"><br>
+    <fmt:message key="profile.new_password"/><input name="new_password" type="text"><br>
+    <input type="submit" value="<fmt:message key="edit.profile.button"/>">
+</form>
+${succesEditPassword}
+${errorWrongPasswordMessage}
 </body>
 </html>

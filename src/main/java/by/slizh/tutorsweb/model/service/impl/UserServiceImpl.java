@@ -125,6 +125,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean checkPassword(User user, String password) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
+        boolean result = false;
+        try {
+            transaction.init(userDao);
+            String userPasswordHash = userDao.findUserPassword(user);
+            result = PasswordEncoder.checkPassword(password, userPasswordHash);
+        } catch (DaoException e) {
+            throw new ServiceException("Failed to make transaction in checkPassword method", e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in checkPassword method", e);
+            }
+        }
+        return result;
+    }
+
+    @Override
     public boolean verify(String userId) throws ServiceException {
         EntityTransaction transaction = new EntityTransaction();
         UserDao userDao = new UserDaoImpl();
@@ -167,6 +188,44 @@ public class UserServiceImpl implements UserService {
                 transaction.end();
             } catch (DaoException e) {
                 logger.error("Can't end transaction in updatePhoto method", e);
+            }
+        }
+    }
+
+    @Override
+    public void updateUser(User user) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
+        try {
+            transaction.init(userDao);
+            userDao.update(user);
+        } catch (DaoException e) {
+            logger.error("Failed to make transaction in updateUser method", e);
+            throw new ServiceException("Failed to make transaction in updateUser method", e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in updateUser method", e);
+            }
+        }
+    }
+
+    @Override
+    public void updatePassword(User user, String password) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
+        try {
+            transaction.init(userDao);
+            userDao.updateUserPassword(user, password);
+        } catch (DaoException e) {
+            logger.error("Failed to make transaction in updatePassword method", e);
+            throw new ServiceException("Failed to make transaction in updatePassword method", e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in updatePassword method", e);
             }
         }
     }

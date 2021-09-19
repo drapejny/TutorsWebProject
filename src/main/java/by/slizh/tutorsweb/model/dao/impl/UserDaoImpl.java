@@ -161,7 +161,7 @@ public class UserDaoImpl extends UserDao {
     @Override
     public boolean updateUserPassword(User user, String password) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER_PASSWORD)) {
-            statement.setString(1, password);
+            statement.setString(1, PasswordEncoder.encodePassword(password));
             statement.setInt(2, user.getUserId());
             boolean result = statement.executeUpdate() == 1;
             return result;

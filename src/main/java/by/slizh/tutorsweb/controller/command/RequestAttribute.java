@@ -7,11 +7,14 @@ public final class RequestAttribute {
 
     public static String ERROR_USER_NON_ACTIVETED = "errorNonActivetedMessage";
     public static String ERROR_USER_BLOCKED = "errorBlockedMessage";
-    public static String WRONG_PASSWORD_OR_EMAIL = "errorLogInMessage";
-    public static final String WRONG_REGISTRATION_DATA = "errorWrongDataMessage";
+    public static String ERROR_WRONG_PASSWORD_OR_EMAIL = "errorLogInMessage";
+    public static final String ERROR_WRONG_DATA = "errorWrongDataMessage";
     public static final String ERROR_EMAIL_EXISTS = "errorEmailExistsMessage";
+    public static final String SUCCESSFUL_EDIT_DATA = "succesEditMessage";
+    public static final String ERROR_WRONG_PASSWORD = "errorWrongPassword";
+    public static final String SUCCESSFUL_EDIT_PASSWORD = "succesEditPassword";
 
 
-
-    private RequestAttribute(){}
+    private RequestAttribute() {
+    }
 }

@@ -13,15 +13,12 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Arrays;
 import java.util.Locale;
-import java.util.Map;
 
 import static by.slizh.tutorsweb.controller.command.RequestAttribute.*;
 import static by.slizh.tutorsweb.controller.command.RequestParameter.*;
 
-
-public class EditProfileCommand implements Command {
+public class EditPasswordCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -30,32 +27,36 @@ public class EditProfileCommand implements Command {
         HttpSession session = request.getSession();
         String locale = (String) session.getAttribute(SessionAttribute.LOCALE);
 
-        String firstName = request.getParameter(FIRST_NAME);
-        String lastName = request.getParameter(LAST_NAME);
-        String city = request.getParameter(CITY);
+        String password = request.getParameter(PASSWORD);
+        String newPassword = request.getParameter(NEW_PASSWORD);
 
         UserValidator validator = UserValidatorImpl.getInstance();
         UserService service = UserServiceImpl.getInstance();
 
         User user = (User) session.getAttribute(SessionAttribute.USER);
-        System.out.println(firstName == null);
-        System.out.println(firstName.equals(""));
-        System.out.println(firstName + lastName + city + "!!!");
-        if (validator.validateFirstName(firstName) && validator.validateLastName(lastName) && validator.validateCity(city)) {
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setCity(city);
+
+        if (validator.validatePassword(password) && validator.validatePassword(newPassword)) {
+            boolean isCorrectPassword = false;
             try {
-                service.updateUser(user);
+                isCorrectPassword = service.checkPassword(user, password);
             } catch (ServiceException e) {
-                logger.error("Failed to update user in edit profile command", e);
-                throw new CommandException("Failed to update user in edit profile command", e);
+                logger.error("Failed to check password in edit password command", e);
+                throw new CommandException("Failed to check password in edit password command", e);
             }
-            request.setAttribute(RequestAttribute.SUCCESSFUL_EDIT_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(SUCCESSFUL_EDIT_DATA));
+            if (isCorrectPassword) {
+                try {
+                    service.updatePassword(user, newPassword);
+                    request.setAttribute(SUCCESSFUL_EDIT_PASSWORD, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(SUCCESSFUL_EDIT_PASSWORD));
+                } catch (ServiceException e) {
+                    logger.error("Failed to update password in edit password command", e);
+                    throw new CommandException("Failed to update password in edit password command", e);
+                }
+            } else {
+                request.setAttribute(RequestAttribute.ERROR_WRONG_PASSWORD, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_PASSWORD));
+            }
         } else {
             request.setAttribute(RequestAttribute.ERROR_WRONG_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_DATA));
         }
         return new Router(PagePath.EDIT_PROFILE_PAGE, Router.RouteType.FORWARD);
-
     }
 }

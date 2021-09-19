@@ -6,11 +6,5 @@
 </head>
 <body>
 <jsp:forward page="jsp/main.jsp"></jsp:forward>
-<%--<form action="controller" method="get">--%>
-<%--    <input type="text" name="num">--%>
-<%--    <input type="submit" value="push">--%>
-<%--</form>--%>
-<%--<hr/>--%>
-<%--result = ${res}--%>
 </body>
 </html>

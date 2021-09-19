@@ -42,8 +42,9 @@ public class RegistrationCommand implements Command {
 
         try {
             if (service.isEmailExist(userMap.get(EMAIL))) {
+                System.out.println(1);
                 request.setAttribute(REGISTRATION_USER_DATA, userMap);
-                request.setAttribute(ERROR_EMAIL_EXISTS, userMap);
+                request.setAttribute(ERROR_EMAIL_EXISTS, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_EMAIL_EXISTS));
                 return new Router(PagePath.REGISTRATION_PAGE, Router.RouteType.FORWARD);
             }
 
@@ -66,7 +67,7 @@ public class RegistrationCommand implements Command {
             return new Router(PagePath.CONFIRMATION_PAGE, Router.RouteType.REDIRECT);
         } else {
             request.setAttribute(REGISTRATION_USER_DATA, userMap);
-            request.setAttribute(WRONG_REGISTRATION_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(WRONG_REGISTRATION_DATA));
+            request.setAttribute(ERROR_WRONG_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_DATA));
             return new Router(PagePath.REGISTRATION_PAGE, Router.RouteType.FORWARD);
         }
     }

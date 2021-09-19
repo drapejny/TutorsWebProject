@@ -20,6 +20,9 @@ public final class RequestParameter {
     public static final String PHOTO = "photo";
     public static final String CITY = "city";
 
+    //edit profile
+    public static final String NEW_PASSWORD = "new_password";
+
     //verification
     public static final String USER_ID = "user_id";
 

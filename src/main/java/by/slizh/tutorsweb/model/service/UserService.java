@@ -17,8 +17,14 @@ public interface UserService {
 
     boolean isEmailExist(String email) throws ServiceException;
 
+    boolean checkPassword(User user, String password) throws ServiceException;
+
     boolean verify(String userId) throws ServiceException;
 
     void updatePhoto(User user, InputStream inputStream) throws ServiceException;
+
+    void updateUser(User user) throws ServiceException;
+
+    void updatePassword(User user,String password) throws ServiceException;
 
 }
