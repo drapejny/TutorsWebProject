@@ -15,7 +15,10 @@ public enum CommandType {
     VERIFICATION(new VerificationCommand()),
     EDIT_PROFILE_PAGE(new GoToEditProfilePage()),
     EDIT_PROFILE(new EditProfileCommand()),
-    EDIT_PASSWORD(new EditPasswordCommand());
+    EDIT_PASSWORD(new EditPasswordCommand()),
+    ADD_APPLICATION(new AddApplicationCommand()),
+    DELETE_APPLICATION(new DeleteApplication()),
+    BECOME_TUTOR(new BecomeTutorCommand());
 
     private Command command;
 

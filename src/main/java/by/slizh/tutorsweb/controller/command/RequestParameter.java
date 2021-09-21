@@ -11,12 +11,12 @@ public final class RequestParameter {
 
     //locale
     public static final String LOCALE = "locale";
+    public static final String CURRENT_URL = "current_url";
 
     //registration
     public static final String FIRST_NAME = "first_name";
     public static final String LAST_NAME = "last_name";
     public static final String PASSWORD_REPEAT = "password_repeat";
-    public static final String PHONE = "phone";
     public static final String PHOTO = "photo";
     public static final String CITY = "city";
 
@@ -25,6 +25,14 @@ public final class RequestParameter {
 
     //verification
     public static final String USER_ID = "user_id";
+
+    //application
+    public static final String PHONE = "phone";
+    public static final String EDUCATION = "education";
+    public static final String INFORMATION = "info";
+    public static final String PRICE = "price";
+    public static final String SUBJECT = "subject";
+
 
     private RequestParameter() {
     }

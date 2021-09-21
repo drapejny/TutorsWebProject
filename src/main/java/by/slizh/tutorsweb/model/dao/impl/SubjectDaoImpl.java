@@ -21,7 +21,8 @@ public class SubjectDaoImpl extends SubjectDao {
 
     private static final String SQL_FIND_ALL_SUBJECTS = """
             SELECT subject_id, subject_name
-            FROM subjects;
+            FROM subjects
+            ORDER BY subject_name;
             """;
     private static final String SQL_FIND_SUBJECT_BY_ID = """
             SELECT subject_id, subject_name
@@ -41,6 +42,11 @@ public class SubjectDaoImpl extends SubjectDao {
             SET subject_name = ?
             WHERE subject_id = ?;
             """;
+    private static final String SQL_CREATE_TUTOR_SUBJECT = """
+            INSERT INTO tutors_has_subject(tutor_id, subject_id)
+            VALUES(?, ?);
+            """;
+
 
     @Override
     public List<Subject> findAll() throws DaoException {
@@ -122,6 +128,18 @@ public class SubjectDaoImpl extends SubjectDao {
         } catch (SQLException e) {
             logger.error("Failed to update subject", e);
             throw new DaoException("Failed to update subject", e);
+        }
+    }
+
+    @Override
+    public boolean createTutorSubject(int tutorId, int subjectId) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_TUTOR_SUBJECT)) {
+            statement.setInt(1, tutorId);
+            statement.setInt(2, subjectId);
+            return statement.executeUpdate() == 1;
+        } catch (SQLException e) {
+            logger.error("Failed to create tutorSubject record", e);
+            throw new DaoException("Failed to create tutorSubject record", e);
         }
     }
 }
