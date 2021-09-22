@@ -17,5 +17,13 @@
 <body>
 <c:import url="fragment/header.jsp"/>
 MIAN PAGE! !!! ! !
+<c:if test="${sessionScope.user.role == 'ADMIN'}">
+    <ul>
+        <li><a href="#"><fmt:message key="main.users"/></a></li>
+        <li><a href="#"><fmt:message key="main.subjects"/></a></li>
+        <li><a href="#"><fmt:message key="main.feedbacks"/></a></li>
+        <li><a href="#"><fmt:message key="main.applications"/></a></li>
+    </ul>
+</c:if>
 </body>
 </html>
