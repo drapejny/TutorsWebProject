@@ -10,5 +10,9 @@ public final class PagePath {
     public static final String EDIT_PROFILE_PAGE = "/jsp/edit_profile.jsp";
     public static final String ADD_APPLICATION_PAGE = "/jsp/tutor/add_application.jsp";
     public static final String APPLICATION_PAGE = "/jsp/tutor/application.jsp";
-    private PagePath(){}
+    public static final String ALL_APPLICATIONS_PAGE = "/jsp/admin/all_applications.jsp";
+    public static final String ALL_SUBJECTS_PAGE = "/jsp/admin/all_subjects.jsp";
+
+    private PagePath() {
+    }
 }

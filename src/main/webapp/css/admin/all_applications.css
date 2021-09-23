@@ -1,0 +1,147 @@
+* {
+    font-family: sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:active,
+a:focus {
+    outline: none;
+}
+
+input,
+textarea {
+    outline: none;
+}
+
+input:active,
+textarea:active {
+    outline: none;
+}
+
+:focus {
+    outline: none;
+}
+
+textarea {
+    resize: none;
+}
+
+textarea {
+    resize: vertical;
+}
+
+textarea {
+    resize: horizontal;
+}
+
+.tutor_profile {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+}
+.left_part {
+    flex: 0 0 150px;
+    margin-right: 20px;
+}
+
+.left_part .img {
+    padding-bottom: 120%;
+    position: relative;
+}
+.left_part .img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+.right_part .name {
+    font-size: 20px;
+    color: #1976d2;
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+
+.right_part .phone,
+.right_part .email {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #d8a200;
+}
+
+.right_part .city {
+    font-size: 14px;
+}
+.right_part .city span {
+    font-size: 20px;
+}
+
+.right_part .education_title {
+    font-size: 20px;
+    color: #000;
+    margin-bottom: 5px;
+    margin-top: 25px;
+}
+
+.right_part .education {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.right_part .ed_item {
+    padding-left: 15px;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.right_part .info_title {
+    font-size: 20px;
+    color: #000;
+    margin-bottom: 5px;
+    margin-top: 25px;
+}
+
+.right_part .info {
+    padding-left: 15px;
+    margin-bottom: 20px;
+}
+
+.right_part .price_per_hour {
+    font-size: 20px;
+}
+.right_part .price_per_hour span {
+    font-size: 25px;
+    font-weight: 500;
+}
+.right_part .controls {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+.right_part .controls .submit,
+.right_part .controls .declain {
+    flex: 0 1 150px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    background-color: #4caf50;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.right_part .controls .declain {
+    background-color: #af4c4c;
+}

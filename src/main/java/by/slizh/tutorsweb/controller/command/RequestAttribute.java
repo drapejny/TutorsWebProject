@@ -6,6 +6,8 @@ public final class RequestAttribute {
 
     public static String TUTOR = "tutor";
 
+    public static String SUBJECTS = "subjects";
+
 
     public static String ERROR_USER_NON_ACTIVETED = "errorNonActivetedMessage";
     public static String ERROR_USER_BLOCKED = "errorBlockedMessage";

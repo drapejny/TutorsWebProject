@@ -1,6 +1,9 @@
 package by.slizh.tutorsweb.controller.command;
 
 import by.slizh.tutorsweb.controller.command.impl.*;
+import by.slizh.tutorsweb.controller.command.impl.admin.AddSubjectCommand;
+import by.slizh.tutorsweb.controller.command.impl.admin.DeleteSubjectCommand;
+import by.slizh.tutorsweb.controller.command.impl.go.*;
 
 public enum CommandType {
     DEFAULT(new DefaultCommand()),
@@ -18,6 +21,10 @@ public enum CommandType {
     EDIT_PASSWORD(new EditPasswordCommand()),
     ADD_APPLICATION(new AddApplicationCommand()),
     DELETE_APPLICATION(new DeleteApplication()),
+    ALL_APPLICATIONS_PAGE(new GoToAllApplicationsPage()),
+    ALL_SUBJECTS_PAGE(new GoToAllSubjectsPage()),
+    ADD_SUBJECT(new AddSubjectCommand()),
+    DELETE_SUBJECT(new DeleteSubjectCommand()),
     BECOME_TUTOR(new BecomeTutorCommand());
 
     private Command command;

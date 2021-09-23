@@ -33,6 +33,9 @@ public final class RequestParameter {
     public static final String PRICE = "price";
     public static final String SUBJECT = "subject";
 
+    //subject
+    public static final String SUBJECT_ID = "subject_id";
+
 
     private RequestParameter() {
     }
