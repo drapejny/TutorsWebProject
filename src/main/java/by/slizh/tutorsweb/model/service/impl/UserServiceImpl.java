@@ -18,6 +18,7 @@ import static by.slizh.tutorsweb.controller.command.RequestParameter.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Optional;
@@ -27,6 +28,8 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
 
     private static UserServiceImpl instance;
+
+    private static final String BASE_PHOTO_PATH = "/img/user.png";
 
     private UserServiceImpl() {
     }
@@ -50,6 +53,9 @@ public class UserServiceImpl implements UserService {
             if (optionalUser.isPresent()) {
                 passwordHash = userDao.findUserPassword(optionalUser.get());
                 if (PasswordEncoder.checkPassword(password, passwordHash)) {
+                    if(optionalUser.get().getPhoto() == null){  //// TODO: 24.09.2021 путь не полный, поэтому не читает. Сделать свой тег
+                        optionalUser.get().setPhoto(loadBaseUserPhoto(BASE_PHOTO_PATH));
+                    }
                     result = optionalUser;
                 }
             }
@@ -74,7 +80,6 @@ public class UserServiceImpl implements UserService {
                 .setLastName(userMap.get(LAST_NAME))
                 .setEmail(userMap.get(EMAIL))
                 .setCity(userMap.get(CITY))
-                .setPhoto(userMap.get(PHOTO))
                 .setRole(User.Role.USER)
                 .setStatus(User.Status.NON_ACTIVATED)
                 .createUser();
@@ -228,5 +233,17 @@ public class UserServiceImpl implements UserService {
                 logger.error("Can't end transaction in updatePassword method", e);
             }
         }
+    }
+
+    private String loadBaseUserPhoto(String path) {
+        String result = "";
+        try (FileInputStream fis = new FileInputStream(path)) {
+            result = Base64Coder.encode(fis);
+        } catch (FileNotFoundException e) {
+            logger.error("Can't find base user photo file", e);
+        } catch (IOException e) {
+            logger.error("Can't load base user photo file", e);
+        }
+        return result;
     }
 }

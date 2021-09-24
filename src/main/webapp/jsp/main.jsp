@@ -10,6 +10,8 @@
 <body>
 <c:import url="fragment/header.jsp"/>
 MIAN PAGE! !!! ! !
+<ctg:user-photo photo="${sessionScope.user.photo}" height="100" width="100"/>
+<h1>sdfkjkdsflkjlds</h1>
 <c:if test="${sessionScope.user.role == 'ADMIN'}">
     <ul>
         <li><a href="#"><fmt:message key="main.users"/></a></li>

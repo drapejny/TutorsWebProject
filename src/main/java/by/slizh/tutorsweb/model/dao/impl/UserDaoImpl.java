@@ -41,8 +41,8 @@ public class UserDaoImpl extends UserDao {
             DELETE FROM users WHERE user_id = ?;
             """;
     private static final String SQL_CREATE_USER = """
-            INSERT INTO users (first_name, last_name, email, password, city, photo, role_id, status_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+            INSERT INTO users (first_name, last_name, email, password, city, role_id, status_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?);
             """;
     private static final String SQL_UPDATE_USER = """
             UPDATE users
@@ -122,9 +122,9 @@ public class UserDaoImpl extends UserDao {
             statement.setString(3, user.getEmail());
             statement.setString(4, PasswordEncoder.encodePassword(password));
             statement.setString(5, user.getCity());
-            statement.setBlob(6, Base64Coder.decode(user.getPhoto()));
-            statement.setInt(7, user.getRole().getId());
-            statement.setInt(8, user.getStatus().getId());
+            //statement.setBlob(6, null);
+            statement.setInt(6, user.getRole().getId());
+            statement.setInt(7, user.getStatus().getId());
             boolean result = statement.executeUpdate() == 1;
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {
@@ -146,7 +146,7 @@ public class UserDaoImpl extends UserDao {
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getCity());
-            statement.setBlob(4, Base64Coder.decode(user.getPhoto()));
+            statement.setBlob(4, user.getPhoto() == null ? null : Base64Coder.decode(user.getPhoto()));
             statement.setInt(5, user.getRole().getId());
             statement.setInt(6, user.getStatus().getId());
             statement.setInt(7, user.getUserId());
@@ -216,7 +216,7 @@ public class UserDaoImpl extends UserDao {
                 .setLastName(resultSet.getString(LAST_NAME))
                 .setEmail(resultSet.getString(EMAIL))
                 .setCity(resultSet.getString(CITY))
-                .setPhoto(resultSet.getBlob(PHOTO) == null ? "" : Base64Coder.encode(resultSet.getBlob(PHOTO).getBinaryStream()))
+                .setPhoto(resultSet.getBlob(PHOTO) == null ? null : Base64Coder.encode(resultSet.getBlob(PHOTO).getBinaryStream()))
                 .setRole(User.Role.valueOf(resultSet.getString(ROLE_NAME).toUpperCase(Locale.ROOT)))
                 .setStatus(User.Status.valueOf(resultSet.getString(STATUS_NAME).toUpperCase(Locale.ROOT)))
                 .createUser();

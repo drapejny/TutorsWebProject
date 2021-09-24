@@ -41,7 +41,6 @@ public class LoginCommand implements Command {
                     return new Router(PagePath.LOGIN_PAGE, Router.RouteType.FORWARD);
                 }
                 session.setAttribute(SessionAttribute.USER, user.get());
-                //session.setAttribute(SessionAttribute.USER_PHOTO, base64UserPhoto);
                 router = new Router(PagePath.MAIN_PAGE, Router.RouteType.REDIRECT);
             } else {
                 request.setAttribute(ERROR_WRONG_PASSWORD_OR_EMAIL, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_PASSWORD_OR_EMAIL));

@@ -57,7 +57,7 @@ public class RegistrationCommand implements Command {
 
         if (service.validateUserData(userMap) && password.equals(passwordRepeat)) {
             try {
-                userMap.put(PHOTO, loadBaseUserPhoto(request.getServletContext().getRealPath("") + BASE_PHOTO_PATH));
+               // userMap.put(PHOTO, loadBaseUserPhoto(request.getServletContext().getRealPath("") + BASE_PHOTO_PATH));
                 service.registrate(userMap);
             } catch (ServiceException e) {
                 logger.error("Executing registration command error", e);
