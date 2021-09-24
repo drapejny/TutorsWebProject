@@ -32,10 +32,8 @@ public class MainServlet extends HttpServlet {
         try {
             router = command.execute(request);
         } catch (CommandException e) {
-            router = new Router(PagePath.ERROR_404_PAGE, Router.RouteType.REDIRECT); // FIXME: 15.09.2021 
+            router = new Router(PagePath.ERROR_PAGE, Router.RouteType.REDIRECT);
         }
-        //HttpSession session = request.getSession();
-        //session.setAttribute(SessionAttribute.CURRENT_PAGE, router.getPagePath());
         switch (router.getRouteType()) {
             case FORWARD:
                 request.getRequestDispatcher(router.getPagePath()).forward(request, response);

@@ -38,9 +38,6 @@ public class EditProfileCommand implements Command {
         UserService service = UserServiceImpl.getInstance();
 
         User user = (User) session.getAttribute(SessionAttribute.USER);
-        System.out.println(firstName == null);
-        System.out.println(firstName.equals(""));
-        System.out.println(firstName + lastName + city + "!!!");
         if (validator.validateFirstName(firstName) && validator.validateLastName(lastName) && validator.validateCity(city)) {
             user.setFirstName(firstName);
             user.setLastName(lastName);

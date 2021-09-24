@@ -1,4 +1,4 @@
-package by.slizh.tutorsweb.controller.command.impl;
+package by.slizh.tutorsweb.controller.command.impl.go;
 
 import by.slizh.tutorsweb.controller.command.Command;
 import by.slizh.tutorsweb.controller.command.PagePath;

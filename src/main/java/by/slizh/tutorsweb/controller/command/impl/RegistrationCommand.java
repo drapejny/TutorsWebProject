@@ -58,7 +58,7 @@ public class RegistrationCommand implements Command {
 
         if (service.validateUserData(userMap) && password.equals(passwordRepeat)) {
             try {
-                userMap.put(PHOTO,loadBaseUserPhoto(request.getServletContext().getRealPath("") + BASE_PHOTO_PATH));
+                userMap.put(PHOTO, loadBaseUserPhoto(request.getServletContext().getRealPath("") + BASE_PHOTO_PATH));
                 service.registrate(userMap);
             } catch (ServiceException e) {
                 logger.error("Executing registration command error", e);
@@ -77,9 +77,9 @@ public class RegistrationCommand implements Command {
         try (FileInputStream fis = new FileInputStream(path)) {
             result = Base64Coder.encode(fis);
         } catch (FileNotFoundException e) {
-            logger.error("Can't find base user photo file",e);
+            logger.error("Can't find base user photo file", e);
         } catch (IOException e) {
-            logger.error("Can't load base user photo file",e);
+            logger.error("Can't load base user photo file", e);
         }
         return result;
     }

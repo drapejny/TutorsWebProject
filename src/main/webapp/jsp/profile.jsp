@@ -22,5 +22,7 @@
 <h3>${sessionScope.user.firstName} ${sessionScope.user.lastName}</h3><br>
 <fmt:message key="profile.email"/> ${sessionScope.user.email}<br>
 <fmt:message key="profile.city"/> ${sessionScope.user.city}<br>
+<a href="${pageContext.request.contextPath}/controller?command=become_tutor"><fmt:message key="profile.become_tutor"/></a>
+<a href="${pageContext.request.contextPath}/controller?command=edit_profile_page"><fmt:message key="profile.edit"/></a>
 </body>
 </html>

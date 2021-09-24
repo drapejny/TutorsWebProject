@@ -18,12 +18,7 @@ public class PageFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String contextPath = httpServletRequest.getContextPath();
-        int len = contextPath.length();
-        String uri = httpServletRequest.getRequestURI();
-        String path = uri.substring(len);
-        httpServletRequest.getSession().setAttribute(SessionAttribute.CURRENT_PAGE, path);
+
         chain.doFilter(request, response);
     }
 }

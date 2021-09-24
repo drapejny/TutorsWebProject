@@ -40,6 +40,15 @@ public class TutorDaoImpl extends TutorDao {
              JOIN status ON users.status_id = status.status_id
              WHERE tutor_id = ?;
             """;
+    private static final String SQL_FIND_TUTOR_BY_EMAIL = """
+            SELECT tutor_id, phone, education, info, price_per_hour, is_active,
+                                users.user_id, first_name, last_name, email, city, photo, role_name, status_name
+             FROM tutors
+             JOIN users ON tutors.user_id = users.user_id
+             JOIN role ON users.role_id = role.role_id
+             JOIN status ON users.status_id = status.status_id
+             WHERE email = ?;
+            """;
     private static final String SQL_DELETE_TUTOR_BY_ID = """
             DELETE FROM tutors WHERE tutor_id = ?;
             """;
@@ -52,6 +61,7 @@ public class TutorDaoImpl extends TutorDao {
             SET phone = ?, education = ?, info = ?, price_per_hour = ?, is_active = ?
             WHERE tutor_id = ?;
             """;
+
 
     @Override
     public List<Tutor> findAll() throws DaoException {
@@ -67,6 +77,25 @@ public class TutorDaoImpl extends TutorDao {
         } catch (SQLException e) {
             logger.error("Failed to find all tutors", e);
             throw new DaoException("Failed to find all tutors", e);
+        }
+    }
+
+
+    @Override
+    public Optional<Tutor> findTutorByEmail(String email) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TUTOR_BY_EMAIL)) {
+            statement.setString(1, email);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    Tutor tutor = buildTutor(resultSet);
+                    return Optional.of(tutor);
+                } else {
+                    return Optional.empty();
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Failed to find tutoy by email", e);
+            throw new DaoException("Failed to find tutor by email", e);
         }
     }
 

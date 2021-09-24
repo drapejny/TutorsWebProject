@@ -33,14 +33,12 @@
             <div id="myDropdown" class="dropdown-content">
                 <a href="${pageContext.request.contextPath}/controller?command=profile_page"><fmt:message key="header.dropdown.profile"/></a>
                 <a href="#"><fmt:message key="header.dropdown.bookmarks"/></a>
-                <a href="${pageContext.request.contextPath}/controller?command=edit_profile_page"><fmt:message key="header.dropdown.edit"/></a>
                 <a href="${pageContext.request.contextPath}/controller?command=logout"><fmt:message key="header.dropdown.logout"/></a>
             </div>
         </div>
     </c:if>
 
-    <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=ru_RU"><img src="${pageContext.request.contextPath}/img/ru.png" alt="ru"></a>
-    <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=en_EN"><img src="${pageContext.request.contextPath}/img/en.png" alt="en"></a>
+    <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=ru_RU&current_url=${pageContext.request.requestURL}"><img src="${pageContext.request.contextPath}/img/ru.png" alt="ru"></a>
+    <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=en_EN&current_url=${pageContext.request.requestURL}"><img src="${pageContext.request.contextPath}/img/en.png" alt="en"></a>
     <hr>
-
 </header>
