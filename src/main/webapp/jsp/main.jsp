@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="customtags" prefix="ctg" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="prop.pagecontent"/>
 <html>
@@ -10,8 +11,6 @@
 <body>
 <c:import url="fragment/header.jsp"/>
 MIAN PAGE! !!! ! !
-<ctg:user-photo photo="${sessionScope.user.photo}" height="100" width="100"/>
-<h1>sdfkjkdsflkjlds</h1>
 <c:if test="${sessionScope.user.role == 'ADMIN'}">
     <ul>
         <li><a href="#"><fmt:message key="main.users"/></a></li>

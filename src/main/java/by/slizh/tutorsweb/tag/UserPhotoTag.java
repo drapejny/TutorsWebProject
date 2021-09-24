@@ -25,17 +25,16 @@ public class UserPhotoTag extends TagSupport {
     @Override
     public int doStartTag() throws JspException {
         StringBuilder stringBuilder = new StringBuilder("<img src='");
-        if (photo == null) {
-            stringBuilder.append("${pageContext.request.contextPath}/img/user.png' ");
-            stringBuilder.append("width='" + width + "' ");
-            stringBuilder.append("height='" + height + "'>");
+        if (photo.equals("")) {
+            stringBuilder.append(pageContext.getServletContext().getContextPath());
+            stringBuilder.append("/img/user.png' ");
         } else {
             stringBuilder.append("data:image/jpg;base64,");
             stringBuilder.append(photo);
             stringBuilder.append("' ");
-            stringBuilder.append("width='" + width + "' ");
-            stringBuilder.append("height='" + height + "'>");
         }
+        stringBuilder.append("width='" + width + "' ");
+        stringBuilder.append("height='" + height + "'>");
         try {
             pageContext.getOut().write(stringBuilder.toString());
         } catch (IOException e) {

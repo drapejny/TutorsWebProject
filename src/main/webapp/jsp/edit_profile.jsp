@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="customtags" prefix="ctg"%>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="prop.pagecontent"/>
 <html>
@@ -16,7 +17,7 @@
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
-<img src="data:image/jpg;base64,${sessionScope.user.photo}" width="200" height="200"><br>
+<ctg:user-photo photo="${sessionScope.user.photo}" height="200" width="200"/>
 <form action="${pageContext.request.contextPath}/uploadServlet" method="post" enctype="multipart/form-data">
     <input type="file" name="photo" multiple accept="image/*,image/jpeg"><br>
     <input type="submit" value="Изменить">

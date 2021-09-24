@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="customtags" prefix="ctg"%>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="prop.pagecontent"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mycss.css" />
@@ -28,6 +29,7 @@
     </c:if>
     <c:if test="${not empty sessionScope.user}">
         <br>
+        <ctg:user-photo photo="${sessionScope.user.photo}" height="50" width="50"/>
         <div class="dropdown">
             <button onclick="myFunction()" class="dropbtn">${sessionScope.user.firstName} ${sessionScope.user.lastName}</button>
             <div id="myDropdown" class="dropdown-content">
