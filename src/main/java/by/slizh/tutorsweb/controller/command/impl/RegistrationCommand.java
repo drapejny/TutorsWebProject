@@ -42,7 +42,6 @@ public class RegistrationCommand implements Command {
 
         try {
             if (service.isEmailExist(userMap.get(EMAIL))) {
-                System.out.println(1);
                 request.setAttribute(REGISTRATION_USER_DATA, userMap);
                 request.setAttribute(ERROR_EMAIL_EXISTS, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_EMAIL_EXISTS));
                 return new Router(PagePath.REGISTRATION_PAGE, Router.RouteType.FORWARD);

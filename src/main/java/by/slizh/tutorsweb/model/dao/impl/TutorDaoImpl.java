@@ -17,7 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import static by.slizh.tutorsweb.model.dao.ColumnName.PHOTO;
+import static by.slizh.tutorsweb.model.dao.ColumnName.*;
 
 public class TutorDaoImpl extends TutorDao {
 
@@ -177,20 +177,20 @@ public class TutorDaoImpl extends TutorDao {
 
     private Tutor buildTutor(ResultSet resultSet) throws SQLException {
         Tutor tutor = new Tutor.TutorBuilder()
-                .setTutorId(resultSet.getInt(ColumnName.TUTOR_ID))
-                .setPhone(ColumnName.PHONE)
-                .setEducation(resultSet.getString(ColumnName.EDUCATION))
-                .setInfo(resultSet.getString(ColumnName.INFO))
-                .setPricePerHour(resultSet.getBigDecimal(ColumnName.PRICE_PER_HOUR))
-                .setActive(resultSet.getByte(ColumnName.IS_ACTIVE) == 1 ? true : false)
-                .setUserId(resultSet.getInt(ColumnName.USER_ID))
-                .setFirstName(resultSet.getString(ColumnName.FIRST_NAME))
-                .setLastName(resultSet.getString(ColumnName.LAST_NAME))
-                .setEmail(resultSet.getString(ColumnName.EMAIL))
-                .setCity(resultSet.getString(ColumnName.CITY))
+                .setTutorId(resultSet.getInt(TUTOR_ID))
+                .setPhone(resultSet.getString(PHOTO))
+                .setEducation(resultSet.getString(EDUCATION))
+                .setInfo(resultSet.getString(INFO))
+                .setPricePerHour(resultSet.getBigDecimal(PRICE_PER_HOUR))
+                .setActive(resultSet.getByte(IS_ACTIVE) == 1 ? true : false)
+                .setUserId(resultSet.getInt(USER_ID))
+                .setFirstName(resultSet.getString(FIRST_NAME))
+                .setLastName(resultSet.getString(LAST_NAME))
+                .setEmail(resultSet.getString(EMAIL))
+                .setCity(resultSet.getString(CITY))
                 .setPhoto(Base64Coder.encode(resultSet.getBlob(PHOTO).getBinaryStream()))
-                .setRole(User.Role.valueOf(resultSet.getString(ColumnName.ROLE_NAME).toUpperCase()))
-                .setStatus(User.Status.valueOf(resultSet.getString(ColumnName.STATUS_NAME).toUpperCase()))
+                .setRole(User.Role.valueOf(resultSet.getString(ROLE_NAME).toUpperCase()))
+                .setStatus(User.Status.valueOf(resultSet.getString(STATUS_NAME).toUpperCase()))
                 .createTutor();
         return tutor;
     }
