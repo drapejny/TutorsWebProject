@@ -25,13 +25,6 @@ public class AddApplicationCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        System.out.println(1);
-//        String phone = request.getParameter(PHONE);
-//        String education = request.getParameter(EDUCATION);
-//        String info = request.getParameter(INFORMATION);
-//        String price = request.getParameter(PRICE);
-//        String[] subjectsIds = request.getParameterMap().get(SUBJECT);
-
         Map<String, String[]> tutorMap = request.getParameterMap();
         TutorValidator tutorValidator = TutorValidatorImpl.getInstance();
 

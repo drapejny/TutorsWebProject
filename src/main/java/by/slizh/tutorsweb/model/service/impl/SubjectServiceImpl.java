@@ -42,7 +42,43 @@ public class SubjectServiceImpl implements SubjectService {
                 throw new ServiceException("Failed to end transaction in findAllSubjects method", e);
             }
         }
+    }
 
+    @Override
+    public boolean deleteSubjectById(int id) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        SubjectDao subjectDao = new SubjectDaoImpl();
+        try {
+            transaction.init(subjectDao);
+            return subjectDao.deleteById(id);
+        } catch (DaoException e) {
+            logger.error("Failed ot delete subject in deleteSubjectById method", e);
+            throw new ServiceException("Failed ot delete subject in deleteSubjectById method", e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Failed to end transaction in deleteSubjectById method", e);
+            }
+        }
+    }
 
+    @Override
+    public boolean addSubject(Subject subject) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        SubjectDao subjectDao = new SubjectDaoImpl();
+        try {
+            transaction.init(subjectDao);
+            return subjectDao.create(subject);
+        } catch (DaoException e) {
+            logger.error("Failed ot add subject in addSubject method", e);
+            throw new ServiceException("Failed ot add subject in addSubject method", e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Failed to end transaction in addSubject method", e);
+            }
+        }
     }
 }

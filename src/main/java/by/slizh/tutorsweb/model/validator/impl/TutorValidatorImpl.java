@@ -35,25 +35,21 @@ public class TutorValidatorImpl implements TutorValidator {
 
     @Override
     public boolean validatePhone(String phone) {
-        System.out.println(phone.matches(REGEXP_PHONE));
         return phone.matches(REGEXP_PHONE);
     }
 
     @Override
     public boolean validateEducation(String education) {
-        System.out.println(education.matches(REGEXP_EDUCATION));
         return education.matches(REGEXP_EDUCATION);
     }
 
     @Override
     public boolean validateInfo(String info) {
-        System.out.println(info.matches(REGEXP_INFO));
         return info.matches(REGEXP_INFO);
     }
 
     @Override
     public boolean validatePrice(String price) {
-        System.out.println(price.matches(REGEXP_PRICE));
         return price.matches(REGEXP_PRICE);
     }
 }
