@@ -10,7 +10,6 @@
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
-MIAN PAGE! !!! ! !
 <c:if test="${sessionScope.user.role == 'ADMIN'}">
     <ul>
         <li><a href="#"><fmt:message key="main.users"/></a></li>

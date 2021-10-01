@@ -57,7 +57,7 @@ public class FeedbackDaoImpl extends FeedbackDao {
     }
 
     @Override
-    public Optional<Feedback> findById(Integer id) throws DaoException {
+    public Optional<Feedback> findById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_FEEDBACK_BY_ID)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -75,7 +75,7 @@ public class FeedbackDaoImpl extends FeedbackDao {
     }
 
     @Override
-    public boolean deleteById(Integer id) throws DaoException {
+    public boolean deleteById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_FEEDBACK_BY_ID)) {
             statement.setInt(1, id);
             boolean result = statement.executeUpdate() == 1;

@@ -7,15 +7,15 @@ import by.slizh.tutorsweb.model.connection.ProxyConnection;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractDao<K, T extends Entity> {
+public abstract class AbstractDao< T extends Entity> {
 
     protected ProxyConnection connection;
 
     public abstract List<T> findAll() throws DaoException;
 
-    public abstract Optional<T> findById(K id) throws DaoException;
+    public abstract Optional<T> findById(int id) throws DaoException;
 
-    public abstract boolean deleteById(K id) throws DaoException;
+    public abstract boolean deleteById(int id) throws DaoException;
 
     public abstract boolean create(T t) throws DaoException;
 

@@ -10,6 +10,7 @@ import by.slizh.tutorsweb.model.service.UserService;
 import by.slizh.tutorsweb.model.validator.impl.UserValidatorImpl;
 import by.slizh.tutorsweb.util.Base64Coder;
 import by.slizh.tutorsweb.util.mail.MailSender;
+import by.slizh.tutorsweb.util.security.LinkIdEncoder;
 import by.slizh.tutorsweb.util.security.PasswordEncoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -94,7 +95,7 @@ public class UserServiceImpl implements UserService {
             }
         }
         MailSender mailSender = new MailSender();
-        mailSender.send(user.getUserId(), user.getEmail());
+        mailSender.send(LinkIdEncoder.encodeId(user.getUserId()), user.getEmail());
     }
 
     @Override
@@ -152,7 +153,8 @@ public class UserServiceImpl implements UserService {
         User user;
         try {
             transaction.init(userDao);
-            Optional<User> optionalUser = userDao.findById(Integer.parseInt(userId));
+            int decodedId = LinkIdEncoder.decodeId(Integer.parseInt(userId));
+            Optional<User> optionalUser = userDao.findById(decodedId);
             if (optionalUser.isPresent()) {
                 user = optionalUser.get();
                 if (user.getStatus() == User.Status.NON_ACTIVATED) {

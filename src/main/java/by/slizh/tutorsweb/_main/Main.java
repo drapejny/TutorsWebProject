@@ -19,63 +19,54 @@ import org.apache.logging.log4j.Logger;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class Main {
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) throws ClassNotFoundException, DaoException, ServiceException {
+        System.out.println(Integer.parseInt("0222"));
 
 //        User user = new User.UserBuilder()
-//                .setFirstName("Anton")
-//                .setLastName("Slizh")
-//                .setEmail("slizh@yandex.by")
+//                .setFirstName("admin")
+//                .setLastName("admin")
+//                .setEmail("admin@yandex.by")
+//                .setCity("Минск")
+//                .setRole(User.Role.ADMIN)
+//                .setStatus(User.Status.ACTIVATED)
+//                .createUser();
+//        User admin = new User.UserBuilder()
+//                .setFirstName("a")
+//                .setLastName("a")
+//                .setEmail("a@a.by")
 //                .setCity("Минск")
 //                .setRole(User.Role.USER)
 //                .setStatus(User.Status.ACTIVATED)
 //                .createUser();
-//        User admin = new User.UserBuilder()
-//                .setFirstName("Tom")
-//                .setLastName("Parker")
-//                .setEmail("parker@yandex.by")
-//                .setCity("Гродно")
-//                .setRole(User.Role.ADMIN)
-//                .setStatus(User.Status.ACTIVATED)
-//                .createUser();
 //
 //        Tutor tutor = new Tutor.TutorBuilder()
-//                .setFirstName("Bob")
-//                .setLastName("Dylan")
-//                .setEmail("dylan@yandex.by")
+//                .setFirstName("b")
+//                .setLastName("b")
+//                .setEmail("b@b.by")
 //                .setPhone("+375294444444")
 //                .setCity("Минск")
 //                .setRole(User.Role.TUTOR)
 //                .setStatus(User.Status.ACTIVATED)
 //                .setEducation("BSUIR")
 //                .setInfo("Some info")
-//                .setPricePerHour(BigDecimal.valueOf(25))
+//                .setPricePerHour(10)
 //                .setActive(true)
 //                .createTutor();
-//        Feedback feedback = new Feedback.FeedbackBuilder()
-//                .setText("Some text")
-//                .setDate(LocalDate.now())
-//                .setRating(5)
-//                .setUserId(1)
-//                .setTutorId(1)
-//                .createFeedback();
-//        System.out.println(LocalDateTime.now());
+//
 //        UserDao userDao = new UserDaoImpl();
 //        TutorDao tutorDao = new TutorDaoImpl();
-//        FeedbackDao feedbackDao = new FeedbackDaoImpl();
 //        EntityTransaction transaction = new EntityTransaction();
-////
 //        try {
-//            transaction.initTransaction(userDao, tutorDao, feedbackDao);
-//            userDao.create(user, "123");
-//            userDao.create(admin, "123");
-//            userDao.create(tutor, "123");
+//            transaction.initTransaction(userDao, tutorDao);
+//            userDao.create(user, "123123");
+//            userDao.create(admin, "123123");
+//            userDao.create(tutor, "123123");
 //            tutorDao.create(tutor);
 //        } finally {
 //            transaction.endTransaction();

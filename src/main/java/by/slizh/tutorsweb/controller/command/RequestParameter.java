@@ -37,6 +37,12 @@ public final class RequestParameter {
     public static final String SUBJECT_ID = "subject_id";
     public static final String SUBJECT_NAME = "subject_name";
 
+    //search
+    public static final String MIN_PRICE = "min_price";
+    public static final String MAX_PRICE = "max_price";
+    public static final String PAGE_NUMBER = "page_number";
+    public static final String SORT = "sort";
+
 
     private RequestParameter() {
     }

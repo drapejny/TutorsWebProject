@@ -15,7 +15,7 @@
     <fmt:message key="login.password"/><input type="text" name="password"><br>
     <a href="${pageContext.request.contextPath}/controller?command=registration_page" method="post"><fmt:message key="header.registration"/></a>
     ${errorBlockedMessage}
-    ${errorNonActivetedMessage}
+    ${errorNonActivatedMessage}
     ${errorLogInMessage}<br>
     <input type="submit" value="<fmt:message key="login.button.signin"/>">
 </form>

@@ -61,6 +61,27 @@ public class TutorDaoImpl extends TutorDao {
             SET phone = ?, education = ?, info = ?, price_per_hour = ?, is_active = ?
             WHERE tutor_id = ?;
             """;
+    private static final String SQL_SEARCH_TUTORS_FIRST_PART = """
+            SELECT tutor_id, phone, education, info, price_per_hour, is_active, users.user_id, first_name, last_name, email, city, photo, role_name, status_name
+            FROM tutors
+            JOIN users ON tutors.user_id = users.user_id
+            JOIN role ON users.role_id = role.role_id
+            JOIN status ON users.status_id = status.status_id
+            WHERE tutors.tutor_id IN (SELECT tutor_id FROM tutors_has_subject WHERE subject_id = ?) AND
+            city LIKE ? AND
+            price_per_hour > ? AND tutors.price_per_hour < ? 
+            """;
+    private static final String SQL_SEARCH_TUTORS_LIMIT_PART = "LIMIT ?, ?;";
+    private static final String SQL_COUNT_SEARCHED_RECORDS = """
+            SELECT COUNT(*) AS count
+            FROM tutors
+             JOIN users ON tutors.user_id = users.user_id
+             JOIN role ON users.role_id = role.role_id
+             JOIN status ON users.status_id = status.status_id
+             WHERE tutors.tutor_id IN (SELECT tutor_id FROM tutors_has_subject WHERE subject_id = ?) AND
+             city LIKE ? AND
+             price_per_hour > ? AND tutors.price_per_hour < ?;
+            """;
 
 
     @Override
@@ -94,13 +115,76 @@ public class TutorDaoImpl extends TutorDao {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Failed to find tutoy by email", e);
+            logger.error("Failed to find tutor by email", e);
             throw new DaoException("Failed to find tutor by email", e);
         }
     }
 
     @Override
-    public Optional<Tutor> findById(Integer id) throws DaoException {
+    public List<Tutor> searchTutors(int subjectId, String city, int minPrice, int maxPrice, int offset, int numberOfRecords, String sort) throws DaoException {
+        List<Tutor> tutors = new LinkedList<Tutor>();
+        String query = buildSearchQuery(sort);
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, subjectId);
+            statement.setString(2, "%" + city + "%");
+            statement.setInt(3, minPrice);
+            statement.setInt(4, maxPrice);
+            statement.setInt(5, offset);
+            statement.setInt(6, numberOfRecords);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Tutor tutor = buildTutor(resultSet);
+                    tutors.add(tutor);
+                }
+                return tutors;
+            }
+        } catch (SQLException e) {
+            logger.error("Failed to search tutors", e);
+            throw new DaoException("Failed to search tutors", e);
+        }
+    }
+
+    private String buildSearchQuery(String sort) {
+        StringBuilder stringBuilder = new StringBuilder(SQL_SEARCH_TUTORS_FIRST_PART);
+        String orderBy;
+        switch (sort) {
+            case "price_asc":
+                orderBy = "ORDER BY " + PRICE_PER_HOUR + " ASC ";
+                break;
+            case "price_desc":
+                orderBy = "ORDER BY " + PRICE_PER_HOUR + " DESC ";
+                break;
+            default:
+                orderBy = "ORDER BY " + TUTOR_ID + " ";
+        }
+        stringBuilder.append(orderBy);
+        stringBuilder.append(SQL_SEARCH_TUTORS_LIMIT_PART);
+        return stringBuilder.toString();
+
+    }
+
+    @Override
+    public int countSearchedRecords(int subjectId, String city, int  minPrice, int maxPrice) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_COUNT_SEARCHED_RECORDS)) {
+            statement.setInt(1, subjectId);
+            statement.setString(2, "%" + city + "%");
+            statement.setInt(3, minPrice);
+            statement.setInt(4, maxPrice);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                } else {
+                    return 0;
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Failed to count searched tutors", e);
+            throw new DaoException("Failed to count searched tutors", e);
+        }
+    }
+
+    @Override
+    public Optional<Tutor> findById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TUTOR_BY_ID)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -118,7 +202,7 @@ public class TutorDaoImpl extends TutorDao {
     }
 
     @Override
-    public boolean deleteById(Integer id) throws DaoException {
+    public boolean deleteById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_TUTOR_BY_ID)) {
             statement.setInt(1, id);
             boolean result = statement.executeUpdate() == 1;
@@ -137,7 +221,7 @@ public class TutorDaoImpl extends TutorDao {
             statement.setString(2, tutor.getPhone());
             statement.setString(3, tutor.getEducation());
             statement.setString(4, tutor.getInfo());
-            statement.setBigDecimal(5, tutor.getPricePerHour());
+            statement.setInt(5, tutor.getPricePerHour());
             statement.setByte(6, (byte) (tutor.isActive() ? 1 : 0));
             boolean result = statement.executeUpdate() == 1;
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
@@ -163,7 +247,7 @@ public class TutorDaoImpl extends TutorDao {
             statement.setString(1, tutor.getPhone());
             statement.setString(2, tutor.getEducation());
             statement.setString(3, tutor.getInfo());
-            statement.setBigDecimal(4, tutor.getPricePerHour());
+            statement.setInt(4, tutor.getPricePerHour());
             statement.setByte(5, (byte) (tutor.isActive() ? 1 : 0));
             statement.setInt(6, tutor.getTutorId());
 
@@ -178,17 +262,17 @@ public class TutorDaoImpl extends TutorDao {
     private Tutor buildTutor(ResultSet resultSet) throws SQLException {
         Tutor tutor = new Tutor.TutorBuilder()
                 .setTutorId(resultSet.getInt(TUTOR_ID))
-                .setPhone(resultSet.getString(PHOTO))
+                .setPhone(resultSet.getString(PHONE))
                 .setEducation(resultSet.getString(EDUCATION))
                 .setInfo(resultSet.getString(INFO))
-                .setPricePerHour(resultSet.getBigDecimal(PRICE_PER_HOUR))
+                .setPricePerHour(resultSet.getInt(PRICE_PER_HOUR))
                 .setActive(resultSet.getByte(IS_ACTIVE) == 1 ? true : false)
                 .setUserId(resultSet.getInt(USER_ID))
                 .setFirstName(resultSet.getString(FIRST_NAME))
                 .setLastName(resultSet.getString(LAST_NAME))
                 .setEmail(resultSet.getString(EMAIL))
                 .setCity(resultSet.getString(CITY))
-                .setPhoto(Base64Coder.encode(resultSet.getBlob(PHOTO).getBinaryStream()))
+                .setPhoto(resultSet.getBlob(PHOTO) == null ? null : Base64Coder.encode(resultSet.getBlob(PHOTO).getBinaryStream()))
                 .setRole(User.Role.valueOf(resultSet.getString(ROLE_NAME).toUpperCase()))
                 .setStatus(User.Status.valueOf(resultSet.getString(STATUS_NAME).toUpperCase()))
                 .createTutor();

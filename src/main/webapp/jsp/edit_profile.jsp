@@ -30,14 +30,14 @@
     <input type="submit" value="<fmt:message key="edit.profile.button"/>"><hr>
 </form>
 ${errorWrongDataMessage}
-${succesEditMessage}
+${successEditMessage}
 <form action="${pageContext.request.contextPath}/controller" method="post">
     <input type="hidden" name="command" value="edit_password">
     <fmt:message key="profile.password"/><input name="password" type="text"><br>
     <fmt:message key="profile.new_password"/><input name="new_password" type="text"><br>
     <input type="submit" value="<fmt:message key="edit.profile.button"/>">
 </form>
-${succesEditPassword}
+${successEditPassword}
 ${errorWrongPasswordMessage}
 </body>
 </html>

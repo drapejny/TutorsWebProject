@@ -15,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -60,7 +61,7 @@ public class TutorServiceImpl implements TutorService {
                 .setPhone(tutorMap.get(PHONE)[0])
                 .setEducation(tutorMap.get(EDUCATION)[0])
                 .setInfo(tutorMap.get(INFORMATION)[0])
-                .setPricePerHour(BigDecimal.valueOf(Double.parseDouble(tutorMap.get(PRICE)[0])))
+                .setPricePerHour(Integer.parseInt(tutorMap.get(PRICE)[0]))
                 .setActive(true)
                 .createTutor();
         EntityTransaction transaction = new EntityTransaction();
@@ -106,6 +107,44 @@ public class TutorServiceImpl implements TutorService {
                 logger.error("Failed to end transaction in deleteTutorByEmail method", e);
             }
 
+        }
+    }
+
+    @Override
+    public List<Tutor> searchTutors(int subjectId, String city, int minPrice, int maxPrice, int offset, int numberOfRecords, String sort) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        TutorDao tutorDao = new TutorDaoImpl();
+        try {
+            transaction.init(tutorDao);
+            List<Tutor> tutors = tutorDao.searchTutors(subjectId, city, minPrice, maxPrice, offset, numberOfRecords, sort);
+            return tutors;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Failed to end transaction in searchTutors method", e);
+            }
+        }
+    }
+
+    @Override
+    public int countSearchedRecords(int subjectId, String city, int minPrice, int maxPrice) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        TutorDao tutorDao = new TutorDaoImpl();
+        try {
+            transaction.init(tutorDao);
+            int count = tutorDao.countSearchedRecords(subjectId, city, minPrice, maxPrice);
+            return count;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Failed to end transaction in countSearchedRecords method", e);
+            }
         }
     }
 }

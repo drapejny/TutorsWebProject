@@ -78,7 +78,7 @@ public class UserDaoImpl extends UserDao {
     }
 
     @Override
-    public Optional<User> findById(Integer id) throws DaoException {
+    public Optional<User> findById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ID)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -96,7 +96,7 @@ public class UserDaoImpl extends UserDao {
     }
 
     @Override
-    public boolean deleteById(Integer id) throws DaoException {
+    public boolean deleteById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_USER_BY_ID)) {
             statement.setInt(1, id);
             boolean result = statement.executeUpdate() == 1;

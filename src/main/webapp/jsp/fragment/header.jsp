@@ -20,7 +20,7 @@
             <li>
                 <a href="${pageContext.request.contextPath}/controller?command=main_page">LOGO</a>
             </li>
-            <li><a href="#"/> <fmt:message key="main.tutors"/></li>
+            <li><a href="${pageContext.request.contextPath}/controller?command=search_page"/> <fmt:message key="main.tutors"/></li>
             <li><a href="#"/> <fmt:message key="main.feedbacks"/></li>
         </ul>
     </nav>

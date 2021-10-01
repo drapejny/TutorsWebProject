@@ -33,7 +33,7 @@ public class LoginCommand implements Command {
             Optional<User> user = userService.authenticate(email, password);
             if (user.isPresent()) {
                 if (user.get().getStatus() == User.Status.NON_ACTIVATED) {
-                    request.setAttribute(ERROR_USER_NON_ACTIVETED, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_USER_NON_ACTIVETED));
+                    request.setAttribute(ERROR_USER_NON_ACTIVATED, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_USER_NON_ACTIVATED));
                     return new Router(PagePath.LOGIN_PAGE, Router.RouteType.FORWARD);
                 }
                 if (user.get().getStatus() == User.Status.BLOCKED) {

@@ -13,6 +13,7 @@ public final class PagePath {
     public static final String APPLICATION_PAGE = "/jsp/tutor/application.jsp";
     public static final String ALL_APPLICATIONS_PAGE = "/jsp/admin/all_applications.jsp";
     public static final String ALL_SUBJECTS_PAGE = "/jsp/admin/all_subjects.jsp";
+    public static final String SEARCH_PAGE = "jsp/search.jsp";
 
     private PagePath() {
     }

@@ -25,6 +25,8 @@ public enum CommandType {
     ALL_SUBJECTS_PAGE(new GoToAllSubjectsPage()),
     ADD_SUBJECT(new AddSubjectCommand()),
     DELETE_SUBJECT(new DeleteSubjectCommand()),
+    SEARCH(new SearchCommand()),
+    SEARCH_PAGE(new GoToSearchPage()),
     BECOME_TUTOR(new BecomeTutorCommand());
 
     private Command command;

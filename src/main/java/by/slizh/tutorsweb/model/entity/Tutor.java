@@ -8,7 +8,7 @@ public class Tutor extends User {
     private String phone;
     private String education;
     private String info;
-    private BigDecimal pricePerHour;
+    private int pricePerHour;
     private boolean isActive;
 
     public Tutor() {
@@ -46,11 +46,11 @@ public class Tutor extends User {
         this.info = info;
     }
 
-    public BigDecimal getPricePerHour() {
+    public int getPricePerHour() {
         return pricePerHour;
     }
 
-    public void setPricePerHour(BigDecimal pricePerHour) {
+    public void setPricePerHour(int pricePerHour) {
         this.pricePerHour = pricePerHour;
     }
 
@@ -130,7 +130,7 @@ public class Tutor extends User {
             return this;
         }
 
-        public TutorBuilder setPricePerHour(BigDecimal pricePerHour) {
+        public TutorBuilder setPricePerHour(int pricePerHour) {
             tutor.setPricePerHour(pricePerHour);
             return this;
         }

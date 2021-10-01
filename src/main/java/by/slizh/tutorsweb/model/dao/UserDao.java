@@ -5,7 +5,7 @@ import by.slizh.tutorsweb.exception.DaoException;
 
 import java.util.Optional;
 
-public abstract class UserDao extends AbstractDao<Integer, User> {
+public abstract class UserDao extends AbstractDao<User> {
 
     public abstract boolean create(User user, String password) throws DaoException;
 

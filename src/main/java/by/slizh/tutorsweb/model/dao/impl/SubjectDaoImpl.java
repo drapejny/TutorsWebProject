@@ -68,7 +68,7 @@ public class SubjectDaoImpl extends SubjectDao {
     }
 
     @Override
-    public Optional<Subject> findById(Integer id) throws DaoException {
+    public Optional<Subject> findById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_SUBJECT_BY_ID)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -88,7 +88,7 @@ public class SubjectDaoImpl extends SubjectDao {
     }
 
     @Override
-    public boolean deleteById(Integer id) throws DaoException {
+    public boolean deleteById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_SUBJECT_BY_ID)) {
             statement.setInt(1, id);
             boolean result = statement.executeUpdate() == 1;
