@@ -15,6 +15,7 @@ public class TutorValidatorImpl implements TutorValidator {
     private static final String REGEXP_EDUCATION = "^.{1,300}$";
     private static final String REGEXP_INFO = "^.{1,500}$";
     private static final String REGEXP_PRICE = "^[0-9]{1,3}(\\.[0-9]{1,2})?$"; //// FIXME: 20.09.2021 изменить в будущем
+    private static final String REGEXP_CITY = "(?=^.{1,32}$)^([A-zА-яЁё`'.-])+$";
 
     private TutorValidatorImpl() {
     }
@@ -25,11 +26,12 @@ public class TutorValidatorImpl implements TutorValidator {
 
     @Override
     public boolean validateTutorMap(Map<String, String[]> tutorMap) {
-        if (validatePhone(tutorMap.get(PHONE)[0]) && validateEducation(tutorMap.get(EDUCATION)[0])
+        if (validatePhone(tutorMap.get(PHONE)[0]) && validateCity(tutorMap.get(CITY)[0])
+                && validateEducation(tutorMap.get(EDUCATION)[0])
                 && validateInfo(tutorMap.get(INFORMATION)[0]) && validatePrice(tutorMap.get(PRICE)[0])
                 && tutorMap.get(SUBJECT).length > 0 && tutorMap.get(SUBJECT).length <= 8) {
             return true;
-        }    //// TODO: 21.09.2021 ТУТ ОШИБКА 
+        }
         return false;
     }
 
@@ -51,5 +53,10 @@ public class TutorValidatorImpl implements TutorValidator {
     @Override
     public boolean validatePrice(String price) {
         return price.matches(REGEXP_PRICE);
+    }
+
+    @Override
+    public boolean validateCity(String city) {
+        return city.matches(REGEXP_CITY);
     }
 }

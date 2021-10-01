@@ -7,7 +7,6 @@ public class User extends Entity {
     private String firstName;
     private String lastName;
     private String email;
-    private String city;
     private String photo;
     private Role role;
     private Status status;
@@ -46,14 +45,6 @@ public class User extends Entity {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public String getPhoto() {
@@ -149,11 +140,6 @@ public class User extends Entity {
 
         public UserBuilder setEmail(String email) {
             user.setEmail(email);
-            return this;
-        }
-
-        public UserBuilder setCity(String city) {
-            user.setCity(city);
             return this;
         }
 

@@ -26,7 +26,6 @@
     <input type="hidden" name="command" value="edit_profile">
     <fmt:message key="profile.first_name"/><input type="text" name="first_name" value="${sessionScope.user.firstName}"><br>
     <fmt:message key="profile.last_name"/><input type="text" name="last_name" value="${sessionScope.user.lastName}"><br>
-    <fmt:message key="profile.city"/><input type="text" name="city" value="${sessionScope.user.city}"><br>
     <input type="submit" value="<fmt:message key="edit.profile.button"/>"><hr>
 </form>
 ${errorWrongDataMessage}

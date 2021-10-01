@@ -32,16 +32,14 @@ public class EditProfileCommand implements Command {
 
         String firstName = request.getParameter(FIRST_NAME);
         String lastName = request.getParameter(LAST_NAME);
-        String city = request.getParameter(CITY);
 
         UserValidator validator = UserValidatorImpl.getInstance();
         UserService service = UserServiceImpl.getInstance();
 
         User user = (User) session.getAttribute(SessionAttribute.USER);
-        if (validator.validateFirstName(firstName) && validator.validateLastName(lastName) && validator.validateCity(city)) {
+        if (validator.validateFirstName(firstName) && validator.validateLastName(lastName)) {
             user.setFirstName(firstName);
             user.setLastName(lastName);
-            user.setCity(city);
             try {
                 service.updateUser(user);
             } catch (ServiceException e) {

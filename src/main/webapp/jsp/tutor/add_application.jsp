@@ -14,10 +14,12 @@
         <input type="checkbox" name="subject" value="${element.subjectId}">${element.subjectName}<br>
     </c:forEach>
     <fmt:message key="application.phone"/><input type="text" name="phone" value="${requestScope.phone}"><br>
+    <fmt:message key="application.city"/><input type="text" name="city" value="${requestScope.city}"><br>
     <fmt:message key="application.education"/><input type="text" name="education" value="${requestScope.education}"><br>
     <fmt:message key="application.info"/><input type="text" name="info" value="${requestScope.info}"><br>
     <fmt:message key="application.price"/><input type="text" name="price" value="${requestScope.price}"><br>
     <input type="submit" value="<fmt:message key="application.submit.button"/>">
+    ${errorWrongDataMessage}
 </form>
 </body>
 </html>

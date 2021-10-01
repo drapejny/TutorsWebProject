@@ -18,20 +18,20 @@ public class UserDaoImpl extends UserDao {
     private static final Logger logger = LogManager.getLogger();
 
     private static final String SQL_FIND_ALL_USERS = """
-            SELECT user_id, first_name, last_name, email, city, photo, role_name, status_name
+            SELECT user_id, first_name, last_name, email, photo, role_name, status_name
             FROM users
             JOIN role ON users.role_id = role.role_id
             JOIN status ON users.status_id = status.status_id;
             """;
     private static final String SQL_FIND_USER_BY_ID = """
-            SELECT user_id, first_name, last_name, email, city, photo, role_name, status_name
+            SELECT user_id, first_name, last_name, email, photo, role_name, status_name
             FROM users
             JOIN role ON users.role_id = role.role_id
             JOIN status ON users.status_id = status.status_id
             WHERE user_id = ?;
             """;
     private static final String SQL_FIND_USER_BY_EMAIL = """
-            SELECT user_id, first_name, last_name, email, city, photo, role_name, status_name
+            SELECT user_id, first_name, last_name, email, photo, role_name, status_name
             FROM users
             JOIN role ON users.role_id = role.role_id
             JOIN status ON users.status_id = status.status_id
@@ -41,12 +41,12 @@ public class UserDaoImpl extends UserDao {
             DELETE FROM users WHERE user_id = ?;
             """;
     private static final String SQL_CREATE_USER = """
-            INSERT INTO users (first_name, last_name, email, password, city, role_id, status_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?);
+            INSERT INTO users (first_name, last_name, email, password, role_id, status_id)
+            VALUES (?, ?, ?, ?, ?, ?);
             """;
     private static final String SQL_UPDATE_USER = """
             UPDATE users
-            SET first_name = ?, last_name = ?, city = ?, photo = ?, role_id = ?, status_id = ?
+            SET first_name = ?, last_name = ?, photo = ?, role_id = ?, status_id = ?
             WHERE user_id = ?;
             """;
     private static final String SQL_UPDATE_USER_PASSWORD = """
@@ -121,10 +121,8 @@ public class UserDaoImpl extends UserDao {
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getEmail());
             statement.setString(4, PasswordEncoder.encodePassword(password));
-            statement.setString(5, user.getCity());
-            //statement.setBlob(6, null);
-            statement.setInt(6, user.getRole().getId());
-            statement.setInt(7, user.getStatus().getId());
+            statement.setInt(5, user.getRole().getId());
+            statement.setInt(6, user.getStatus().getId());
             boolean result = statement.executeUpdate() == 1;
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {
@@ -145,11 +143,10 @@ public class UserDaoImpl extends UserDao {
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER)) {
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
-            statement.setString(3, user.getCity());
-            statement.setBlob(4, user.getPhoto() == null ? null : Base64Coder.decode(user.getPhoto()));
-            statement.setInt(5, user.getRole().getId());
-            statement.setInt(6, user.getStatus().getId());
-            statement.setInt(7, user.getUserId());
+            statement.setBlob(3, user.getPhoto() == null ? null : Base64Coder.decode(user.getPhoto()));
+            statement.setInt(4, user.getRole().getId());
+            statement.setInt(5, user.getStatus().getId());
+            statement.setInt(6, user.getUserId());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Failed to update user", e);
@@ -215,7 +212,6 @@ public class UserDaoImpl extends UserDao {
                 .setFirstName(resultSet.getString(FIRST_NAME))
                 .setLastName(resultSet.getString(LAST_NAME))
                 .setEmail(resultSet.getString(EMAIL))
-                .setCity(resultSet.getString(CITY))
                 .setPhoto(resultSet.getBlob(PHOTO) == null ? null : Base64Coder.encode(resultSet.getBlob(PHOTO).getBinaryStream()))
                 .setRole(User.Role.valueOf(resultSet.getString(ROLE_NAME).toUpperCase(Locale.ROOT)))
                 .setStatus(User.Status.valueOf(resultSet.getString(STATUS_NAME).toUpperCase(Locale.ROOT)))

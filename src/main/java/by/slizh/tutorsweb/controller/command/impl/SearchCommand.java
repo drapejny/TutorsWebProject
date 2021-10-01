@@ -55,7 +55,7 @@ public class SearchCommand implements Command {
             String maxPrice = request.getParameter(MAX_PRICE);
 
 
-            if (userValidator.validateCity(city) && tutorValidator.validatePrice(minPrice)
+            if (tutorValidator.validateCity(city) && tutorValidator.validatePrice(minPrice)
                     && tutorValidator.validatePrice(maxPrice)) {
                 System.out.println(2);
                 session.setAttribute(SEARCHED_CITY, city);

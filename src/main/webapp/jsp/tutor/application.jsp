@@ -10,6 +10,7 @@
 <body>
 <h3><fmt:message key="application.wait_for_moderator"/></h3>
 <fmt:message key="application.phone"/>${requestScope.tutor.phone}<br>
+<fmt:message key="application.city"/>${requestScope.tutor.city}<br>
 <fmt:message key="application.education"/>${requestScope.tutor.education}<br>
 <fmt:message key="application.info"/>${requestScope.tutor.info}<br>
 <fmt:message key="application.price"/>${requestScope.tutor.pricePerHour}<br>

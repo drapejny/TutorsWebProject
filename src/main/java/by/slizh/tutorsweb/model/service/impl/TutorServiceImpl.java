@@ -59,6 +59,7 @@ public class TutorServiceImpl implements TutorService {
         Tutor tutor = new Tutor.TutorBuilder()
                 .setUserId(user.getUserId())
                 .setPhone(tutorMap.get(PHONE)[0])
+                .setCity(tutorMap.get(CITY)[0])
                 .setEducation(tutorMap.get(EDUCATION)[0])
                 .setInfo(tutorMap.get(INFORMATION)[0])
                 .setPricePerHour(Integer.parseInt(tutorMap.get(PRICE)[0]))

@@ -36,7 +36,6 @@ public class RegistrationCommand implements Command {
         userMap.put(LAST_NAME, request.getParameter(LAST_NAME));
         userMap.put(EMAIL, request.getParameter(EMAIL));
         userMap.put(PASSWORD, request.getParameter(PASSWORD));
-        userMap.put(CITY, request.getParameter(CITY));
 
         UserService service = UserServiceImpl.getInstance();
 
@@ -68,17 +67,5 @@ public class RegistrationCommand implements Command {
             request.setAttribute(ERROR_WRONG_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_DATA));
             return new Router(PagePath.REGISTRATION_PAGE, Router.RouteType.FORWARD);
         }
-    }
-
-    private String loadBaseUserPhoto(String path) {
-        String result = "";
-        try (FileInputStream fis = new FileInputStream(path)) {
-            result = Base64Coder.encode(fis);
-        } catch (FileNotFoundException e) {
-            logger.error("Can't find base user photo file", e);
-        } catch (IOException e) {
-            logger.error("Can't load base user photo file", e);
-        }
-        return result;
     }
 }

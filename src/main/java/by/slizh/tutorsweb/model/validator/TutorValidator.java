@@ -13,4 +13,6 @@ public interface TutorValidator {
     boolean validateInfo(String info);
 
     boolean validatePrice(String price);
+
+    boolean validateCity(String city);
 }

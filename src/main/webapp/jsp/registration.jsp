@@ -25,7 +25,6 @@
     <fmt:message key="registration.email"/><input type="text" name="email"value="${requestScope.userMap["email"]}"><br>
     <fmt:message key="registration.password"/><input type="text" name="password"><br>
     <fmt:message key="registration.password_repeat"/><input type="text" name="password_repeat"><br>
-    <fmt:message key="registration.city"/><input type="text" name="city"value="${requestScope.userMap["city"]}"><br>
     ${errorEmailExistsMessage}
     ${errorWrongDataMessage}
     <input type="submit" value="<fmt:message key="registration.button.signup"/>">

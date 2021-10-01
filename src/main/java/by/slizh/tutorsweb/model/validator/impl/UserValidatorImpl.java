@@ -14,7 +14,7 @@ public class UserValidatorImpl implements UserValidator {
     private static final String REGEXP_LAST_NAME = "(?=^.{1,32}$)^([A-zА-яЁё`'.-])+$";
     private static final String REGEXP_EMAIL = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
     private static final String REGEXP_PASSWORD = "^.{6,20}$";
-    private static final String REGEXP_CITY = "(?=^.{1,32}$)^([A-zА-яЁё`'.-])+$";
+
 
     private static final String EMPTY_LINE = "";
 
@@ -44,10 +44,6 @@ public class UserValidatorImpl implements UserValidator {
             userMap.put(PASSWORD, EMPTY_LINE);
             result = false;
         }
-        if (!validateCity(userMap.get(CITY))) {
-            userMap.put(CITY, EMPTY_LINE);
-            result = false;
-        }
         return result;
     }
 
@@ -71,8 +67,4 @@ public class UserValidatorImpl implements UserValidator {
         return password.matches(REGEXP_PASSWORD);
     }
 
-    @Override
-    public boolean validateCity(String city) {
-        return city.matches(REGEXP_CITY);
-    }
 }

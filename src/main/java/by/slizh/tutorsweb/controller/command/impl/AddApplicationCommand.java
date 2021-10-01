@@ -15,8 +15,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+import static by.slizh.tutorsweb.controller.command.RequestAttribute.ERROR_WRONG_DATA;
 import static by.slizh.tutorsweb.controller.command.RequestParameter.*;
 
 public class AddApplicationCommand implements Command {
@@ -25,6 +27,7 @@ public class AddApplicationCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
+        String locale = (String) request.getSession().getAttribute(LOCALE);
         Map<String, String[]> tutorMap = request.getParameterMap();
         TutorValidator tutorValidator = TutorValidatorImpl.getInstance();
 
@@ -37,8 +40,14 @@ public class AddApplicationCommand implements Command {
                 logger.error("Executing add application command error", e);
                 throw new CommandException("Executing add application command error", e);
             }
-            return new Router(PagePath.MAIN_PAGE, Router.RouteType.REDIRECT);
+            return new Router(PagePath.PROFILE_PAGE, Router.RouteType.REDIRECT);
         } else {
+            request.setAttribute(PHONE, tutorMap.get(PHONE)[0]);
+            request.setAttribute(CITY, tutorMap.get(CITY)[0]);
+            request.setAttribute(EDUCATION, tutorMap.get(EDUCATION)[0]);
+            request.setAttribute(INFORMATION, tutorMap.get(INFORMATION)[0]);
+            request.setAttribute(PRICE, tutorMap.get(PRICE)[0]);
+            request.setAttribute(RequestAttribute.ERROR_WRONG_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_DATA));
             return new Router(PagePath.ADD_APPLICATION_PAGE, Router.RouteType.FORWARD);
         }
 

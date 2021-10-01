@@ -75,7 +75,6 @@ public class UserServiceImpl implements UserService {
                 .setFirstName(userMap.get(FIRST_NAME))
                 .setLastName(userMap.get(LAST_NAME))
                 .setEmail(userMap.get(EMAIL))
-                .setCity(userMap.get(CITY))
                 .setRole(User.Role.USER)
                 .setStatus(User.Status.NON_ACTIVATED)
                 .createUser();

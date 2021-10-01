@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 public class Tutor extends User {
     private int tutorId;
     private String phone;
+    private String city;
     private String education;
     private String info;
     private int pricePerHour;
@@ -28,6 +29,14 @@ public class Tutor extends User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getEducation() {
@@ -115,7 +124,7 @@ public class Tutor extends User {
             return this;
         }
 
-        public TutorBuilder setPhone(String phone){
+        public TutorBuilder setPhone(String phone) {
             tutor.setPhone(phone);
             return this;
         }

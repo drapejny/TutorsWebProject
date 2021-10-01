@@ -53,12 +53,12 @@ public class TutorDaoImpl extends TutorDao {
             DELETE FROM tutors WHERE tutor_id = ?;
             """;
     private static final String SQL_CREATE_TUTOR = """
-            INSERT INTO tutors(user_id, phone, education, info, price_per_hour, is_active)
-            VALUES (?, ?, ?, ?, ?, ?);
+            INSERT INTO tutors(user_id, phone, city, education, info, price_per_hour, is_active)
+            VALUES (?, ?, ?, ?, ?, ?, ?);
             """;
     private static final String SQL_UPDATE_TUTOR = """
             UPDATE tutors
-            SET phone = ?, education = ?, info = ?, price_per_hour = ?, is_active = ?
+            SET phone = ?, city = ?, education = ?, info = ?, price_per_hour = ?, is_active = ?
             WHERE tutor_id = ?;
             """;
     private static final String SQL_SEARCH_TUTORS_FIRST_PART = """
@@ -219,10 +219,11 @@ public class TutorDaoImpl extends TutorDao {
         try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_TUTOR, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, tutor.getUserId());
             statement.setString(2, tutor.getPhone());
-            statement.setString(3, tutor.getEducation());
-            statement.setString(4, tutor.getInfo());
-            statement.setInt(5, tutor.getPricePerHour());
-            statement.setByte(6, (byte) (tutor.isActive() ? 1 : 0));
+            statement.setString(3,tutor.getCity());
+            statement.setString(4, tutor.getEducation());
+            statement.setString(5, tutor.getInfo());
+            statement.setInt(6, tutor.getPricePerHour());
+            statement.setByte(7, (byte) (tutor.isActive() ? 1 : 0));
             boolean result = statement.executeUpdate() == 1;
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {
@@ -245,11 +246,12 @@ public class TutorDaoImpl extends TutorDao {
                 );
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_TUTOR)) {
             statement.setString(1, tutor.getPhone());
-            statement.setString(2, tutor.getEducation());
-            statement.setString(3, tutor.getInfo());
-            statement.setInt(4, tutor.getPricePerHour());
-            statement.setByte(5, (byte) (tutor.isActive() ? 1 : 0));
-            statement.setInt(6, tutor.getTutorId());
+            statement.setString(2,tutor.getCity());
+            statement.setString(3, tutor.getEducation());
+            statement.setString(4, tutor.getInfo());
+            statement.setInt(5, tutor.getPricePerHour());
+            statement.setByte(6, (byte) (tutor.isActive() ? 1 : 0));
+            statement.setInt(7, tutor.getTutorId());
 
             statement.executeUpdate();
         } catch (SQLException e) {
