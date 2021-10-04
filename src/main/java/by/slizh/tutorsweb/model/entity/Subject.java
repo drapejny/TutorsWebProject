@@ -7,6 +7,11 @@ public class Subject extends Entity {
     public Subject() {
     }
 
+    public Subject(int subjectId, String subjectName) {
+        this.subjectId = subjectId;
+        this.subjectName = subjectName;
+    }
+
     public Subject(String subjectName) {
         this.subjectName = subjectName;
     }

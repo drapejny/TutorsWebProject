@@ -30,7 +30,8 @@ public enum CommandType {
     BECOME_TUTOR(new BecomeTutorCommand()),
     TUTOR_PROFILE_PAGE(new GoToTutorProfilePage()),
     ADD_FEEDBACK(new AddFeedbackCommand()),
-    EDIT_FEEDBACK(new EditFeedbackCommand());
+    EDIT_FEEDBACK(new EditFeedbackCommand()),
+    DELETE_FEEDBACK(new DeleteFeedbackCommand());
 
     private Command command;
 

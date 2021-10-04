@@ -81,4 +81,22 @@ public class SubjectServiceImpl implements SubjectService {
             }
         }
     }
+
+    @Override
+    public List<Subject> findSubjectsByTutorId(int tutorId) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        SubjectDao subjectDao = new SubjectDaoImpl();
+        try {
+            transaction.init(subjectDao);
+            return subjectDao.findSubjectsByTutorId(tutorId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Failed to end transaction in findSubjectsByTutorId method", e);
+            }
+        }
+    }
 }

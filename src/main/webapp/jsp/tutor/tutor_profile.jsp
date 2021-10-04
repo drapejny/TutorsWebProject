@@ -14,7 +14,13 @@
 <c:import url="/jsp/fragment/header.jsp"/>
 <ctg:user-photo photo="${requestScope.tutor.photo}" height="200" width="200"/><br>
 <h3>${requestScope.tutor.firstName} ${requestScope.tutor.lastName}</h3>
-<fmt:message key="profile.email"/>${requestScope.tutor.email}<br>
+<c:forEach var="element" items="${subjects}">
+    ${element.subjectName}<br>
+</c:forEach>
+<br>
+<c:if test="${tutor.userId eq user.userId}">
+    <fmt:message key="profile.email"/>${requestScope.tutor.email}<br>
+</c:if>
 <fmt:message key="profile.phone"/>
 <c:choose>
     <c:when test="${empty user}">
@@ -41,30 +47,9 @@
     <c:set var="averageRating" value="${0}"/>
 </c:if>
 ${averageRating}
-<p>${fn:length(feedbacks)} <fmt:message key="profile.feedbacks"/></p>
+<p><fmt:message key="profile.feedbacks"/>${fn:length(feedbacks)}</p>
 
 <c:choose>
-    <c:when test="${empty user}">
-        <c:forEach var="element" items="${feedbacks}">
-            <ctg:user-photo photo="${users[element].photo}" height="20" width="20"/>
-            <p>${users[element].firstName} ${users[element].lastName}</p>
-            ${element.date}<br>
-            ${element.text}<br>
-            <div class="rating-mini">
-                <c:forEach var="i" begin="1" end="5">
-                    <c:choose>
-                        <c:when test="${i <= element.rating}">
-                            <span class="active"></span>
-                        </c:when>
-                        <c:otherwise>
-                            <span></span>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-            </div>
-            <hr>
-        </c:forEach>
-    </c:when>
     <c:when test="${user.role eq 'USER'}">
         <c:set var="contains" value="false"/>
         <c:set var="yourFeedback"/>
@@ -90,7 +75,7 @@ ${averageRating}
                     </div>
                     <textarea name="text">${yourFeedback.text}</textarea>
                     <input type="submit" value="<fmt:message key="profile.edit"/>">
-                    <a href="#"><fmt:message key="profile.delete"/></a>
+                    <a href="${pageContext.request.contextPath}/controller?command=delete_feedback&feedback_id=${yourFeedback.feedbackId}&tutor_id=${tutor.tutorId}"><fmt:message key="profile.delete"/></a>
                     <br>
                 </form>
             </c:when>
@@ -112,16 +97,30 @@ ${averageRating}
                 </form>
             </c:when>
         </c:choose>
-        <c:forEach var="element" items="${feedbacks}">
-            <ctg:user-photo photo="${users[element].photo}" height="20" width="20"/>
-            <p>${users[element].firstName} ${users[element].lastName}</p>
-            ${element.date}<br>
-            ${element.text}<br>
-            ${element.rating}<hr>
-        </c:forEach>
+    </c:when>
+    <c:when test="${user.role eq 'TUTOR'}">
+
     </c:when>
 </c:choose>
-
+<c:forEach var="element" items="${feedbacks}">
+    <ctg:user-photo photo="${users[element].photo}" height="20" width="20"/>
+    <p>${users[element].firstName} ${users[element].lastName}</p>
+    ${element.date}<br>
+    ${element.text}<br>
+    <div class="rating-mini">
+        <c:forEach var="i" begin="1" end="5">
+            <c:choose>
+                <c:when test="${i <= element.rating}">
+                    <span class="active"></span>
+                </c:when>
+                <c:otherwise>
+                    <span></span>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </div>
+    <hr>
+</c:forEach>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/tutor/tutor_profile.css" />
 
 

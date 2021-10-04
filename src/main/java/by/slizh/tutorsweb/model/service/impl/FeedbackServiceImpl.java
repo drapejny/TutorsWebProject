@@ -101,4 +101,22 @@ public class FeedbackServiceImpl implements FeedbackService {
             }
         }
     }
+
+    @Override
+    public boolean deleteFeedbackById(int id) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        FeedbackDao feedbackDao = new FeedbackDaoImpl();
+        try {
+            transaction.init(feedbackDao);
+            return feedbackDao.deleteById(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Failed to end transaction in deleteFeedbackById method", e);
+            }
+        }
+    }
 }

@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -46,11 +47,17 @@ public class SubjectDaoImpl extends SubjectDao {
             INSERT INTO tutors_has_subject(tutor_id, subject_id)
             VALUES(?, ?);
             """;
+    private static final String SQL_FIND_SUBJECTS_BY_TUTOR_ID = """
+            SELECT tutors_has_subject.subject_id, subject_name
+            FROM tutors_has_subject
+            JOIN subjects ON subjects.subject_id = tutors_has_subject.subject_id
+            WHERE tutor_id = ?;
+            """;
 
 
     @Override
     public List<Subject> findAll() throws DaoException {
-        List<Subject> subjects = new LinkedList<Subject>();
+        List<Subject> subjects = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_SUBJECTS)) {
             try (ResultSet resultSet = statement.executeQuery();) {
                 while (resultSet.next()) {
@@ -140,6 +147,25 @@ public class SubjectDaoImpl extends SubjectDao {
         } catch (SQLException e) {
             logger.error("Failed to create tutorSubject record", e);
             throw new DaoException("Failed to create tutorSubject record", e);
+        }
+    }
+
+    @Override
+    public List<Subject> findSubjectsByTutorId(int tutorId) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_SUBJECTS_BY_TUTOR_ID)) {
+            statement.setInt(1, tutorId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                List<Subject> subjects = new ArrayList<>();
+                while (resultSet.next()) {
+                    int subjectId = resultSet.getInt(ColumnName.SUBJECT_ID);
+                    String subjectName = resultSet.getString(ColumnName.SUBJECT_NAME);
+                    subjects.add(new Subject(subjectId, subjectName));
+                }
+                return subjects;
+            }
+        } catch (SQLException e) {
+            logger.error("Failed to find subjects by tutor id",e);
+            throw new DaoException("Failed to find subjects by tutor id",e);
         }
     }
 }

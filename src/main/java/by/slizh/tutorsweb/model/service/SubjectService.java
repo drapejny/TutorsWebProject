@@ -11,4 +11,6 @@ public interface SubjectService {
     boolean deleteSubjectById(int id) throws ServiceException;
 
     boolean addSubject(Subject subject) throws ServiceException;
+
+    List<Subject> findSubjectsByTutorId(int tutorId) throws ServiceException;
 }
