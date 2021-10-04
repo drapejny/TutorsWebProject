@@ -32,6 +32,7 @@ public class MainServlet extends HttpServlet {
         try {
             router = command.execute(request);
         } catch (CommandException e) {
+            e.printStackTrace();
             router = new Router(PagePath.ERROR_PAGE, Router.RouteType.REDIRECT);
         }
         switch (router.getRouteType()) {

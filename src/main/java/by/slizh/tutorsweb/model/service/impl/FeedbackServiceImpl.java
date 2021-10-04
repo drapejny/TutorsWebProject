@@ -65,4 +65,40 @@ public class FeedbackServiceImpl implements FeedbackService {
             }
         }
     }
+
+    @Override
+    public Feedback updateFeedback(Feedback feedback) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        FeedbackDao feedbackDao = new FeedbackDaoImpl();
+        try {
+            transaction.init(feedbackDao);
+            return feedbackDao.update(feedback);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Failed to end transaction in updateFeedback method", e);
+            }
+        }
+    }
+
+    @Override
+    public Optional<Feedback> findFeedbackById(int id) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        FeedbackDao feedbackDao = new FeedbackDaoImpl();
+        try {
+            transaction.init(feedbackDao);
+            return feedbackDao.findById(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Failed to end transaction in findFeedbackById method", e);
+            }
+        }
+    }
 }

@@ -76,18 +76,23 @@ ${averageRating}
         </c:forEach>
         <c:choose>
             <c:when test="${contains eq true}">
-                <div class="rating">
-                    <div class="rating__items">
-                        <c:forEach var="i" begin="1" end="5">
-                            <input id="rating__${6 - i}" type="radio" class="rating__item" <c:if test="${yourFeedback.rating eq (6 - i)}">checked</c:if> name="rating" value="${6 - i}">
-                            <label for="rating__${6 - i}" class="rating__label"></label>
-                        </c:forEach>
+                <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <input type="hidden" name="command" value="edit_feedback">
+                    <input type="hidden" name="feedback_id" value="${yourFeedback.feedbackId}">
+                    <input type="hidden" name="tutor_id" value="${tutor.tutorId}">
+                    <div class="rating">
+                        <div class="rating__items">
+                            <c:forEach var="i" begin="1" end="5">
+                                <input id="rating__${6 - i}" type="radio" class="rating__item" <c:if test="${yourFeedback.rating eq (6 - i)}">checked</c:if> name="rating" value="${6 - i}">
+                                <label for="rating__${6 - i}" class="rating__label"></label>
+                            </c:forEach>
+                        </div>
                     </div>
-                </div>
-                <textarea name="text">${yourFeedback.text}</textarea>
-                <a href="#"><fmt:message key="profile.edit"/></a>
-                <a href="#"><fmt:message key="profile.delete"/></a>
-                <br>
+                    <textarea name="text">${yourFeedback.text}</textarea>
+                    <input type="submit" value="<fmt:message key="profile.edit"/>">
+                    <a href="#"><fmt:message key="profile.delete"/></a>
+                    <br>
+                </form>
             </c:when>
             <c:when test="${contains eq false}">
                 <form action="${pageContext.request.contextPath}/controller" method="post">

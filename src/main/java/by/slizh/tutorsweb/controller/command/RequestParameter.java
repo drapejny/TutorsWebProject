@@ -47,6 +47,7 @@ public final class RequestParameter {
     public static final String TUTOR_ID = "tutor_id";
     public static final String TEXT = "text";
     public static final String RATING = "rating";
+    public static final String FEEDBACK_ID = "feedback_id";
 
 
     private RequestParameter() {

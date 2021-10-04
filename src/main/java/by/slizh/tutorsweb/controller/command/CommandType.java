@@ -29,7 +29,8 @@ public enum CommandType {
     SEARCH_PAGE(new GoToSearchPage()),
     BECOME_TUTOR(new BecomeTutorCommand()),
     TUTOR_PROFILE_PAGE(new GoToTutorProfilePage()),
-    ADD_FEEDBACK(new AddFeedbackCommand());
+    ADD_FEEDBACK(new AddFeedbackCommand()),
+    EDIT_FEEDBACK(new EditFeedbackCommand());
 
     private Command command;
 
