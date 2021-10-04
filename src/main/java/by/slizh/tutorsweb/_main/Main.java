@@ -16,6 +16,7 @@ import by.slizh.tutorsweb.util.mail.MailSender;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,8 +26,8 @@ import java.util.stream.Stream;
 public class Main {
     private static final Logger logger = LogManager.getLogger();
 
+
     public static void main(String[] args) throws ClassNotFoundException, DaoException, ServiceException {
-        System.out.println(Integer.parseInt("0222"));
 
 //        User user = new User.UserBuilder()
 //                .setFirstName("admin")
@@ -56,7 +57,7 @@ public class Main {
 //                .setEducation("BSUIR")
 //                .setInfo("Some info")
 //                .setPricePerHour(10)
-//                .setActive(true)
+//                .setIsActive(true)
 //                .createTutor();
 //
 //        UserDao userDao = new UserDaoImpl();

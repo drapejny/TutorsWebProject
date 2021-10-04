@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +25,12 @@ public class FeedbackDaoImpl extends FeedbackDao {
             SELECT feedback_id, text, date, rating, user_id, tutor_id
             FROM feedbacks
             WHERE feedback_id = ?;
+            """;
+    private static final String SQL_FIND_FEEDBACKS_BY_TUTOR_ID = """
+            SELECT feedback_id, text, date, rating, user_id, tutor_id
+            FROM feedbacks
+            WHERE tutor_id = ?
+            ORDER BY date DESC;
             """;
     private static final String SQL_DELETE_FEEDBACK_BY_ID = """
             DELETE FROM feedbacks WHERE feedback_id = ?;
@@ -42,7 +49,7 @@ public class FeedbackDaoImpl extends FeedbackDao {
     @Override
     public List<Feedback> findAll() throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_FEEDBACKS)) {
-            List<Feedback> feedbacks = new LinkedList<Feedback>();
+            List<Feedback> feedbacks = new ArrayList<>();
             try (ResultSet resultSet = statement.executeQuery();) {
                 while (resultSet.next()) {
                     Feedback feedback = buildFeedback(resultSet);
@@ -123,6 +130,24 @@ public class FeedbackDaoImpl extends FeedbackDao {
             throw new DaoException("Failed to update feedback", e);
         }
         return oldFeedback;
+    }
+
+    @Override
+    public List<Feedback> findByTutorId(int tutorId) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_FEEDBACKS_BY_TUTOR_ID)) {
+            statement.setInt(1, tutorId);
+            List<Feedback> feedbacks = new ArrayList<>();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while(resultSet.next()){
+                    Feedback feedback = buildFeedback(resultSet);
+                    feedbacks.add(feedback);
+                }
+                return feedbacks;
+            }
+        } catch (SQLException e) {
+            logger.error("Failed to find feedbacks by tutorId", e);
+            throw new DaoException("Failed to find feedbacks by tutorId", e);
+        }
     }
 
     private Feedback buildFeedback(ResultSet resultSet) throws SQLException {

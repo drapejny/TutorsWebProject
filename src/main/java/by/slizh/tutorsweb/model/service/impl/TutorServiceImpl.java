@@ -1,6 +1,5 @@
 package by.slizh.tutorsweb.model.service.impl;
 
-import by.slizh.tutorsweb.controller.command.RequestParameter;
 import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.exception.ServiceException;
 import by.slizh.tutorsweb.model.dao.EntityTransaction;
@@ -14,7 +13,6 @@ import by.slizh.tutorsweb.model.service.TutorService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -55,6 +53,26 @@ public class TutorServiceImpl implements TutorService {
     }
 
     @Override
+    public Optional<Tutor> findTutorById(int id) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        TutorDao tutorDao = new TutorDaoImpl();
+        try {
+            transaction.init(tutorDao);
+            return tutorDao.findById(id);
+        } catch (DaoException e) {
+            logger.error("Failed to make transaction in findTutorById method", e);
+            throw new ServiceException("Failed to make transaction in findTutorById method", e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Failed to end transaction in findTutorById method", e);
+            }
+        }
+
+    }
+
+    @Override
     public void createTutor(User user, Map<String, String[]> tutorMap) throws ServiceException {
         Tutor tutor = new Tutor.TutorBuilder()
                 .setUserId(user.getUserId())
@@ -63,7 +81,7 @@ public class TutorServiceImpl implements TutorService {
                 .setEducation(tutorMap.get(EDUCATION)[0])
                 .setInfo(tutorMap.get(INFORMATION)[0])
                 .setPricePerHour(Integer.parseInt(tutorMap.get(PRICE)[0]))
-                .setActive(true)
+                .setIsActive(true)
                 .createTutor();
         EntityTransaction transaction = new EntityTransaction();
         TutorDao tutorDao = new TutorDaoImpl();
@@ -76,6 +94,11 @@ public class TutorServiceImpl implements TutorService {
             }
             transaction.commit();
         } catch (DaoException e) {
+            try {
+                transaction.rollback();
+            } catch (DaoException ex) {
+                logger.error("Failed to rollback transaction in createTutor method", e);
+            }
             logger.error("Failed to make transaction in createTutor method", e);
             throw new ServiceException("Failed to make transaction in createTutor method", e);
         } finally {
@@ -145,6 +168,25 @@ public class TutorServiceImpl implements TutorService {
                 transaction.end();
             } catch (DaoException e) {
                 logger.error("Failed to end transaction in countSearchedRecords method", e);
+            }
+        }
+    }
+
+    @Override
+    public List<String> findAllCities() throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        TutorDao tutorDao = new TutorDaoImpl();
+        try {
+            transaction.init(tutorDao);
+            List<String> cities = tutorDao.findAllCities();
+            return cities;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in findAllCities method", e);
             }
         }
     }

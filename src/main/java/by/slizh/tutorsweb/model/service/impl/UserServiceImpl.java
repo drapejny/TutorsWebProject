@@ -1,5 +1,6 @@
 package by.slizh.tutorsweb.model.service.impl;
 
+import by.slizh.tutorsweb.model.entity.Feedback;
 import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.exception.ServiceException;
@@ -21,6 +22,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -229,5 +232,32 @@ public class UserServiceImpl implements UserService {
                 logger.error("Can't end transaction in updatePassword method", e);
             }
         }
+    }
+
+    @Override
+    public Map<Feedback, User> findUsersForFeedbacks(List<Feedback> feedbacks) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
+        try {
+            transaction.init(userDao);
+            Map<Feedback, User> resultMap = new HashMap<>();
+            for (Feedback feedback : feedbacks) {
+                Optional<User> user = userDao.findById(feedback.getUserId());
+                if (user.isPresent()) {
+                    resultMap.put(feedback, user.get());
+                }
+            }
+            return resultMap;
+        } catch (DaoException e) {
+            logger.error("Failed to make transaction in findUsersForFeedbacks method", e);
+            throw new ServiceException("Failed to make transaction in findUsersForFeedbacks method", e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in findUsersForFeedbacks method", e);
+            }
+        }
+
     }
 }

@@ -13,10 +13,10 @@
     $( function() {
         $( "#slider-range" ).slider({
             range: true,
-            min: 0,
-            max: 1000,
-            values: [<c:choose><c:when test="${empty sessionScope.searchedMinPrice}">0</c:when><c:otherwise>${sessionScope.searchedMinPrice}</c:otherwise></c:choose>,
-                <c:choose><c:when test="${empty sessionScope.searchedMaxPrice}">1000</c:when><c:otherwise>${sessionScope.searchedMaxPrice}</c:otherwise></c:choose> ],
+            min: 1,
+            max: 999,
+            values: [<c:choose><c:when test="${empty sessionScope.searchedMinPrice}">1</c:when><c:otherwise>${sessionScope.searchedMinPrice}</c:otherwise></c:choose>,
+                <c:choose><c:when test="${empty sessionScope.searchedMaxPrice}">999</c:when><c:otherwise>${sessionScope.searchedMaxPrice}</c:otherwise></c:choose> ],
             slide: function( event, ui ) {
                 $( "#amount1" ).val( ui.values[ 0 ]);
                 $("#amount2").val(ui.values[1]);
@@ -42,9 +42,13 @@
         </c:if>>${element.subjectName}</option>
         </c:forEach>
     </select>
-    <input type="text" name="city" value="${sessionScope.searchedCity}">
-<%--    <input type="text" name="min_price" value="${sessionScope.searchedMinPrice}" placeholder="От">$--%>
-<%--    <input type="text" name="max_price" value="${sessionScope.searchedMaxPrice}" placeholder="До">$--%>
+    <select name="city">
+        <c:forEach var="element" items="${requestScope.cities}">
+            <option value="${element}" <c:if test="${sessionScope.searchedCity == element}">
+                selected
+            </c:if>>${element}</option>
+        </c:forEach>
+    </select>
         <input type="text" id="amount1" name="min_price" value="${sessionScope.searchedMinPrice}" readonly >
         <input type="text" id="amount2" name="max_price" value="${sessionScope.searchedMaxPrice}" readonly >
     <div id="slider-range"></div>
@@ -60,7 +64,7 @@
     <a href="${pageContext.request.contextPath}/controller?command=search&sort=price_desc&page_number=1">по убыванию цены</a>
     <c:forEach var="element" items="${requestScope.tutors}">
         <ctg:user-photo photo="${element.photo}" height="100" width="100"/>
-        ${element.firstName} ${element.lastName}
+        <a href="${pageContext.request.contextPath}/controller?command=tutor_profile_page&tutor_id=${element.tutorId}">${element.firstName} ${element.lastName}</a>
         <hr>
     </c:forEach>
     <c:if test="${searchedPageNumber != 1}">

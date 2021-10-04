@@ -11,7 +11,7 @@ public class User extends Entity {
     private Role role;
     private Status status;
 
-    public User(){
+    public User() {
     }
 
 
@@ -116,10 +116,55 @@ public class User extends Entity {
 
     }
 
-    public static class UserBuilder{
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || o.getClass() != getClass()) {
+            return false;
+        }
+        User user = (User) o;
+
+        return user.userId == userId &&
+                user.firstName == null ? firstName == null : firstName.equals(user.firstName) &&
+                user.lastName == null ? lastName == null : lastName.equals(user.lastName) &&
+                user.email == null ? email == null : email.equals(user.email) &&
+                user.photo == null ? photo == null : photo.equals(user.photo) &&
+                user.role == null ? role == null : role.equals(user.role) &&
+                user.status == null ? status == null : status.equals(user.status);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = userId;
+        result = 31 * result + (firstName == null ? 0 : firstName.hashCode());
+        result = 31 * result + (lastName == null ? 0 : lastName.hashCode());
+        result = 31 * result + (email == null ? 0 : email.hashCode());
+        result = 31 * result + (photo == null ? 0 : photo.hashCode());
+        result = 31 * result + (role == null ? 0 : role.hashCode());
+        result = 31 * result + (status == null ? 0 : status.hashCode());
+        return result;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder("User{");
+        stringBuilder.append("userId=").append(userId);
+        stringBuilder.append(", firstName='").append(firstName).append("'");
+        stringBuilder.append(", lastName='").append(lastName).append("'");
+        stringBuilder.append(", email='").append(email).append("'");
+        stringBuilder.append(", photo='").append(photo).append("'");
+        stringBuilder.append(", role=").append(role);
+        stringBuilder.append(", status=").append(status).append("}");
+        return stringBuilder.toString();
+    }
+
+    public static class UserBuilder {
         User user;
 
-        public UserBuilder(){
+        public UserBuilder() {
             user = new User();
         }
 

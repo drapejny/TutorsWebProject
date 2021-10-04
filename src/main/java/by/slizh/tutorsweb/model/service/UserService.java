@@ -1,9 +1,11 @@
 package by.slizh.tutorsweb.model.service;
 
+import by.slizh.tutorsweb.model.entity.Feedback;
 import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.exception.ServiceException;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -26,5 +28,7 @@ public interface UserService {
     void updateUser(User user) throws ServiceException;
 
     void updatePassword(User user,String password) throws ServiceException;
+
+    Map<Feedback, User> findUsersForFeedbacks(List<Feedback> feedbacks) throws ServiceException;
 
 }

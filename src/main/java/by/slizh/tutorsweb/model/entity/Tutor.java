@@ -1,8 +1,5 @@
 package by.slizh.tutorsweb.model.entity;
 
-import java.io.InputStream;
-import java.math.BigDecimal;
-
 public class Tutor extends User {
     private int tutorId;
     private String phone;
@@ -63,11 +60,11 @@ public class Tutor extends User {
         this.pricePerHour = pricePerHour;
     }
 
-    public boolean isActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setIsActive(boolean active) {
         isActive = active;
     }
 
@@ -144,8 +141,8 @@ public class Tutor extends User {
             return this;
         }
 
-        public TutorBuilder setActive(boolean active) {
-            tutor.setActive(active);
+        public TutorBuilder setIsActive(boolean isActive) {
+            tutor.setIsActive(isActive);
             return this;
         }
 

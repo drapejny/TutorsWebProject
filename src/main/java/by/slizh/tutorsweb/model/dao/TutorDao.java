@@ -14,4 +14,6 @@ public abstract class TutorDao extends AbstractDao<Tutor> {
 
     public abstract int countSearchedRecords(int subjectId, String city, int minPrice, int maxPrice) throws DaoException;
 
+    public abstract List<String> findAllCities() throws DaoException;
+
 }

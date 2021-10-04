@@ -10,6 +10,13 @@ public final class RequestAttribute {
 
     public static String TUTORS = "tutors";
 
+    public static String CITIES = "cities";
+
+    public static String AVERAGE_RATING = "averageRating";
+    public static String FEEDBACKS = "feedbacks";
+    public static String USERS = "users";
+    public static String FEEDBACKS_COUNT = "feedbacksCount";
+
     public static final String SEARCHED_PAGE_NUMBER = "searchedPageNumber";
     public static final String SEARCHED_PAGES_COUNT = "searchedPagesCount";
 

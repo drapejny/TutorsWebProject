@@ -43,6 +43,11 @@ public final class RequestParameter {
     public static final String PAGE_NUMBER = "page_number";
     public static final String SORT = "sort";
 
+    //tutor profile
+    public static final String TUTOR_ID = "tutor_id";
+    public static final String TEXT = "text";
+    public static final String RATING = "rating";
+
 
     private RequestParameter() {
     }

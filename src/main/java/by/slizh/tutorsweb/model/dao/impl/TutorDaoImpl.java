@@ -3,7 +3,6 @@ package by.slizh.tutorsweb.model.dao.impl;
 import by.slizh.tutorsweb.model.entity.Tutor;
 import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.exception.DaoException;
-import by.slizh.tutorsweb.model.dao.ColumnName;
 import by.slizh.tutorsweb.model.dao.TutorDao;
 import by.slizh.tutorsweb.util.Base64Coder;
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -48,6 +48,9 @@ public class TutorDaoImpl extends TutorDao {
              JOIN role ON users.role_id = role.role_id
              JOIN status ON users.status_id = status.status_id
              WHERE email = ?;
+            """;
+    private static final String SQL_FIND_ALL_CITIES = """
+            SELECT DISTINCT city FROM tutors;
             """;
     private static final String SQL_DELETE_TUTOR_BY_ID = """
             DELETE FROM tutors WHERE tutor_id = ?;
@@ -127,8 +130,8 @@ public class TutorDaoImpl extends TutorDao {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, subjectId);
             statement.setString(2, "%" + city + "%");
-            statement.setInt(3, minPrice);
-            statement.setInt(4, maxPrice);
+            statement.setInt(3, minPrice - 1);
+            statement.setInt(4, maxPrice + 1);
             statement.setInt(5, offset);
             statement.setInt(6, numberOfRecords);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -144,32 +147,13 @@ public class TutorDaoImpl extends TutorDao {
         }
     }
 
-    private String buildSearchQuery(String sort) {
-        StringBuilder stringBuilder = new StringBuilder(SQL_SEARCH_TUTORS_FIRST_PART);
-        String orderBy;
-        switch (sort) {
-            case "price_asc":
-                orderBy = "ORDER BY " + PRICE_PER_HOUR + " ASC ";
-                break;
-            case "price_desc":
-                orderBy = "ORDER BY " + PRICE_PER_HOUR + " DESC ";
-                break;
-            default:
-                orderBy = "ORDER BY " + TUTOR_ID + " ";
-        }
-        stringBuilder.append(orderBy);
-        stringBuilder.append(SQL_SEARCH_TUTORS_LIMIT_PART);
-        return stringBuilder.toString();
-
-    }
-
     @Override
-    public int countSearchedRecords(int subjectId, String city, int  minPrice, int maxPrice) throws DaoException {
+    public int countSearchedRecords(int subjectId, String city, int minPrice, int maxPrice) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_COUNT_SEARCHED_RECORDS)) {
             statement.setInt(1, subjectId);
             statement.setString(2, "%" + city + "%");
-            statement.setInt(3, minPrice);
-            statement.setInt(4, maxPrice);
+            statement.setInt(3, minPrice - 1);
+            statement.setInt(4, maxPrice + 1);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     return resultSet.getInt(1);
@@ -180,6 +164,22 @@ public class TutorDaoImpl extends TutorDao {
         } catch (SQLException e) {
             logger.error("Failed to count searched tutors", e);
             throw new DaoException("Failed to count searched tutors", e);
+        }
+    }
+
+    @Override
+    public List<String> findAllCities() throws DaoException {
+        List<String> cities = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_CITIES)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    cities.add(resultSet.getString(1));
+                }
+            }
+            return cities;
+        } catch (SQLException e) {
+            logger.error("Failed to find all cities", e);
+            throw new DaoException("Failed to find all cities", e);
         }
     }
 
@@ -219,11 +219,11 @@ public class TutorDaoImpl extends TutorDao {
         try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_TUTOR, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, tutor.getUserId());
             statement.setString(2, tutor.getPhone());
-            statement.setString(3,tutor.getCity());
+            statement.setString(3, tutor.getCity());
             statement.setString(4, tutor.getEducation());
             statement.setString(5, tutor.getInfo());
             statement.setInt(6, tutor.getPricePerHour());
-            statement.setByte(7, (byte) (tutor.isActive() ? 1 : 0));
+            statement.setByte(7, (byte) (tutor.getIsActive() ? 1 : 0));
             boolean result = statement.executeUpdate() == 1;
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {
@@ -246,11 +246,11 @@ public class TutorDaoImpl extends TutorDao {
                 );
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_TUTOR)) {
             statement.setString(1, tutor.getPhone());
-            statement.setString(2,tutor.getCity());
+            statement.setString(2, tutor.getCity());
             statement.setString(3, tutor.getEducation());
             statement.setString(4, tutor.getInfo());
             statement.setInt(5, tutor.getPricePerHour());
-            statement.setByte(6, (byte) (tutor.isActive() ? 1 : 0));
+            statement.setByte(6, (byte) (tutor.getIsActive() ? 1 : 0));
             statement.setInt(7, tutor.getTutorId());
 
             statement.executeUpdate();
@@ -268,7 +268,7 @@ public class TutorDaoImpl extends TutorDao {
                 .setEducation(resultSet.getString(EDUCATION))
                 .setInfo(resultSet.getString(INFO))
                 .setPricePerHour(resultSet.getInt(PRICE_PER_HOUR))
-                .setActive(resultSet.getByte(IS_ACTIVE) == 1 ? true : false)
+                .setIsActive(resultSet.getByte(IS_ACTIVE) == 1 ? true : false)
                 .setUserId(resultSet.getInt(USER_ID))
                 .setFirstName(resultSet.getString(FIRST_NAME))
                 .setLastName(resultSet.getString(LAST_NAME))
@@ -279,6 +279,26 @@ public class TutorDaoImpl extends TutorDao {
                 .setStatus(User.Status.valueOf(resultSet.getString(STATUS_NAME).toUpperCase()))
                 .createTutor();
         return tutor;
+    }
+
+
+    private String buildSearchQuery(String sort) {
+        StringBuilder stringBuilder = new StringBuilder(SQL_SEARCH_TUTORS_FIRST_PART);
+        String orderBy;
+        switch (sort) {
+            case "price_asc":
+                orderBy = "ORDER BY " + PRICE_PER_HOUR + " ASC ";
+                break;
+            case "price_desc":
+                orderBy = "ORDER BY " + PRICE_PER_HOUR + " DESC ";
+                break;
+            default:
+                orderBy = "ORDER BY " + TUTOR_ID + " ";
+        }
+        stringBuilder.append(orderBy);
+        stringBuilder.append(SQL_SEARCH_TUTORS_LIMIT_PART);
+        return stringBuilder.toString();
+
     }
 
 }
