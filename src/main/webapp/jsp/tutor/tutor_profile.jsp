@@ -6,6 +6,9 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="prop.pagecontent"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/tutor/tutor_profile.css">
+
 <html>
 <head>
     <title><fmt:message key="profile.title"/></title>
@@ -46,8 +49,8 @@
 <c:if test="${fn:length(feedbacks) eq 0}">
     <c:set var="averageRating" value="${0}"/>
 </c:if>
+
 ${averageRating}
-<p><fmt:message key="profile.feedbacks"/>${fn:length(feedbacks)}</p>
 
 <c:choose>
     <c:when test="${user.role eq 'USER'}">
@@ -99,9 +102,14 @@ ${averageRating}
         </c:choose>
     </c:when>
     <c:when test="${user.role eq 'TUTOR'}">
-
+        <br>
+        <a href="${pageContext.request.contextPath}/controller?command=edit_tutor_profile_page"><fmt:message key="edit.profile.button"/></a>
+        <br>
     </c:when>
 </c:choose>
+
+<p><fmt:message key="profile.feedbacks"/>${fn:length(feedbacks)}</p>
+
 <c:forEach var="element" items="${feedbacks}">
     <ctg:user-photo photo="${users[element].photo}" height="20" width="20"/>
     <p>${users[element].firstName} ${users[element].lastName}</p>
@@ -119,9 +127,12 @@ ${averageRating}
             </c:choose>
         </c:forEach>
     </div>
+    <c:if test="${user.role eq 'ADMIN' || user.userId eq tutor.userId}">
+        <a href="${pageContext.request.contextPath}/controller?command=delete_feedback&tutor_id=${tutor.tutorId}&feedback_id=${element.feedbackId}"><fmt:message key="profile.delete"/></a>
+    </c:if>
     <hr>
 </c:forEach>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/tutor/tutor_profile.css" />
+
 
 
 

@@ -10,7 +10,7 @@
 <body>
 <form action="${pageContext.request.contextPath}/controller" method="post">
     <input type="hidden" name="command" value="add_application">
-    <c:forEach var="element" items="${sessionScope.subjects}" varStatus="status">
+    <c:forEach var="element" items="${applicationScope.subjects}" varStatus="status">
         <input type="checkbox" name="subject" value="${element.subjectId}">${element.subjectName}<br>
     </c:forEach>
     <fmt:message key="application.phone"/><input type="text" name="phone" value="${requestScope.phone}"><br>

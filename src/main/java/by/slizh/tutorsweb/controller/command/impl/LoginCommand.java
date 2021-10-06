@@ -4,15 +4,22 @@ import static by.slizh.tutorsweb.controller.command.RequestAttribute.*;
 
 import by.slizh.tutorsweb.controller.command.*;
 import by.slizh.tutorsweb.exception.CommandException;
+import by.slizh.tutorsweb.model.entity.Subject;
+import by.slizh.tutorsweb.model.entity.Tutor;
 import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.exception.ServiceException;
+import by.slizh.tutorsweb.model.service.SubjectService;
+import by.slizh.tutorsweb.model.service.TutorService;
 import by.slizh.tutorsweb.model.service.UserService;
+import by.slizh.tutorsweb.model.service.impl.SubjectServiceImpl;
+import by.slizh.tutorsweb.model.service.impl.TutorServiceImpl;
 import by.slizh.tutorsweb.model.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -29,6 +36,8 @@ public class LoginCommand implements Command {
         String email = request.getParameter(RequestParameter.EMAIL);
         String password = request.getParameter(RequestParameter.PASSWORD);
         UserService userService = UserServiceImpl.getInstance();
+        TutorService tutorService = TutorServiceImpl.getInstance();
+        SubjectService subjectService = SubjectServiceImpl.getInstance();
         try {
             Optional<User> user = userService.authenticate(email, password);
             if (user.isPresent()) {
@@ -40,7 +49,15 @@ public class LoginCommand implements Command {
                     request.setAttribute(ERROR_USER_BLOCKED, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_USER_BLOCKED));
                     return new Router(PagePath.LOGIN_PAGE, Router.RouteType.FORWARD);
                 }
-                session.setAttribute(SessionAttribute.USER, user.get());
+                if (user.get().getRole() == User.Role.TUTOR) {
+                    Optional<Tutor> tutor = tutorService.findTutorByEmail(email);
+                    List<Subject> subjects = subjectService.findSubjectsByTutorId(tutor.get().getTutorId());
+                    session.setAttribute(SessionAttribute.USER, tutor.get());
+                    session.setAttribute(SessionAttribute.SUBJECTS, subjects);
+                } else {
+                    session.setAttribute(SessionAttribute.USER, user.get());
+                }
+
                 router = new Router(PagePath.MAIN_PAGE, Router.RouteType.REDIRECT);
             } else {
                 request.setAttribute(ERROR_WRONG_PASSWORD_OR_EMAIL, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_PASSWORD_OR_EMAIL));

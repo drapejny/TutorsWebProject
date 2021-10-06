@@ -33,7 +33,14 @@
         <div class="dropdown">
             <button onclick="myFunction()" class="dropbtn">${sessionScope.user.firstName} ${sessionScope.user.lastName}</button>
             <div id="myDropdown" class="dropdown-content">
-                <a href="${pageContext.request.contextPath}/controller?command=profile_page"><fmt:message key="header.dropdown.profile"/></a>
+                <c:choose>
+                    <c:when test="${sessionScope.user.role eq 'USER' || sessionScope.user.role eq 'ADMIN'}">
+                        <a href="${pageContext.request.contextPath}/controller?command=profile_page"><fmt:message key="header.dropdown.profile"/></a>
+                    </c:when>
+                    <c:when test="${sessionScope.user.role eq 'TUTOR'}">
+                        <a href="${pageContext.request.contextPath}/controller?command=tutor_profile_page&tutor_id=${sessionScope.user.tutorId}"><fmt:message key="header.dropdown.profile"/></a>
+                    </c:when>
+                </c:choose>
                 <a href="#"><fmt:message key="header.dropdown.bookmarks"/></a>
                 <a href="${pageContext.request.contextPath}/controller?command=logout"><fmt:message key="header.dropdown.logout"/></a>
             </div>

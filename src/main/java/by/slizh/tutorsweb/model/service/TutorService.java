@@ -16,6 +16,8 @@ public interface TutorService {
 
     void createTutor(User user, Map<String, String[]> tutorMap) throws ServiceException;
 
+    void updateTutor(Tutor tutor) throws ServiceException;
+
     boolean deleteTutorByEmail(String email) throws ServiceException;
 
     List<Tutor> searchTutors(int subjectId, String city, int minPrice, int maxPrice, int offset, int numberOfRecords, String sort) throws ServiceException;

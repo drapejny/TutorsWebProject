@@ -27,7 +27,6 @@ public class BecomeTutorCommand implements Command {
             Optional<Tutor> tutor = tutorService.findTutorByEmail(user.getEmail());
             if (tutor.isPresent()) {
                 request.setAttribute(RequestAttribute.TUTOR,tutor.get());
-                System.out.println(tutor.get().getPhone());
                 return new Router(PagePath.APPLICATION_PAGE, Router.RouteType.FORWARD);
             } else {
                 return new Router(PagePath.ADD_APPLICATION_PAGE, Router.RouteType.REDIRECT);

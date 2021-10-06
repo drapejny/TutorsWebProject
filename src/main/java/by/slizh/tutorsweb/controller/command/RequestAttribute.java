@@ -12,10 +12,9 @@ public final class RequestAttribute {
 
     public static String CITIES = "cities";
 
-    public static String AVERAGE_RATING = "averageRating";
     public static String FEEDBACKS = "feedbacks";
     public static String USERS = "users";
-    public static String FEEDBACKS_COUNT = "feedbacksCount";
+    public static String TUTOR_SUBJECTS = "tutorSubjects";
 
     public static final String SEARCHED_PAGE_NUMBER = "searchedPageNumber";
     public static final String SEARCHED_PAGES_COUNT = "searchedPagesCount";
@@ -27,7 +26,7 @@ public final class RequestAttribute {
     public static final String ERROR_WRONG_DATA = "errorWrongDataMessage";
     public static final String ERROR_EMAIL_EXISTS = "errorEmailExistsMessage";
     public static final String SUCCESSFUL_EDIT_DATA = "successEditMessage";
-    public static final String ERROR_WRONG_PASSWORD = "errorWrongPassword";
+    public static final String ERROR_WRONG_PASSWORD = "errorWrongPasswordMessage";
     public static final String SUCCESSFUL_EDIT_PASSWORD = "successEditPassword";
 
 

@@ -4,6 +4,7 @@ public final class RequestParameter {
 
     //command
     public static final String COMMAND = "command";
+    public static final String FILE = "file";
 
     //login
     public static final String EMAIL = "email";

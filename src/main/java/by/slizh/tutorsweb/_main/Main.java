@@ -2,14 +2,13 @@ package by.slizh.tutorsweb._main;
 
 import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.exception.ServiceException;
-import by.slizh.tutorsweb.model.dao.EntityTransaction;
-import by.slizh.tutorsweb.model.dao.FeedbackDao;
-import by.slizh.tutorsweb.model.dao.TutorDao;
-import by.slizh.tutorsweb.model.dao.UserDao;
+import by.slizh.tutorsweb.model.dao.*;
 import by.slizh.tutorsweb.model.dao.impl.FeedbackDaoImpl;
+import by.slizh.tutorsweb.model.dao.impl.SubjectDaoImpl;
 import by.slizh.tutorsweb.model.dao.impl.TutorDaoImpl;
 import by.slizh.tutorsweb.model.dao.impl.UserDaoImpl;
 import by.slizh.tutorsweb.model.entity.Feedback;
+import by.slizh.tutorsweb.model.entity.Subject;
 import by.slizh.tutorsweb.model.entity.Tutor;
 import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.util.mail.MailSender;
@@ -27,7 +26,9 @@ public class Main {
     private static final Logger logger = LogManager.getLogger();
 
 
-    public static void main(String[] args) throws ClassNotFoundException, DaoException, ServiceException {
+    public static void main(String[] args) {
+
+
 
 //        User user = new User.UserBuilder()
 //                .setFirstName("admin")

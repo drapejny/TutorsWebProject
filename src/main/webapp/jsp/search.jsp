@@ -36,7 +36,7 @@
 <form action="${pageContext.request.contextPath}/controller">
     <input type="hidden" name="command" value="search">
     <select name="subject">
-        <c:forEach var="element" items="${sessionScope.subjects}">
+        <c:forEach var="element" items="${applicationScope.subjects}">
             <option value="${element.subjectId}" <c:if test="${sessionScope.searchedSubjectId == element.subjectId}">
             selected
         </c:if>>${element.subjectName}</option>

@@ -10,6 +10,7 @@ import by.slizh.tutorsweb.model.service.SubjectService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SubjectServiceImpl implements SubjectService {
@@ -98,5 +99,34 @@ public class SubjectServiceImpl implements SubjectService {
                 logger.error("Failed to end transaction in findSubjectsByTutorId method", e);
             }
         }
+    }
+
+    @Override
+    public void editTutorSubjects(int tutorId, List<Integer> oldSubjectIds, List<Integer> newSubjectIds) throws ServiceException {
+        List<Integer> deletedSubjects = new ArrayList<>(oldSubjectIds);
+        deletedSubjects.removeAll(newSubjectIds);
+        List<Integer> addedSubjects = new ArrayList<>(newSubjectIds);
+        addedSubjects.removeAll(oldSubjectIds);
+        List<Integer> savedSubjects = new ArrayList<>(newSubjectIds);
+        EntityTransaction transaction = new EntityTransaction();
+        SubjectDao subjectDao = new SubjectDaoImpl();
+        try {
+            transaction.init(subjectDao);
+            for (Integer id : deletedSubjects) {
+                subjectDao.deleteTutorSubject(tutorId, id);
+            }
+            for (Integer id : addedSubjects) {
+                subjectDao.createTutorSubject(tutorId, id);
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try{
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Failed to end transaction in editTutorSubjects method", e);
+            }
+        }
+
     }
 }

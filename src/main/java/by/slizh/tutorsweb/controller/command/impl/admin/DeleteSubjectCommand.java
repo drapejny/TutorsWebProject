@@ -26,7 +26,7 @@ public class DeleteSubjectCommand implements Command {
         try {
             subjectService.deleteSubjectById(subjectId);
             List<Subject> subjects = subjectService.findAllSubjects();
-            session.setAttribute(RequestAttribute.SUBJECTS, subjects);
+            request.getServletContext().setAttribute(RequestAttribute.SUBJECTS, subjects);
             return new Router(PagePath.ALL_SUBJECTS_PAGE, Router.RouteType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Executing delete subject command error", e);

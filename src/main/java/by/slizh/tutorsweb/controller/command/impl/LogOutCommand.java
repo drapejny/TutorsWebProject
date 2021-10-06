@@ -15,7 +15,7 @@ public class LogOutCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         session.removeAttribute(SessionAttribute.USER);
-        session.removeAttribute(SessionAttribute.USER_PHOTO);
-        return new Router(PagePath.MAIN_PAGE, Router.RouteType.REDIRECT);
+        session.removeAttribute(SessionAttribute.SUBJECTS);
+        return new Router(PagePath.MAIN_PAGE, Router.RouteType.FORWARD);
     }
 }

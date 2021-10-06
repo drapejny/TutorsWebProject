@@ -57,6 +57,10 @@ public class EditPasswordCommand implements Command {
         } else {
             request.setAttribute(RequestAttribute.ERROR_WRONG_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_DATA));
         }
-        return new Router(PagePath.EDIT_PROFILE_PAGE, Router.RouteType.FORWARD);
+        if (user.getRole() == User.Role.TUTOR) {
+            return new Router(PagePath.EDIT_TUTOR_PROFILE_PAGE, Router.RouteType.FORWARD);
+        } else {
+            return new Router(PagePath.EDIT_PROFILE_PAGE, Router.RouteType.FORWARD);
+        }
     }
 }

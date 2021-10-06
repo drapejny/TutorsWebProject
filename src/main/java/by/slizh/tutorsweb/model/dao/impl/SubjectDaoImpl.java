@@ -53,6 +53,14 @@ public class SubjectDaoImpl extends SubjectDao {
             JOIN subjects ON subjects.subject_id = tutors_has_subject.subject_id
             WHERE tutor_id = ?;
             """;
+    private static final String SQL_DELETE_SUBJECTS_BY_TUTOR_ID = """
+            DELETE FROM tutors_has_subject
+            WHERE tutor_id = ?;
+            """;
+    private static final String SQL_DELETE_TUTOR_SUBJECT = """
+            DELETE FROM tutors_has_subject
+            WHERE tutor_id = ? AND subject_id = ?;
+            """;
 
 
     @Override
@@ -151,6 +159,18 @@ public class SubjectDaoImpl extends SubjectDao {
     }
 
     @Override
+    public void deleteTutorSubject(int tutorId, int subjectId) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_TUTOR_SUBJECT)) {
+            statement.setInt(1, tutorId);
+            statement.setInt(2, subjectId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Failed to delete tutorSubject record", e);
+            throw new DaoException("Failed to delete tutorSubject record", e);
+        }
+    }
+
+    @Override
     public List<Subject> findSubjectsByTutorId(int tutorId) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_SUBJECTS_BY_TUTOR_ID)) {
             statement.setInt(1, tutorId);
@@ -164,8 +184,19 @@ public class SubjectDaoImpl extends SubjectDao {
                 return subjects;
             }
         } catch (SQLException e) {
-            logger.error("Failed to find subjects by tutor id",e);
-            throw new DaoException("Failed to find subjects by tutor id",e);
+            logger.error("Failed to find subjects by tutor id", e);
+            throw new DaoException("Failed to find subjects by tutor id", e);
+        }
+    }
+
+    @Override
+    public int deleteSubjectsByTutorId(int tutorId) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_SUBJECTS_BY_TUTOR_ID)) {
+            statement.setInt(1, tutorId);
+            return statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Failed to delete subjects by tutor id", e);
+            throw new DaoException("Failed to delete subjects by tutor id", e);
         }
     }
 }

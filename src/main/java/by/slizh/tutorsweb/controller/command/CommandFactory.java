@@ -4,15 +4,12 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class CommandFactory {
 
-    private static CommandFactory instance;
+    private static CommandFactory instance = new CommandFactory();
 
     private CommandFactory() {
     }
 
     public static CommandFactory getInstance() {
-        if (instance == null) {
-            instance = new CommandFactory();
-        }
         return instance;
     }
 
@@ -29,8 +26,6 @@ public class CommandFactory {
                 command = CommandType.DEFAULT.getCommand();
             }
         }
-        CommandType commandType = CommandType.valueOf(commandName.toUpperCase());
-        command = commandType.getCommand();
         return command;
     }
 }

@@ -27,14 +27,5 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent event) {
         HttpSession session = event.getSession();
         session.setAttribute(LOCALE, Locale.getDefault().toString());
-        SubjectService subjectService = SubjectServiceImpl.getInstance();
-        try {
-            List<Subject> subjects = subjectService.findAllSubjects();
-            session.setAttribute(SUBJECTS, subjects);
-        } catch (ServiceException e) {
-            logger.error("Can't find subjects while session created", e);
-            //// TODO: 20.09.2021 какой exception кидать и стоит ли
-        }
-
     }
 }

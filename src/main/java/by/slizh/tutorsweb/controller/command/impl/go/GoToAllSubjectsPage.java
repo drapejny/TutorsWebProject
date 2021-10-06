@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static by.slizh.tutorsweb.controller.command.RequestAttribute.*;
+
 import java.util.List;
 
 public class GoToAllSubjectsPage implements Command {
@@ -21,13 +23,9 @@ public class GoToAllSubjectsPage implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         SubjectService subjectService = SubjectServiceImpl.getInstance();
-        try {
-            List<Subject> subjects = subjectService.findAllSubjects();
-            request.setAttribute(RequestAttribute.SUBJECTS, subjects);
-            return new Router(PagePath.ALL_SUBJECTS_PAGE, Router.RouteType.FORWARD);
-        } catch (ServiceException e) {
-            logger.error("Executing go to all subjects page command error", e);
-            throw new CommandException("Executing go to all subjects page command error", e);
-        }
+        List<Subject> subjects = (List<Subject>) request.getServletContext().getAttribute(SUBJECTS);
+        request.setAttribute(SUBJECTS, subjects);
+        return new Router(PagePath.ALL_SUBJECTS_PAGE, Router.RouteType.FORWARD);
+
     }
 }

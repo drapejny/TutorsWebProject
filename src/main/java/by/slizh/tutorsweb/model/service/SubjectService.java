@@ -13,4 +13,6 @@ public interface SubjectService {
     boolean addSubject(Subject subject) throws ServiceException;
 
     List<Subject> findSubjectsByTutorId(int tutorId) throws ServiceException;
+
+    void editTutorSubjects(int tutorId, List<Integer> oldSubjectIds, List<Integer> newSubjectIds) throws ServiceException;
 }

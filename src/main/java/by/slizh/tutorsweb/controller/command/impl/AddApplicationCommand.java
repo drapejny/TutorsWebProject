@@ -23,6 +23,7 @@ import static by.slizh.tutorsweb.controller.command.RequestParameter.*;
 
 public class AddApplicationCommand implements Command {
 
+
     private static final Logger logger = LogManager.getLogger();
 
     @Override

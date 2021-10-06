@@ -16,7 +16,7 @@
     <li><a href="#"><fmt:message key="main.feedbacks"/></a></li>
     <li><a href="${pageContext.request.contextPath}/controller?command=all_applications_page"><fmt:message key="main.applications"/></a></li>
 </ul>
-<c:forEach var="element" items="${sessionScope.subjects}" varStatus="status">
+<c:forEach var="element" items="${applicationScope.subjects}" varStatus="status">
     ${element.subjectName} <a href="${pageContext.request.contextPath}/controller?command=delete_subject&subject_id=${element.subjectId}"><fmt:message key="subjects.delete"/></a>
     <hr>
 </c:forEach>

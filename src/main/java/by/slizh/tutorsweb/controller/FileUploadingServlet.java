@@ -1,6 +1,10 @@
 package by.slizh.tutorsweb.controller;
 
 import by.slizh.tutorsweb.controller.command.*;
+import by.slizh.tutorsweb.controller.upload.UploadCommand;
+import by.slizh.tutorsweb.controller.upload.UploadCommandFactory;
+import by.slizh.tutorsweb.controller.upload.UploadCommandType;
+import by.slizh.tutorsweb.exception.CommandException;
 import by.slizh.tutorsweb.exception.ServiceException;
 import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.model.service.UserService;
@@ -31,16 +35,22 @@ public class FileUploadingServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserService service = UserServiceImpl.getInstance();
-        Part filePart = request.getPart(RequestParameter.PHOTO);
+        UploadCommand command = UploadCommandFactory.getInstance().createCommand(request);
+        Part filePart = request.getPart(RequestParameter.FILE);
         InputStream fileContent = filePart.getInputStream();
-        User user = (User) request.getSession().getAttribute(SessionAttribute.USER);
+        Router router;
         try {
-            service.updatePhoto(user, fileContent);
-        } catch (ServiceException e) {
-            logger.error("Can't update user photo", e);
-            throw new ServletException("Can't update user photo", e);
+            router = command.execute(request, fileContent);
+        } catch (CommandException e) {
+            router = new Router(PagePath.ERROR_PAGE, Router.RouteType.REDIRECT);
         }
-        request.getRequestDispatcher(PagePath.EDIT_PROFILE_PAGE).forward(request, response);
+        switch (router.getRouteType()) {
+            case FORWARD:
+                request.getRequestDispatcher(router.getPagePath()).forward(request, response);
+                break;
+            case REDIRECT:
+                response.sendRedirect(request.getContextPath() + router.getPagePath());
+                break;
+        }
     }
 }

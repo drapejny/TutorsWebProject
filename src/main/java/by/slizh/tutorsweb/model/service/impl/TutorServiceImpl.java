@@ -111,6 +111,18 @@ public class TutorServiceImpl implements TutorService {
     }
 
     @Override
+    public void updateTutor(Tutor tutor) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        TutorDao tutorDao = new TutorDaoImpl();
+        try {
+            transaction.init(tutorDao);
+            tutorDao.update(tutor);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public boolean deleteTutorByEmail(String email) throws ServiceException {
         EntityTransaction transaction = new EntityTransaction();
         TutorDao tutorDao = new TutorDaoImpl();

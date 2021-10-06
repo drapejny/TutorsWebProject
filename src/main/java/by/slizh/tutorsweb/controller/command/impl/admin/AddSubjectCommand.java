@@ -16,8 +16,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Locale;
 
-import static by.slizh.tutorsweb.controller.command.RequestAttribute.ERROR_WRONG_DATA;
-import static by.slizh.tutorsweb.controller.command.RequestAttribute.SUCCESSFUL_EDIT_PASSWORD;
+import static by.slizh.tutorsweb.controller.command.RequestAttribute.*;
 
 public class AddSubjectCommand implements Command {
 
@@ -34,8 +33,8 @@ public class AddSubjectCommand implements Command {
             Subject subject = new Subject(subjectName);
             try {
                 if (subjectService.addSubject(subject)) {
-                    List<Subject> subjects = subjectService.findAllSubjects();
-                    session.setAttribute(SessionAttribute.SUBJECTS, subjects);
+                    List<Subject> subjects = (List<Subject>) request.getServletContext().getAttribute(SUBJECTS);
+                    subjects.add(subject);
                     return new Router(PagePath.ALL_SUBJECTS_PAGE, Router.RouteType.FORWARD);
                 } else {
                     return new Router(PagePath.MAIN_PAGE, Router.RouteType.FORWARD);

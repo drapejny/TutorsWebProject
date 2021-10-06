@@ -28,11 +28,10 @@ public class MainServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = CommandFactory.getInstance().createCommand(request);
-        Router router = null;
+        Router router;
         try {
             router = command.execute(request);
         } catch (CommandException e) {
-            e.printStackTrace();
             router = new Router(PagePath.ERROR_PAGE, Router.RouteType.REDIRECT);
         }
         switch (router.getRouteType()) {

@@ -15,6 +15,7 @@ public final class PagePath {
     public static final String ALL_SUBJECTS_PAGE = "/jsp/admin/all_subjects.jsp";
     public static final String SEARCH_PAGE = "jsp/search.jsp";
     public static final String TUTOR_PROFILE_PAGE = "/jsp/tutor/tutor_profile.jsp";
+    public static final String EDIT_TUTOR_PROFILE_PAGE = "/jsp/tutor/edit_tutor_profile.jsp";
 
     private PagePath() {
     }

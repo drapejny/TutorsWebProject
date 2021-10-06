@@ -9,7 +9,6 @@ public class PasswordEncoder {
 
     public static String encodePassword(String password) {
         String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
-        System.out.println(hashed);
         return hashed;
     }
 
