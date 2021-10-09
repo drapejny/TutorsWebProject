@@ -25,4 +25,10 @@ public interface TutorService {
     int countSearchedRecords(int subjectId, String city, int minPrice, int maxPrice) throws ServiceException;
 
     List<String> findAllCities() throws ServiceException;
+
+    List<Tutor> findApplications(int offset, int numberOfRecords) throws ServiceException;
+
+    int countApplications() throws ServiceException;
+
+    boolean deleteTutorById(int tutorId) throws ServiceException;
 }

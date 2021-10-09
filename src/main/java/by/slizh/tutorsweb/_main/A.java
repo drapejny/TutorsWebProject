@@ -1,8 +1,8 @@
 package by.slizh.tutorsweb._main;
 
-public interface A {
+public class A {
 
-    private int met() {
-        return 1;
+    public static void met() {
+        System.out.println("A");
     }
 }

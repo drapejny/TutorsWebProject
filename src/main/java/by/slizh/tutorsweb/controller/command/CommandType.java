@@ -1,8 +1,7 @@
 package by.slizh.tutorsweb.controller.command;
 
 import by.slizh.tutorsweb.controller.command.impl.*;
-import by.slizh.tutorsweb.controller.command.impl.admin.AddSubjectCommand;
-import by.slizh.tutorsweb.controller.command.impl.admin.DeleteSubjectCommand;
+import by.slizh.tutorsweb.controller.command.impl.admin.*;
 import by.slizh.tutorsweb.controller.command.impl.go.*;
 
 public enum CommandType {
@@ -33,7 +32,12 @@ public enum CommandType {
     EDIT_FEEDBACK(new EditFeedbackCommand()),
     DELETE_FEEDBACK(new DeleteFeedbackCommand()),
     EDIT_TUTOR_PROFILE_PAGE(new GoToEditTutorProfilePage()),
-    EDIT_TUTOR_PROFILE(new EditTutorProfileCommand());
+    EDIT_TUTOR_PROFILE(new EditTutorProfileCommand()),
+    APPLICATION_PAGE(new GoToApplicationPage()),
+    REJECT_APPLICATION(new RejectApplicationCommand()),
+    ACCEPT_APPLICATION(new AcceptApplicationCommand()),
+    SEARCH_USERS_PAGE(new GoToSearchUsersPage()),
+    SEARCH_USERS(new SearchUsersCommand());
 
     private Command command;
 

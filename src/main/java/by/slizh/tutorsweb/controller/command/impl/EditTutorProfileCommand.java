@@ -1,4 +1,4 @@
-package by.slizh.tutorsweb.controller.command.impl.go;
+package by.slizh.tutorsweb.controller.command.impl;
 
 import by.slizh.tutorsweb.controller.command.*;
 import by.slizh.tutorsweb.exception.CommandException;
@@ -48,6 +48,11 @@ public class EditTutorProfileCommand implements Command {
         String info = request.getParameter(INFORMATION);
         String price = request.getParameter(PRICE);
 
+        boolean isActive = false;
+        if (request.getParameter(IS_ACTIVE) != null) {
+            isActive = true;
+        }
+
         String[] subjectIds = request.getParameterValues(SUBJECT);
 
         if (userValidator.validateFirstName(firstName) && userValidator.validateLastName(lastName)
@@ -58,6 +63,7 @@ public class EditTutorProfileCommand implements Command {
             tutor.setLastName(lastName);
             tutor.setPhone(phone);
             tutor.setInfo(info);
+            tutor.setIsActive(isActive);
             tutor.setPricePerHour(Integer.parseInt(price));
             List<Integer> newSubjects = Arrays.stream(subjectIds)
                     .map(s -> Integer.parseInt(s))

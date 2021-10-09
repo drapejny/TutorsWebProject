@@ -9,15 +9,19 @@
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
-<form action="${pageContext.request.contextPath}/controller" method="post">
-    <input type="hidden" name="command" value="login"/>
-    <fmt:message key="login.email"/><input type="text" name="email"><br>
-    <fmt:message key="login.password"/><input type="text" name="password"><br>
-    <a href="${pageContext.request.contextPath}/controller?command=registration_page" method="post"><fmt:message key="header.registration"/></a>
-    ${errorBlockedMessage}
-    ${errorNonActivatedMessage}
-    ${errorLogInMessage}<br>
-    <input type="submit" value="<fmt:message key="login.button.signin"/>">
-</form>
+    <form class="login-form" action="${pageContext.request.contextPath}/controller" method="post">
+        <input type="hidden" name="command" value="login"/>
+        <fmt:message key="login.email"/>
+        <input id="login-input" type="email" name="email" required><br>
+        <fmt:message key="login.password"/>
+        <input id="login-input"  type="password" name="password" required  minlength="6" maxlength="20"><br>
+        <input type="submit" value="<fmt:message key="login.button.signin"/>">
+        <a href="${pageContext.request.contextPath}/controller?command=registration_page" method="post"><fmt:message key="header.registration"/></a>
+        ${errorBlockedMessage}
+        ${errorNonActivatedMessage}
+        ${errorLogInMessage}<br>
+    </form>
+</div>
+
 </body>
 </html>

@@ -28,7 +28,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-
+      A a = new A(){
+          int x;
+      };
+        System.out.println(a.getClass());
 
 //        User user = new User.UserBuilder()
 //                .setFirstName("admin")

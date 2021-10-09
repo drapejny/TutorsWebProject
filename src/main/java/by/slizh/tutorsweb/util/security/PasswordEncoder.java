@@ -2,7 +2,7 @@ package by.slizh.tutorsweb.util.security;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-public class PasswordEncoder {
+public final class PasswordEncoder {
 
     private PasswordEncoder() {
     }

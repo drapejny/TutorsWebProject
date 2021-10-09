@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpSessionListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,5 +28,6 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent event) {
         HttpSession session = event.getSession();
         session.setAttribute(LOCALE, Locale.getDefault().toString());
+        System.out.println("session");
     }
 }

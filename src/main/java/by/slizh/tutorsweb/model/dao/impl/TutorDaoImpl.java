@@ -72,7 +72,9 @@ public class TutorDaoImpl extends TutorDao {
             JOIN status ON users.status_id = status.status_id
             WHERE tutors.tutor_id IN (SELECT tutor_id FROM tutors_has_subject WHERE subject_id = ?) AND
             city LIKE ? AND
-            price_per_hour > ? AND tutors.price_per_hour < ? 
+            price_per_hour > ? AND tutors.price_per_hour < ? AND
+            is_active = true AND
+            role_name = 'tutor' 
             """;
     private static final String SQL_SEARCH_TUTORS_LIMIT_PART = "LIMIT ?, ?;";
     private static final String SQL_COUNT_SEARCHED_RECORDS = """
@@ -84,6 +86,23 @@ public class TutorDaoImpl extends TutorDao {
              WHERE tutors.tutor_id IN (SELECT tutor_id FROM tutors_has_subject WHERE subject_id = ?) AND
              city LIKE ? AND
              price_per_hour > ? AND tutors.price_per_hour < ?;
+            """;
+    private static final String SQL_FIND_APPLICATIONS = """
+             SELECT tutor_id, phone, education, info, price_per_hour, is_active,
+                                users.user_id, first_name, last_name, email, city, photo, role_name, status_name
+             FROM tutors
+             JOIN users ON tutors.user_id = users.user_id
+             JOIN role ON users.role_id = role.role_id
+             JOIN status ON users.status_id = status.status_id
+             WHERE role_name = 'user'
+             ORDER BY tutor_id
+             LIMIT ?, ?;
+            """;
+    private static final String SQL_COUNT_APPLICATIONS = """
+            SELECT COUNT(*) AS count
+            FROM tutors
+            JOIN users ON tutors.user_id = users.user_id
+            WHERE role_id = 2;
             """;
 
 
@@ -125,11 +144,11 @@ public class TutorDaoImpl extends TutorDao {
 
     @Override
     public List<Tutor> searchTutors(int subjectId, String city, int minPrice, int maxPrice, int offset, int numberOfRecords, String sort) throws DaoException {
-        List<Tutor> tutors = new LinkedList<Tutor>();
+        List<Tutor> tutors = new ArrayList<>();
         String query = buildSearchQuery(sort);
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, subjectId);
-            statement.setString(2, "%" + city + "%");
+            statement.setString(2, city);
             statement.setInt(3, minPrice - 1);
             statement.setInt(4, maxPrice + 1);
             statement.setInt(5, offset);
@@ -182,6 +201,38 @@ public class TutorDaoImpl extends TutorDao {
             throw new DaoException("Failed to find all cities", e);
         }
     }
+
+    @Override
+    public List<Tutor> findApplications(int offset, int numberOfRecords) throws DaoException {
+        List<Tutor> tutors = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_APPLICATIONS)) {
+            statement.setInt(1, offset);
+            statement.setInt(2, numberOfRecords);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                tutors.add(buildTutor(resultSet));
+            }
+            return tutors;
+        } catch (SQLException e) {
+            logger.error("Failed to find applications", e);
+            throw new DaoException("Failed to find applications", e);
+        }
+    }
+
+    @Override
+    public int countApplications() throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_COUNT_APPLICATIONS)) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+            return 0;
+        } catch (SQLException e) {
+            logger.error("Failed to count applications", e);
+            throw new DaoException("Failed to count applications", e);
+        }
+    }
+
 
     @Override
     public Optional<Tutor> findById(int id) throws DaoException {

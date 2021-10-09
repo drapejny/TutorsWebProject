@@ -18,4 +18,5 @@ public interface FeedbackService {
     Optional<Feedback> findFeedbackById(int id) throws ServiceException;
 
     boolean deleteFeedbackById(int id) throws ServiceException;
+
 }

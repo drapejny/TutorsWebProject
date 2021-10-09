@@ -26,7 +26,7 @@
 </c:if>
 <fmt:message key="profile.phone"/>
 <c:choose>
-    <c:when test="${empty user}">
+    <c:when test="${user.role eq 'GUEST'}">
         <a href="${pageContext.request.contextPath}/controller?command=login"><fmt:message key="header.login"/></a>
     </c:when>
     <c:when test="${tutor.isActive}">
@@ -101,7 +101,7 @@ ${averageRating}
             </c:when>
         </c:choose>
     </c:when>
-    <c:when test="${user.role eq 'TUTOR'}">
+    <c:when test="${user.role eq 'TUTOR' && user.tutorId eq requestScope.tutor.tutorId}">
         <br>
         <a href="${pageContext.request.contextPath}/controller?command=edit_tutor_profile_page"><fmt:message key="edit.profile.button"/></a>
         <br>

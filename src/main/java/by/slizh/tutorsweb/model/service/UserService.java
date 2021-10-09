@@ -13,7 +13,7 @@ public interface UserService {
 
     Optional<User> authenticate(String email, String password) throws ServiceException;
 
-    void registrate(Map<String, String> userMap) throws ServiceException;
+    void registrate(String firstName, String lastName, String email, String password) throws ServiceException;
 
     boolean validateUserData(Map<String, String> userMap);
 
@@ -30,5 +30,9 @@ public interface UserService {
     void updatePassword(User user,String password) throws ServiceException;
 
     Map<Feedback, User> findUsersForFeedbacks(List<Feedback> feedbacks) throws ServiceException;
+
+    void makeUserToTutor(int userId) throws ServiceException;
+
+    List<User> searchUsers(String searchLine) throws ServiceException;
 
 }

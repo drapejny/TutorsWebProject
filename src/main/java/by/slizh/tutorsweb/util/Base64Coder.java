@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Base64;
 
-public class Base64Coder {
+public final class Base64Coder {
 
     private static final Logger logger = LogManager.getLogger();
 

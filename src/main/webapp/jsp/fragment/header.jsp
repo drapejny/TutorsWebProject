@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Slizh Anton
-  Date: 04.09.2021
-  Time: 23:11
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -15,19 +9,45 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/myjs.js"></script>
 
 <header>
-    <nav>
-        <ul>
-            <li>
-                <a href="${pageContext.request.contextPath}/controller?command=main_page">LOGO</a>
+    <div class="header__container">
+        <div class="header__logo">
+            <a href="${pageContext.request.contextPath}/controller?command=main_page">LOGO</a>
+        </div>
+        <ul class="header__menu menu">
+            <li class="menu__item">
+                <a class="link menu__link" href="${pageContext.request.contextPath}/controller?command=search_page">
+                    <fmt:message key="main.tutors"/>
+                </a>
             </li>
-            <li><a href="${pageContext.request.contextPath}/controller?command=search_page"/> <fmt:message key="main.tutors"/></li>
-            <li><a href="#"/> <fmt:message key="main.feedbacks"/></li>
+            <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                <li class="menu__item">
+                    <a class="link menu__link" href="${pageContext.request.contextPath}/controller?command=search_users_page">
+                        <fmt:message key="main.users"/>
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="link menu__link" href="${pageContext.request.contextPath}/controller?command=all_subjects_page">
+                        <fmt:message key="main.subjects"/>
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="link menu__link" href="${pageContext.request.contextPath}/controller?command=all_applications_page">
+                        <fmt:message key="main.applications"/>
+                    </a>
+                </li>
+            </c:if>
+            <li class="menu__item">
+                <a class="link meny__link" href="#">
+                    <fmt:message key="main.aboutus"/>
+                </a>
+            </li>
         </ul>
-    </nav>
-    <c:if test="${empty sessionScope.user}">
+    </div>
+
+    <c:if test="${sessionScope.user.role eq 'GUEST'}">
         <a href="${pageContext.request.contextPath}/controller?command=login_page"><fmt:message key="header.login"/></a>
     </c:if>
-    <c:if test="${not empty sessionScope.user}">
+    <c:if test="${sessionScope.user.role ne 'GUEST'}">
         <br>
         <ctg:user-photo photo="${sessionScope.user.photo}" height="50" width="50"/>
         <div class="dropdown">

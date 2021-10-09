@@ -10,6 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="prop.pagecontent"/>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/registration.js"></script>
 <html>
 <head>
     <title>
@@ -18,16 +19,22 @@
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
-<form action="${pageContext.request.contextPath}/controller" method="post">
+
+<form class="registration-form" action="${pageContext.request.contextPath}/controller" method="post">
     <input type="hidden" name="command" value="registration">
-    <fmt:message key="registration.first_name"/><input type="text" name="first_name" value="${requestScope.userMap["first_name"]}"><br>
-    <fmt:message key="registration.last_name"/><input type="text" name="last_name" value="${requestScope.userMap["last_name"]}"><br>
-    <fmt:message key="registration.email"/><input type="text" name="email"value="${requestScope.userMap["email"]}"><br>
-    <fmt:message key="registration.password"/><input type="text" name="password"><br>
-    <fmt:message key="registration.password_repeat"/><input type="text" name="password_repeat"><br>
+    <fmt:message key="registration.first_name"/>
+    <input id="firstname" type="text" name="first_name" required pattern="[A-zА-яЁё`'.-]{1,32}"><br>
+    <fmt:message key="registration.last_name" />
+    <input id="lastname" type="text" name="last_name" required pattern="[A-zА-яЁё`'.-]{1,32}"><br>
+    <fmt:message key="registration.email"/>
+    <input id="email" type="text" name="email" required pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"><br>
+    <fmt:message key="registration.password"/>
+    <input id="password" type="text" name="password" required pattern="^.{6,20}$"><br>
+    <fmt:message key="registration.password_repeat"/>
+    <input id="password-repeat" type="text" name="password_repeat" required pattern="^.{6,20}$"><br>
     ${errorEmailExistsMessage}
     ${errorWrongDataMessage}
-    <input type="submit" value="<fmt:message key="registration.button.signup"/>">
+    <input class="submit-btn" type="submit" value="<fmt:message key="registration.button.signup"/>">
 </form>
 </body>
 </html>

@@ -1,6 +1,6 @@
 package by.slizh.tutorsweb.util.security;
 
-public class LinkIdEncoder {
+public final class LinkIdEncoder {
 
     public static int encodeId(int id) {
         int encodedId = (id * 827 + 53) | 883;

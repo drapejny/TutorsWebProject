@@ -5,6 +5,8 @@ import by.slizh.tutorsweb.exception.CommandException;
 import by.slizh.tutorsweb.exception.ServiceException;
 import by.slizh.tutorsweb.model.service.UserService;
 import by.slizh.tutorsweb.model.service.impl.UserServiceImpl;
+import by.slizh.tutorsweb.model.validator.UserValidator;
+import by.slizh.tutorsweb.model.validator.impl.UserValidatorImpl;
 import by.slizh.tutorsweb.util.Base64Coder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -30,18 +32,16 @@ public class RegistrationCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         String locale = (String) session.getAttribute(SessionAttribute.LOCALE);
-
-        Map<String, String> userMap = new HashMap<>();
-        userMap.put(FIRST_NAME, request.getParameter(FIRST_NAME));
-        userMap.put(LAST_NAME, request.getParameter(LAST_NAME));
-        userMap.put(EMAIL, request.getParameter(EMAIL));
-        userMap.put(PASSWORD, request.getParameter(PASSWORD));
+        String firstName = request.getParameter(FIRST_NAME);
+        String lastName = request.getParameter(LAST_NAME);
+        String email = request.getParameter(EMAIL);
+        String password = request.getParameter(PASSWORD);
 
         UserService service = UserServiceImpl.getInstance();
+        UserValidator userValidator = UserValidatorImpl.getInstance();
 
         try {
-            if (service.isEmailExist(userMap.get(EMAIL))) {
-                request.setAttribute(REGISTRATION_USER_DATA, userMap);
+            if (service.isEmailExist(email)) {
                 request.setAttribute(ERROR_EMAIL_EXISTS, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_EMAIL_EXISTS));
                 return new Router(PagePath.REGISTRATION_PAGE, Router.RouteType.FORWARD);
             }
@@ -51,19 +51,19 @@ public class RegistrationCommand implements Command {
             throw new CommandException("Executing registration command error", e);
         }
 
-        String password = request.getParameter(PASSWORD);
         String passwordRepeat = request.getParameter(PASSWORD_REPEAT);
 
-        if (service.validateUserData(userMap) && password.equals(passwordRepeat)) {
+        if (userValidator.validateFirstName(firstName) && userValidator.validateLastName(lastName)
+                && userValidator.validateEmail(email) && userValidator.validatePassword(password)
+                && password.equals(passwordRepeat)) {
             try {
-                service.registrate(userMap);
+                service.registrate(firstName, lastName, email, password);
             } catch (ServiceException e) {
                 logger.error("Executing registration command error", e);
                 throw new CommandException("Executing registration command error", e);
             }
             return new Router(PagePath.CONFIRMATION_PAGE, Router.RouteType.REDIRECT);
         } else {
-            request.setAttribute(REGISTRATION_USER_DATA, userMap);
             request.setAttribute(ERROR_WRONG_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_DATA));
             return new Router(PagePath.REGISTRATION_PAGE, Router.RouteType.FORWARD);
         }

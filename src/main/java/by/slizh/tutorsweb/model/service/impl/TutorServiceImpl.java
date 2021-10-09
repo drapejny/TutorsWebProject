@@ -202,4 +202,59 @@ public class TutorServiceImpl implements TutorService {
             }
         }
     }
+
+    @Override
+    public List<Tutor> findApplications(int offset, int numberOfRecords) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        TutorDao tutorDao = new TutorDaoImpl();
+        try {
+            transaction.init(tutorDao);
+            List<Tutor> tutors = tutorDao.findApplications(offset, numberOfRecords);
+            return tutors;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in findApplications method", e);
+            }
+        }
+    }
+
+    @Override
+    public int countApplications() throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        TutorDao tutorDao = new TutorDaoImpl();
+        try {
+            transaction.init(tutorDao);
+            return tutorDao.countApplications();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in countApplications method", e);
+            }
+        }
+    }
+
+    @Override
+    public boolean deleteTutorById(int tutorId) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        TutorDao tutorDao = new TutorDaoImpl();
+        try {
+            transaction.init(tutorDao);
+            return tutorDao.deleteById(tutorId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in deleteTutorById method", e);
+            }
+        }
+    }
 }

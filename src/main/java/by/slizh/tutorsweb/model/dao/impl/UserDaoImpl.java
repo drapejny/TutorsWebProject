@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static by.slizh.tutorsweb.model.dao.ColumnName.*;
+
 import java.sql.*;
 import java.util.*;
 
@@ -58,6 +59,14 @@ public class UserDaoImpl extends UserDao {
             SELECT password
             FROM users
             WHERE user_id = ?;
+            """;
+    private static final String SQL_SEARCH_USERS = """
+            SELECT user_id, first_name, last_name, email, photo, role_name, status_name
+            FROM users
+            JOIN role ON role.role_id = users.role_id
+            JOIN status ON status.status_id = users.status_id
+            WHERE last_name LIKE ? OR email LIKE ?
+            ORDER BY last_name, first_name;
             """;
 
     @Override
@@ -203,6 +212,23 @@ public class UserDaoImpl extends UserDao {
         } catch (SQLException e) {
             logger.error("Failed to find user password", e);
             throw new DaoException("Failed to find user password", e);
+        }
+    }
+
+    @Override
+    public List<User> searchUsers(String searchLine) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SEARCH_USERS)) {
+            statement.setString(1, searchLine);
+            statement.setString(2, searchLine);
+            ResultSet resultSet = statement.executeQuery();
+            List<User> users = new ArrayList<>();
+            while (resultSet.next()) {
+                users.add(buildUser(resultSet));
+            }
+            return users;
+        } catch (SQLException e) {
+            logger.error("Failed to search users", e);
+            throw new DaoException("Failed to search users", e);
         }
     }
 

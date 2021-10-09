@@ -10,12 +10,6 @@
 </head>
 <body>
 <c:import url="/jsp/fragment/header.jsp"/>
-<ul>
-    <li><a href="#"><fmt:message key="main.users"/></a></li>
-    <li><a href="${pageContext.request.contextPath}/controller?command=all_subjects_page"><fmt:message key="main.subjects"/></a></li>
-    <li><a href="#"><fmt:message key="main.feedbacks"/></a></li>
-    <li><a href="${pageContext.request.contextPath}/controller?command=all_applications_page"><fmt:message key="main.applications"/></a></li>
-</ul>
 <c:forEach var="element" items="${applicationScope.subjects}" varStatus="status">
     ${element.subjectName} <a href="${pageContext.request.contextPath}/controller?command=delete_subject&subject_id=${element.subjectId}"><fmt:message key="subjects.delete"/></a>
     <hr>

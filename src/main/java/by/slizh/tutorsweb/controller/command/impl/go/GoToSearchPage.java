@@ -32,14 +32,6 @@ public class GoToSearchPage implements Command {
 
         TutorService tutorService = TutorServiceImpl.getInstance();
 
-        try {
-            List<String> cities = tutorService.findAllCities();
-            request.setAttribute(RequestAttribute.CITIES, cities);
-        } catch (ServiceException e) {
-            logger.error("Executing goToSearchPage command error", e);
-            throw new CommandException("Executing goToSearchPage command error", e);
-        }
-
         return new Router(PagePath.SEARCH_PAGE, Router.RouteType.FORWARD);
     }
 }

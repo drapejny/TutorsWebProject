@@ -16,4 +16,8 @@ public abstract class TutorDao extends AbstractDao<Tutor> {
 
     public abstract List<String> findAllCities() throws DaoException;
 
+    public abstract List<Tutor> findApplications(int offset, int numberOfRecords) throws DaoException;
+
+    public abstract int countApplications() throws DaoException;
+
 }

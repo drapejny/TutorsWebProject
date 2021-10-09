@@ -6,7 +6,6 @@
 <fmt:setBundle basename="prop.pagecontent"/>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
@@ -33,7 +32,7 @@
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
-<form action="${pageContext.request.contextPath}/controller">
+<form action="${pageContext.request.contextPath}/controller" method="get">
     <input type="hidden" name="command" value="search">
     <select name="subject">
         <c:forEach var="element" items="${applicationScope.subjects}">
@@ -43,7 +42,7 @@
         </c:forEach>
     </select>
     <select name="city">
-        <c:forEach var="element" items="${requestScope.cities}">
+        <c:forEach var="element" items="${applicationScope.cities}">
             <option value="${element}" <c:if test="${sessionScope.searchedCity == element}">
                 selected
             </c:if>>${element}</option>

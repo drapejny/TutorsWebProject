@@ -34,6 +34,7 @@
     <fmt:message key="profile.phone"/><input type="text" name="phone" value="${sessionScope.user.phone}"><br>
     <fmt:message key="profile.info"/><textarea name="info">${sessionScope.user.info}</textarea><br>
     <fmt:message key="profile.price"/><input type="text" name="price" value="${sessionScope.user.pricePerHour}"><br>
+    <fmt:message key="profile.isActive"/><input type="checkbox" name="is_active" value="${user.isActive}" <c:if test="${user.isActive eq true}">checked</c:if>><br>
     <input type="submit" value="<fmt:message key="edit.profile.button"/>">
     <input type="reset"><hr>
     ${errorWrongDataMessage}

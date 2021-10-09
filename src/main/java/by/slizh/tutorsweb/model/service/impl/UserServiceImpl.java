@@ -1,6 +1,9 @@
 package by.slizh.tutorsweb.model.service.impl;
 
+import by.slizh.tutorsweb.model.dao.TutorDao;
+import by.slizh.tutorsweb.model.dao.impl.TutorDaoImpl;
 import by.slizh.tutorsweb.model.entity.Feedback;
+import by.slizh.tutorsweb.model.entity.Tutor;
 import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.exception.ServiceException;
@@ -33,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     private static UserServiceImpl instance;
 
-    private UserServiceImpl() {
+    public UserServiceImpl() {
     }
 
     public static UserServiceImpl getInstance() {
@@ -72,12 +75,12 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void registrate(Map<String, String> userMap) throws ServiceException {
+    public void registrate(String firstName, String lastName, String email, String password) throws ServiceException {
 
         User user = new User.UserBuilder()
-                .setFirstName(userMap.get(FIRST_NAME))
-                .setLastName(userMap.get(LAST_NAME))
-                .setEmail(userMap.get(EMAIL))
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setEmail(email)
                 .setRole(User.Role.USER)
                 .setStatus(User.Status.NON_ACTIVATED)
                 .createUser();
@@ -86,7 +89,7 @@ public class UserServiceImpl implements UserService {
         EntityTransaction transaction = new EntityTransaction();
         try {
             transaction.init(userDao);
-            userDao.create(user, userMap.get(PASSWORD));
+            userDao.create(user, password);
         } catch (DaoException e) {
             throw new ServiceException("Failed to make transaction in checkEmail method", e);
         } finally {
@@ -259,5 +262,54 @@ public class UserServiceImpl implements UserService {
             }
         }
 
+    }
+
+    @Override
+    public void makeUserToTutor(int userId) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
+        TutorDao tutorDao = new TutorDaoImpl();
+        try {
+            transaction.initTransaction(userDao, tutorDao);
+            Optional<User> user = userDao.findById(userId);
+            if (user.isPresent()) {
+                Optional<Tutor> tutor = tutorDao.findTutorByEmail(user.get().getEmail());
+                if (tutor.isPresent()) {
+                    user.get().setRole(User.Role.TUTOR);
+                    userDao.update(user.get());
+                }
+            }
+        } catch (DaoException e) {
+            try {
+                transaction.rollback();
+            } catch (DaoException ex) {
+                logger.error("Can't rollback transaction in makeUserToTutor method", e);
+            }
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.endTransaction();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in makeUserToTutor method", e);
+            }
+        }
+    }
+
+    @Override
+    public List<User> searchUsers(String searchLine) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
+        try {
+            transaction.init(userDao);
+            return userDao.searchUsers(searchLine);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in searchUsers method", e);
+            }
+        }
     }
 }
