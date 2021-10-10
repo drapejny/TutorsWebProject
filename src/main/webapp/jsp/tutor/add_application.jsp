@@ -13,11 +13,11 @@
     <c:forEach var="element" items="${applicationScope.subjects}" varStatus="status">
         <input type="checkbox" name="subject" value="${element.subjectId}">${element.subjectName}<br>
     </c:forEach>
-    <fmt:message key="application.phone"/><input type="text" name="phone" value="${requestScope.phone}"><br>
-    <fmt:message key="application.city"/><input type="text" name="city" value="${requestScope.city}"><br>
-    <fmt:message key="application.education"/><input type="text" name="education" value="${requestScope.education}"><br>
-    <fmt:message key="application.info"/><input type="text" name="info" value="${requestScope.info}"><br>
-    <fmt:message key="application.price"/><input type="text" name="price" value="${requestScope.price}"><br>
+    <fmt:message key="application.phone"/><input type="text" name="phone" value="${requestScope.phone}" required pattern="^\+375[0-9]{9}$" maxlength="13"><br>
+    <fmt:message key="application.city"/><input type="text" name="city" value="${requestScope.city}" required pattern="[A-zА-яЁё`'.-]{1,32}" maxlength="32"><br>
+    <fmt:message key="application.education"/><textarea name="education" required maxlength="300">${requestScope.education}</textarea><br>
+    <fmt:message key="application.info"/><textarea name="info" required maxlength="500">${requestScope.info}</textarea> <br>
+    <fmt:message key="application.price"/><input type="number" name="price" value="${requestScope.price}" required min="1" max="999"><br>
     <input type="submit" value="<fmt:message key="application.submit.button"/>">
     ${errorWrongDataMessage}
 </form>

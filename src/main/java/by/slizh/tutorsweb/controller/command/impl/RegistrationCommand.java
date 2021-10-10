@@ -26,7 +26,6 @@ import static by.slizh.tutorsweb.controller.command.RequestAttribute.*;
 public class RegistrationCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
-    private static final String BASE_PHOTO_PATH = "/img/user.png";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

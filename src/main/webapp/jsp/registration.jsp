@@ -23,15 +23,15 @@
 <form class="registration-form" action="${pageContext.request.contextPath}/controller" method="post">
     <input type="hidden" name="command" value="registration">
     <fmt:message key="registration.first_name"/>
-    <input id="firstname" type="text" name="first_name" required pattern="[A-zА-яЁё`'.-]{1,32}"><br>
+    <input id="firstname" type="text" name="first_name" required pattern="[A-zА-яЁё`'.-]{1,32}" maxlength="32"><br>
     <fmt:message key="registration.last_name" />
-    <input id="lastname" type="text" name="last_name" required pattern="[A-zА-яЁё`'.-]{1,32}"><br>
+    <input id="lastname" type="text" name="last_name" required pattern="[A-zА-яЁё`'.-]{1,32}" maxlength="32"><br>
     <fmt:message key="registration.email"/>
-    <input id="email" type="text" name="email" required pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"><br>
+    <input id="email" type="email" name="email" required maxlength="100"><br>
     <fmt:message key="registration.password"/>
-    <input id="password" type="text" name="password" required pattern="^.{6,20}$"><br>
+    <input id="password" type="password" name="password" required pattern="^\w{6,20}$" maxlength="20"><br>
     <fmt:message key="registration.password_repeat"/>
-    <input id="password-repeat" type="text" name="password_repeat" required pattern="^.{6,20}$"><br>
+    <input id="password-repeat" type="password" name="password_repeat" required pattern="^\w{6,20}$" maxlength="20"><br>
     ${errorEmailExistsMessage}
     ${errorWrongDataMessage}
     <input class="submit-btn" type="submit" value="<fmt:message key="registration.button.signup"/>">

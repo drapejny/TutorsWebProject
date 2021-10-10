@@ -18,17 +18,17 @@
 </form>
 <form action="${pageContext.request.contextPath}/controller" method="post">
     <input type="hidden" name="command" value="edit_profile">
-    <fmt:message key="profile.first_name"/><input type="text" name="first_name" value="${sessionScope.user.firstName}"><br>
-    <fmt:message key="profile.last_name"/><input type="text" name="last_name" value="${sessionScope.user.lastName}"><br>
+    <fmt:message key="profile.first_name"/><input type="text" name="first_name" value="${sessionScope.user.firstName}" required pattern="[A-zА-яЁё`'.-]{1,32}" maxlength="32"><br>
+    <fmt:message key="profile.last_name"/><input type="text" name="last_name" value="${sessionScope.user.lastName}" required pattern="[A-zА-яЁё`'.-]{1,32}" maxlength="32"><br>
     <input type="submit" value="<fmt:message key="edit.profile.button"/>">
-    <input type="reset"><hr>
+    <input type="reset" value="<fmt:message key="edit.reset"/>"><hr>
 </form>
 ${errorWrongDataMessage}
 ${successEditMessage}
 <form action="${pageContext.request.contextPath}/controller" method="post">
     <input type="hidden" name="command" value="edit_password">
-    <fmt:message key="profile.password"/><input name="password" type="text"><br>
-    <fmt:message key="profile.new_password"/><input name="new_password" type="text"><br>
+    <fmt:message key="profile.password"/><input name="password" type="password" required pattern="^\w{6,20}$" maxlength="20"><br>
+    <fmt:message key="profile.new_password"/><input name="new_password" type="password" required pattern="^\w{6,20}$" maxlength="20"><br>
     <input type="submit" value="<fmt:message key="edit.profile.button"/>">
 </form>
 ${successEditPassword}

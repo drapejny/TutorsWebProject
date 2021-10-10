@@ -23,6 +23,11 @@ public final class RequestAttribute {
 
     public static final String PAGE_COUNT = "pageCount";
     public static final String PAGE_NUM = "pageNumber";
+    public static final String SORT = "sort";
+    public static final String CITY = "city";
+    public static final String MIN_PRICE = "minPrice";
+    public static final String MAX_PRICE = "maxPrice";
+    public static final String SUBJECT_ID = "subjectId";
 
 
     public static String ERROR_USER_NON_ACTIVATED = "errorNonActivatedMessage";

@@ -38,7 +38,7 @@
         <div class="education"><span>${application.education}</span></div>
         <div class="info_title"><fmt:message key="application.info"/></div>
         <div class="info">${application.info}</div>
-        <div class="price_per_hour"><fmt:message key="application.price"/> <span>${application.pricePerHour} $</span></div>
+        <div class="price_per_hour"><fmt:message key="application.price"/> <span>${application.pricePerHour} BYN</span></div>
         <c:if test="${user.role eq 'ADMIN'}">
             <div class="controls">
                 <a href="${pageContext.request.contextPath}/controller?command=accept_application&user_id=${application.userId}">

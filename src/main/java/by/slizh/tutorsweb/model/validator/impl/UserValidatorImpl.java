@@ -10,10 +10,10 @@ public class UserValidatorImpl implements UserValidator {
 
     private static UserValidatorImpl instance = new UserValidatorImpl();
 
-    private static final String REGEXP_FIRST_NAME = "(?=^.{1,32}$)^([A-zА-яЁё`'.-])+$";
-    private static final String REGEXP_LAST_NAME = "(?=^.{1,32}$)^([A-zА-яЁё`'.-])+$";
+    private static final String REGEXP_FIRST_NAME = "^[A-zА-яЁё`'.-]{1,32}$";
+    private static final String REGEXP_LAST_NAME = "^[A-zА-яЁё`'.-]{1,32}$";
     private static final String REGEXP_EMAIL = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-    private static final String REGEXP_PASSWORD = "^.{6,20}$";
+    private static final String REGEXP_PASSWORD = "^\\w{6,20}$";
 
 
     private static final String EMPTY_LINE = "";

@@ -29,7 +29,6 @@ public class LoginCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        System.out.println(request.getServletContext().getRealPath(""));
         HttpSession session = request.getSession();
         String locale = (String) session.getAttribute(SessionAttribute.LOCALE);
         Router router = null;
@@ -57,7 +56,7 @@ public class LoginCommand implements Command {
                 } else {
                     session.setAttribute(SessionAttribute.USER, user.get());
                 }
-                router = new Router(PagePath.MAIN_PAGE, Router.RouteType.REDIRECT);
+                router = new Router(PagePath.MAIN_PAGE, Router.RouteType.FORWARD);
             } else {
                 request.setAttribute(ERROR_WRONG_PASSWORD_OR_EMAIL, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_PASSWORD_OR_EMAIL));
                 router = new Router(PagePath.LOGIN_PAGE, Router.RouteType.FORWARD);

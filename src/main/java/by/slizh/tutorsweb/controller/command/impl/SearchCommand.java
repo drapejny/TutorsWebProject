@@ -17,9 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static by.slizh.tutorsweb.controller.command.RequestParameter.*;
 import static by.slizh.tutorsweb.controller.command.RequestAttribute.*;
-import static by.slizh.tutorsweb.controller.command.SessionAttribute.*;
 
 public class SearchCommand implements Command {
 
@@ -31,61 +29,55 @@ public class SearchCommand implements Command {
         TutorValidator tutorValidator = TutorValidatorImpl.getInstance();
         UserValidator userValidator = UserValidatorImpl.getInstance();
         TutorService tutorService = TutorServiceImpl.getInstance();
-//        Map<String,String[]> map = request.getParameterMap();
-//        for (Map.Entry<String, String[]> entry : map.entrySet()) {
-//            System.out.println("ID =  " + entry.getKey() + "  " + Arrays.toString(entry.getValue()));
-//        }
-        String pageNumber = request.getParameter(PAGE_NUMBER);
-        String sort = request.getParameter(SORT);
+
+        String pageNumber = request.getParameter(RequestParameter.PAGE_NUMBER);
+        String sort = request.getParameter(RequestParameter.SORT);
+        String city = request.getParameter(RequestParameter.CITY);
+        String subjectId = request.getParameter(RequestParameter.SUBJECT);
+        String minPrice = request.getParameter(RequestParameter.MIN_PRICE);
+        String maxPrice = request.getParameter(RequestParameter.MAX_PRICE);
 
         if (sort == null) {
             sort = DEFAULT_SORT;
         }
 
         if (pageNumber == null) {
-            String city = request.getParameter(CITY);
-            String subjectId = request.getParameter(SUBJECT);
-            String minPrice = request.getParameter(MIN_PRICE);
-            String maxPrice = request.getParameter(MAX_PRICE);
-
 
             if (tutorValidator.validateCity(city) && tutorValidator.validatePrice(minPrice)
                     && tutorValidator.validatePrice(maxPrice)) {
-                session.setAttribute(SEARCHED_CITY, city);
-                session.setAttribute(SEARCHED_SUBJECT_ID, Integer.parseInt(subjectId));
-                session.setAttribute(SEARCHED_MIN_PRICE, Integer.parseInt(minPrice));
-                session.setAttribute(SEARCHED_MAX_PRICE, Integer.parseInt(maxPrice));
-                request.setAttribute(SEARCHED_PAGE_NUMBER, FIRST_PAGE_NUMBER);
+                System.out.println(1);
                 request.setAttribute(SORT, sort);
                 try {
                     List<Tutor> tutors = tutorService.searchTutors(Integer.parseInt(subjectId), city, Integer.parseInt(minPrice), Integer.parseInt(maxPrice), DEFAULT_OFFSET, TUTORS_ON_SEARCH_PAGE_NUMBER, sort);
                     request.setAttribute(RequestAttribute.TUTORS, tutors);
                     int searchedRecordsCount = tutorService.countSearchedRecords(Integer.parseInt(subjectId), city, Integer.parseInt(minPrice), Integer.parseInt(maxPrice));
                     int pagesCount = searchedRecordsCount % TUTORS_ON_SEARCH_PAGE_NUMBER == 0 ? searchedRecordsCount / TUTORS_ON_SEARCH_PAGE_NUMBER : searchedRecordsCount / TUTORS_ON_SEARCH_PAGE_NUMBER + 1;
-                    request.setAttribute(SEARCHED_PAGES_COUNT, pagesCount);
+                    request.setAttribute(PAGE_NUM, 1);
+                    request.setAttribute(PAGE_COUNT, pagesCount);
                 } catch (ServiceException e) {
                     throw new CommandException("Executing search command error", e);
                 }
             }
         } else {
-            request.setAttribute(SEARCHED_PAGE_NUMBER, Integer.parseInt(pageNumber));
+            System.out.println(2);
+            request.setAttribute(PAGE_NUM, Integer.parseInt(pageNumber));
             request.setAttribute(SORT, sort);
             try {
-                Integer subjectId = (Integer) session.getAttribute(SEARCHED_SUBJECT_ID);
-                String city = (String) session.getAttribute(SEARCHED_CITY);
-                Integer minPrice = (Integer) session.getAttribute(SEARCHED_MIN_PRICE);
-                Integer maxPrice = (Integer) session.getAttribute(SEARCHED_MAX_PRICE);
                 int offset = (Integer.parseInt(pageNumber) - 1) * TUTORS_ON_SEARCH_PAGE_NUMBER;
-                List<Tutor> tutors = tutorService.searchTutors(subjectId, city, minPrice, maxPrice, offset, TUTORS_ON_SEARCH_PAGE_NUMBER, sort);
-                int searchedRecordsCount = tutorService.countSearchedRecords(subjectId, city, minPrice, maxPrice);
+                List<Tutor> tutors = tutorService.searchTutors(Integer.parseInt(subjectId), city, Integer.parseInt(minPrice), Integer.parseInt(maxPrice), offset, TUTORS_ON_SEARCH_PAGE_NUMBER, sort);
+                int searchedRecordsCount = tutorService.countSearchedRecords(Integer.parseInt(subjectId), city, Integer.parseInt(minPrice), Integer.parseInt(maxPrice));
                 int pagesCount = searchedRecordsCount % TUTORS_ON_SEARCH_PAGE_NUMBER == 0 ? searchedRecordsCount / TUTORS_ON_SEARCH_PAGE_NUMBER : searchedRecordsCount / TUTORS_ON_SEARCH_PAGE_NUMBER + 1;
                 request.setAttribute(TUTORS, tutors);
-                request.setAttribute(SEARCHED_PAGES_COUNT, pagesCount);
+                request.setAttribute(PAGE_COUNT, pagesCount);
                 request.setAttribute(SORT, sort);
             } catch (ServiceException e) {
                 throw new CommandException("Executing search command error", e);
             }
         }
+        request.setAttribute(SUBJECT_ID, subjectId);
+        request.setAttribute(CITY, city);
+        request.setAttribute(MIN_PRICE, minPrice);
+        request.setAttribute(MAX_PRICE, maxPrice);
         return new Router(PagePath.SEARCH_PAGE, Router.RouteType.FORWARD);
     }
 }

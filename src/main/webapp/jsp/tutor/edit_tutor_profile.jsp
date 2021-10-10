@@ -29,14 +29,14 @@
                 <c:if test="${contains eq true}">checked</c:if>
         >${element.subjectName}<br>
     </c:forEach>
-    <fmt:message key="profile.first_name"/><input type="text" name="first_name" value="${sessionScope.user.firstName}"><br>
-    <fmt:message key="profile.last_name"/><input type="text" name="last_name" value="${sessionScope.user.lastName}"><br>
-    <fmt:message key="profile.phone"/><input type="text" name="phone" value="${sessionScope.user.phone}"><br>
-    <fmt:message key="profile.info"/><textarea name="info">${sessionScope.user.info}</textarea><br>
-    <fmt:message key="profile.price"/><input type="text" name="price" value="${sessionScope.user.pricePerHour}"><br>
+    <fmt:message key="profile.first_name"/><input type="text" name="first_name" value="${sessionScope.user.firstName}" required pattern="[A-zА-яЁё`'.-]{1,32}" maxlength="32"><br>
+    <fmt:message key="profile.last_name"/><input type="text" name="last_name" value="${sessionScope.user.lastName}" required pattern="[A-zА-яЁё`'.-]{1,32}" maxlength="32"><br>
+    <fmt:message key="profile.phone"/><input type="text" name="phone" value="${sessionScope.user.phone}" required pattern="^\+375[0-9]{9}$" maxlength="13"><br>
+    <fmt:message key="profile.info"/><textarea name="info" required maxlength="500">${sessionScope.user.info}</textarea><br>
+    <fmt:message key="profile.price"/><input type="number" name="price" value="${sessionScope.user.pricePerHour}" required min="1" max="999"><br>
     <fmt:message key="profile.isActive"/><input type="checkbox" name="is_active" value="${user.isActive}" <c:if test="${user.isActive eq true}">checked</c:if>><br>
     <input type="submit" value="<fmt:message key="edit.profile.button"/>">
-    <input type="reset"><hr>
+    <input type="reset" value="<fmt:message key="edit.reset"/>"><hr>
     ${errorWrongDataMessage}
     ${successEditMessage}
 </form>

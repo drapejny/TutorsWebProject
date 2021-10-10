@@ -5,8 +5,8 @@
 <%@ taglib uri="customtags" prefix="ctg"%>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="prop.pagecontent"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/mycss.css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/myjs.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
 
 <header>
     <div class="header__container">
@@ -49,9 +49,11 @@
     </c:if>
     <c:if test="${sessionScope.user.role ne 'GUEST'}">
         <br>
-        <ctg:user-photo photo="${sessionScope.user.photo}" height="50" width="50"/>
-        <div class="dropdown">
-            <button onclick="myFunction()" class="dropbtn">${sessionScope.user.firstName} ${sessionScope.user.lastName}</button>
+        <div onmouseenter="myFunction()" onmouseleave="myFunction()" class="dropdown">
+            <button class="dropbtn">
+                <ctg:user-photo photo="${sessionScope.user.photo}" height="50" width="50"/>
+                    ${sessionScope.user.firstName} ${sessionScope.user.lastName}
+            </button>
             <div id="myDropdown" class="dropdown-content">
                 <c:choose>
                     <c:when test="${sessionScope.user.role eq 'USER' || sessionScope.user.role eq 'ADMIN'}">
@@ -61,7 +63,6 @@
                         <a href="${pageContext.request.contextPath}/controller?command=tutor_profile_page&tutor_id=${sessionScope.user.tutorId}"><fmt:message key="header.dropdown.profile"/></a>
                     </c:when>
                 </c:choose>
-                <a href="#"><fmt:message key="header.dropdown.bookmarks"/></a>
                 <a href="${pageContext.request.contextPath}/controller?command=logout"><fmt:message key="header.dropdown.logout"/></a>
             </div>
         </div>
