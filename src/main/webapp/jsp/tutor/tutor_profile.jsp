@@ -76,10 +76,14 @@ ${averageRating}
                             </c:forEach>
                         </div>
                     </div>
-                    <textarea name="text">${yourFeedback.text}</textarea>
-                    <input type="submit" value="<fmt:message key="profile.edit"/>">
-                    <a href="${pageContext.request.contextPath}/controller?command=delete_feedback&feedback_id=${yourFeedback.feedbackId}&tutor_id=${tutor.tutorId}"><fmt:message key="profile.delete"/></a>
-                    <br>
+                    <textarea name="text" required maxlength="300">${yourFeedback.text}</textarea>
+                    <button type="submit" class="simple-btn"><fmt:message key="profile.edit"/></button>
+                </form>
+                <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <input type="hidden" name="command" value="delete_feedback">
+                    <input type="hidden" name="feedback_id" value="${yourFeedback.feedbackId}">
+                    <input type="hidden" name="tutor_id" value="${tutor.tutorId}">
+                    <button type="submit" class="red-btn"><fmt:message key="profile.delete"/></button>
                 </form>
             </c:when>
             <c:when test="${contains eq false}">
@@ -94,8 +98,8 @@ ${averageRating}
                             </c:forEach>
                         </div>
                     </div>
-                    <textarea name="text"></textarea>
-                    <input type="submit" value="<fmt:message key="profile.addFeedback"/>">
+                    <textarea name="text" required maxlength="300"></textarea>
+                    <button type="submit" class="simple-btn"><fmt:message key="profile.addFeedback"/></button>
                     <br>
                 </form>
             </c:when>
@@ -128,13 +132,14 @@ ${averageRating}
         </c:forEach>
     </div>
     <c:if test="${user.role eq 'ADMIN' || user.userId eq tutor.userId}">
-        <a href="${pageContext.request.contextPath}/controller?command=delete_feedback&tutor_id=${tutor.tutorId}&feedback_id=${element.feedbackId}"><fmt:message key="profile.delete"/></a>
+        <form action="${pageContext.request.contextPath}/controller" method="post">
+            <input type="hidden" name="command" value="delete_feedback">
+            <input type="hidden" name="tutor_id" value="${tutor.tutorId}">
+            <input type="hidden" name="feedback_id" value="${element.feedbackId}">
+            <button type="submit" class="red-btn"><fmt:message key="profile.delete"/></button>
+        </form>
     </c:if>
     <hr>
 </c:forEach>
-
-
-
-
 </body>
 </html>

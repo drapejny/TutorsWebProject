@@ -25,7 +25,16 @@ import java.util.Set;
 public class GoToTutorProfilePage implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        int tutorId = Integer.parseInt(request.getParameter(RequestParameter.TUTOR_ID));
+
+        String tutorIdParameter = request.getParameter(RequestParameter.TUTOR_ID);
+        int tutorId;
+        if (tutorIdParameter == null) {
+            tutorId = (Integer) request.getSession().getAttribute(RequestAttribute.TUTOR_ID);
+        } else {
+            tutorId = Integer.parseInt(tutorIdParameter);
+            request.getSession().removeAttribute(RequestAttribute.TUTOR_ID);
+        }
+
         TutorService tutorService = TutorServiceImpl.getInstance();
         SubjectService subjectService = SubjectServiceImpl.getInstance();
         FeedbackService feedbackService = FeedbackServiceImpl.getInstance();
@@ -36,7 +45,7 @@ public class GoToTutorProfilePage implements Command {
                 request.setAttribute(RequestAttribute.TUTOR, tutor.get());
             }
             List<Subject> subjects = subjectService.findSubjectsByTutorId(tutorId);
-            List<Feedback> feedbacks = feedbackService.findFeedbacksByTutor(tutor.get().getTutorId());
+            List<Feedback> feedbacks = feedbackService.findFeedbacksByTutor(tutorId);
             Map<Feedback, User> feedbackUserMap = userService.findUsersForFeedbacks(feedbacks);
 
             request.setAttribute(RequestAttribute.SUBJECTS, subjects);

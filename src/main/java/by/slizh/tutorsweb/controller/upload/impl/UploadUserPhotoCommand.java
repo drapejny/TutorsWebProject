@@ -25,7 +25,7 @@ public class UploadUserPhotoCommand implements UploadCommand {
         User user = (User) request.getSession().getAttribute(SessionAttribute.USER);
         try {
             userService.updatePhoto(user, inputStream);
-            return new Router(PagePath.EDIT_PROFILE_PAGE, Router.RouteType.FORWARD);
+            return new Router(PagePath.GO_TO_EDIT_PROFILE_PAGE, Router.RouteType.REDIRECT);
         } catch (ServiceException e) {
             logger.error("Executing uploadUserPhoto command error", e);
             throw new CommandException("Executing uploadUserPhoto command error", e);

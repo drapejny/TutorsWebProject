@@ -11,13 +11,10 @@
     </title>
 </head>
 <body>
-<c:import url="fragment/header.jsp"/>
+<c:import url="../fragment/header.jsp"/>
 <ctg:user-photo photo="${sessionScope.user.photo}" height="100" width="100"/>
 <h3>${sessionScope.user.firstName} ${sessionScope.user.lastName}</h3><br>
 <fmt:message key="profile.email"/> ${sessionScope.user.email}<br>
-<c:if test="${user.role eq 'USER'}">
-    <a href="${pageContext.request.contextPath}/controller?command=become_tutor"><fmt:message key="profile.become_tutor"/></a>
-</c:if>
 <a href="${pageContext.request.contextPath}/controller?command=edit_profile_page"><fmt:message key="profile.edit"/></a>
 </body>
 </html>

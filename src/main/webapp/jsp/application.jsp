@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/application.css" />
 </head>
 <body>
+<c:import url="fragment/header.jsp"/>
 <c:if test="${user.role eq 'USER'}">
     <span class="wait-tittle"><fmt:message key="application.wait"/></span>
 </c:if>

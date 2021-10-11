@@ -6,6 +6,7 @@
     <title>INDEX - JSP</title>
 </head>
 <body>
-<c:redirect url="controller?command=main_page"/>
+<%--<c:redirect url="/jsp/main.jsp"/>--%>
+<c:redirect url="/controller?command=main_page"/>
 </body>
 </html>

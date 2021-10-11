@@ -21,6 +21,9 @@
             <input type="submit" class="search-button" value="<fmt:message key="search.button"/>">
         </form>
     </div>
+    <br>
+    <span class="success-message">${successBlockUserMessage}</span>
+    <span class="success-message">${successUnblockUserMessage}</span>
     <div class="main_table">
         <div class="table_body">
             <c:forEach var="element" items="${users}">
@@ -31,7 +34,24 @@
                     <div class="table_item">${element.role}</div>
                     <div class="table_item">${element.status}</div>
                     <div class="table_item">
-                        <button class="white_btn">забанить</button>
+                        <c:if test="${element.role ne 'ADMIN'}">
+                            <c:choose>
+                                <c:when test="${element.status eq 'ACTIVATED'}">
+                                    <form action="${pageContext.request.contextPath}/controller" method="post">
+                                        <input type="hidden" name="command" value="block_user">
+                                        <input type="hidden" name="user_id" value="${element.userId}">
+                                        <button type="submit" class="block_btn"><fmt:message key="admin.block.btn"/></button>
+                                    </form>
+                                </c:when>
+                                <c:when test="${element.status eq 'BLOCKED'}">
+                                    <form action="${pageContext.request.contextPath}/controller" method="post">
+                                        <input type="hidden" name="command" value="unblock_user">
+                                        <input type="hidden" name="user_id" value="${element.userId}">
+                                        <button type="submit" class="unblock_btn"><fmt:message key="admin.unblock.btn"/></button>
+                                    </form>
+                                </c:when>
+                            </c:choose>
+                        </c:if>
                     </div>
                 </div>
             </c:forEach>

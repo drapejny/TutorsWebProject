@@ -26,7 +26,7 @@ public class UploadTutorPhotoCommand implements UploadCommand {
         Tutor tutor = (Tutor) request.getSession().getAttribute(SessionAttribute.USER);
         try {
             userService.updatePhoto(tutor, inputStream);
-            return new Router(PagePath.EDIT_TUTOR_PROFILE_PAGE, Router.RouteType.FORWARD);
+            return new Router(PagePath.GO_TO_EDIT_TUTOR_PROFILE_PAGE, Router.RouteType.REDIRECT);
         } catch (ServiceException e) {
             logger.error("Executing uploadTutorPhoto command error", e);
             throw new CommandException("Executing uploadTutorPhoto command error", e);

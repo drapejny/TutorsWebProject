@@ -38,39 +38,22 @@ public class EditFeedbackCommand implements Command {
         int tutorId = Integer.parseInt(request.getParameter(RequestParameter.TUTOR_ID));
         FeedbackValidator feedbackValidator = FeedbackValidatorImpl.getInstance();
         FeedbackService feedbackService = FeedbackServiceImpl.getInstance();
-        TutorService tutorService = TutorServiceImpl.getInstance();
-        UserService userService = UserServiceImpl.getInstance();
-        SubjectService subjectService = SubjectServiceImpl.getInstance();
         if (feedbackValidator.validateFeedbackText(text) && rating != null) {
             try {
-                Optional<Feedback> feedback = feedbackService.findFeedbackById(feedbackId);
-                if (feedback.isPresent()) {
-                    feedback.get().setText(text);
-                    feedback.get().setRating(Integer.parseInt(rating));
-                    feedback.get().setDate(LocalDate.now());
-                    feedbackService.updateFeedback(feedback.get());
+                Optional<Feedback> feedbackOptional = feedbackService.findFeedbackById(feedbackId);
+                if (feedbackOptional.isPresent()) {
+                    Feedback feedback = feedbackOptional.get();
+                    feedback.setText(text);
+                    feedback.setRating(Integer.parseInt(rating));
+                    feedback.setDate(LocalDate.now());
+                    feedbackService.updateFeedback(feedback);
                 }
-
+                request.getSession().setAttribute(RequestAttribute.TUTOR_ID, tutorId);
             } catch (ServiceException e) {
                 logger.error("Executing editFeedback command error", e);
                 throw new CommandException("Executing editFeedback command error", e);
             }
         }
-        try {
-            Optional<Tutor> tutor = tutorService.findTutorById(tutorId);
-            if (tutor.isPresent()) {
-                request.setAttribute(RequestAttribute.TUTOR, tutor.get());
-            }
-            List<Feedback> feedbacks = feedbackService.findFeedbacksByTutor(tutorId);
-            List<Subject> subjects = subjectService.findSubjectsByTutorId(tutorId);
-            Map<Feedback, User> feedbackUserMap = userService.findUsersForFeedbacks(feedbacks);
-            request.setAttribute(RequestAttribute.FEEDBACKS, feedbacks);
-            request.setAttribute(RequestAttribute.USERS, feedbackUserMap);
-            request.setAttribute(RequestAttribute.SUBJECTS, subjects);
-        } catch (ServiceException e) {
-            logger.error("Executing editFeedback command error", e);
-            throw new CommandException("Executing editFeedback command error", e);
-        }
-        return new Router(PagePath.TUTOR_PROFILE_PAGE, Router.RouteType.FORWARD);
+        return new Router(PagePath.GO_TO_TUTOR_PROFILE_PAGE, Router.RouteType.REDIRECT);
     }
 }

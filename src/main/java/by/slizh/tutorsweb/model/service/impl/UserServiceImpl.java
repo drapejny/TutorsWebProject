@@ -46,6 +46,7 @@ public class UserServiceImpl implements UserService {
         return instance;
     }
 
+
     @Override
     public Optional<User> authenticate(String email, String password) throws ServiceException {
         Optional<User> result = Optional.empty();
@@ -101,11 +102,6 @@ public class UserServiceImpl implements UserService {
         }
         MailSender mailSender = new MailSender();
         mailSender.send(LinkIdEncoder.encodeId(user.getUserId()), user.getEmail());
-    }
-
-    @Override
-    public boolean validateUserData(Map<String, String> userMap) {
-        return UserValidatorImpl.getInstance().validateUserData(userMap);
     }
 
     @Override
@@ -247,7 +243,9 @@ public class UserServiceImpl implements UserService {
             for (Feedback feedback : feedbacks) {
                 Optional<User> user = userDao.findById(feedback.getUserId());
                 if (user.isPresent()) {
-                    resultMap.put(feedback, user.get());
+                    if (user.get().getStatus() != User.Status.BLOCKED) {
+                        resultMap.put(feedback, user.get());
+                    }
                 }
             }
             return resultMap;
@@ -311,5 +309,53 @@ public class UserServiceImpl implements UserService {
                 logger.error("Can't end transaction in searchUsers method", e);
             }
         }
+    }
+
+    @Override
+    public boolean blockUser(int userId) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
+        try {
+            transaction.init(userDao);
+            Optional<User> user = userDao.findById(userId);
+            if (user.isPresent() && user.get().getRole() != User.Role.ADMIN) {
+                user.get().setStatus(User.Status.BLOCKED);
+                userDao.update(user.get());
+                return true;
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in blockUser method", e);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean unblockUser(int userId) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
+        try {
+            transaction.init(userDao);
+            Optional<User> user = userDao.findById(userId);
+            if (user.isPresent() && user.get().getRole() != User.Role.ADMIN) {
+                user.get().setStatus(User.Status.ACTIVATED);
+                userDao.update(user.get());
+                return true;
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in unblockUser method", e);
+            }
+        }
+        return false;
     }
 }

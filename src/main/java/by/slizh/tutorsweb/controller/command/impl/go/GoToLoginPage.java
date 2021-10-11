@@ -3,11 +3,18 @@ package by.slizh.tutorsweb.controller.command.impl.go;
 import by.slizh.tutorsweb.controller.command.Command;
 import by.slizh.tutorsweb.controller.command.PagePath;
 import by.slizh.tutorsweb.controller.command.Router;
+import by.slizh.tutorsweb.controller.command.SessionAttribute;
 import jakarta.servlet.http.HttpServletRequest;
+
+import static by.slizh.tutorsweb.controller.command.SessionAttribute.*;
 
 public class GoToLoginPage implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
-        return new Router(PagePath.LOGIN_PAGE, Router.RouteType.REDIRECT);
+        if(request.getSession().getAttribute(SUCCESS_REGISTRATION_MESSAGE) != null){
+            request.setAttribute(SUCCESS_REGISTRATION_MESSAGE,request.getSession().getAttribute(SUCCESS_REGISTRATION_MESSAGE));
+            request.getSession().removeAttribute(SUCCESS_REGISTRATION_MESSAGE);
+        }
+        return new Router(PagePath.LOGIN_PAGE, Router.RouteType.FORWARD);
     }
 }

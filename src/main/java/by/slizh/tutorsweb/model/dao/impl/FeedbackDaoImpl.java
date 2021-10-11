@@ -26,6 +26,11 @@ public class FeedbackDaoImpl extends FeedbackDao {
             FROM feedbacks
             WHERE feedback_id = ?;
             """;
+    private static final String SQL_FIND_BY_TUTOR_ID_AND_USER_ID = """
+            SELECT feedback_id, text, date, rating, user_id, tutor_id
+            FROM feedbacks
+            WHERE tutor_id = ? AND user_id = ?;
+            """;
     private static final String SQL_FIND_FEEDBACKS_BY_TUTOR_ID = """
             SELECT feedback_id, text, date, rating, user_id, tutor_id
             FROM feedbacks
@@ -36,8 +41,8 @@ public class FeedbackDaoImpl extends FeedbackDao {
             DELETE FROM feedbacks WHERE feedback_id = ?;
             """;
     private static final String SQL_CREATE_FEEDBACK = """
-             INSERT INTO feedbacks (feedback_id, text, date, rating, user_id, tutor_id)
-            VALUES (?, ?, ?, ?, ?, ?);
+             INSERT INTO feedbacks (text, date, rating, user_id, tutor_id)
+            VALUES ( ?, ?, ?, ?, ?);
             """;
     private static final String SQL_UPDATE_FEEDBACK = """
             UPDATE feedbacks
@@ -96,19 +101,18 @@ public class FeedbackDaoImpl extends FeedbackDao {
     @Override
     public boolean create(Feedback feedback) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_FEEDBACK, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1, feedback.getFeedbackId());
-            statement.setString(2, feedback.getText());
-            statement.setDate(3, Date.valueOf(feedback.getDate()));
-            statement.setInt(4, feedback.getRating());
-            statement.setInt(5, feedback.getUserId());
-            statement.setInt(6, feedback.getTutorId());
+            statement.setString(1, feedback.getText());
+            statement.setDate(2, Date.valueOf(feedback.getDate()));
+            statement.setInt(3, feedback.getRating());
+            statement.setInt(4, feedback.getUserId());
+            statement.setInt(5, feedback.getTutorId());
             boolean result = statement.executeUpdate() == 1;
-            try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                if (resultSet.next()) {
-                    feedback.setFeedbackId(resultSet.getInt(1));
-                }
-                return result;
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                feedback.setFeedbackId(resultSet.getInt(1));
             }
+            return result;
+
         } catch (SQLException e) {
             logger.error("Failed to create feedback", e);
             throw new DaoException("Failed to create feedback", e);
@@ -138,7 +142,7 @@ public class FeedbackDaoImpl extends FeedbackDao {
             statement.setInt(1, tutorId);
             List<Feedback> feedbacks = new ArrayList<>();
             try (ResultSet resultSet = statement.executeQuery()) {
-                while(resultSet.next()){
+                while (resultSet.next()) {
                     Feedback feedback = buildFeedback(resultSet);
                     feedbacks.add(feedback);
                 }
@@ -147,6 +151,23 @@ public class FeedbackDaoImpl extends FeedbackDao {
         } catch (SQLException e) {
             logger.error("Failed to find feedbacks by tutorId", e);
             throw new DaoException("Failed to find feedbacks by tutorId", e);
+        }
+    }
+
+    @Override
+    public Optional<Feedback> findByTutorIdAndUserId(int tutorId, int userId) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_TUTOR_ID_AND_USER_ID)) {
+            statement.setInt(1, tutorId);
+            statement.setInt(2, userId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Feedback feedback = buildFeedback(resultSet);
+                return Optional.of(feedback);
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            logger.error("Failed to find feedback by tutorId and userId", e);
+            throw new DaoException("Failed to find feedback by tutorId and userId", e);
         }
     }
 

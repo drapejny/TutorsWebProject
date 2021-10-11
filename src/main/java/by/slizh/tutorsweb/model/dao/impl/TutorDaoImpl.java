@@ -85,7 +85,9 @@ public class TutorDaoImpl extends TutorDao {
              JOIN status ON users.status_id = status.status_id
              WHERE tutors.tutor_id IN (SELECT tutor_id FROM tutors_has_subject WHERE subject_id = ?) AND
              city LIKE ? AND
-             price_per_hour > ? AND tutors.price_per_hour < ?;
+             price_per_hour > ? AND tutors.price_per_hour < ? AND
+             is_active = true AND
+             role_name = 'tutor';
             """;
     private static final String SQL_FIND_APPLICATIONS = """
              SELECT tutor_id, phone, education, info, price_per_hour, is_active,

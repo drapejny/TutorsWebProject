@@ -15,16 +15,14 @@ import java.util.Locale;
 public class RoleFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        System.out.println("roleFilter start");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(SessionAttribute.USER);
-        if (user == null) {
-            user = new User.UserBuilder()
-                    .setRole(User.Role.GUEST)
-                    .createUser();
-            session.setAttribute(SessionAttribute.USER, user);
-        }
+
+        filterChain.doFilter(servletRequest, servletResponse);  //// TODO: 07.10.2021 удалить это и расскомментить код выше
+
 //        String commandName = request.getParameter(RequestParameter.COMMAND);
 //        CommandType commandType;
 //        if (commandName != null) {
@@ -38,6 +36,5 @@ public class RoleFilter implements Filter {
 //        } else {
 //            filterChain.doFilter(servletRequest, servletResponse);
 //        }
-        filterChain.doFilter(servletRequest, servletResponse);  //// TODO: 07.10.2021 удалить это и расскомментить код выше
     }
 }

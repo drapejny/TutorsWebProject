@@ -37,7 +37,9 @@ public enum CommandType {
     REJECT_APPLICATION(new RejectApplicationCommand()),
     ACCEPT_APPLICATION(new AcceptApplicationCommand()),
     SEARCH_USERS_PAGE(new GoToSearchUsersPage()),
-    SEARCH_USERS(new SearchUsersCommand());
+    SEARCH_USERS(new SearchUsersCommand()),
+    BLOCK_USER(new BlockUserCommand()),
+    UNBLOCK_USER(new UnblockUserCommand());
 
     private Command command;
 

@@ -22,6 +22,7 @@ public class ServletContextListenerImpl implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
+        System.out.println("context");
         ConnectionPool.getInstance();
         SubjectService subjectService = SubjectServiceImpl.getInstance();
         TutorService tutorService = TutorServiceImpl.getInstance();

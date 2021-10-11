@@ -4,6 +4,7 @@ import by.slizh.tutorsweb.controller.command.PagePath;
 import by.slizh.tutorsweb.controller.command.SessionAttribute;
 import by.slizh.tutorsweb.exception.ServiceException;
 import by.slizh.tutorsweb.model.entity.Subject;
+import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.model.service.SubjectService;
 import by.slizh.tutorsweb.model.service.impl.SubjectServiceImpl;
 import jakarta.servlet.annotation.WebListener;
@@ -28,6 +29,13 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent event) {
         HttpSession session = event.getSession();
         session.setAttribute(LOCALE, Locale.getDefault().toString());
-        System.out.println("session");
+       User user = new User.UserBuilder()
+                .setRole(User.Role.GUEST)
+                .createUser();
+        session.setAttribute(SessionAttribute.USER, user);
+    }
+
+    @Override
+    public void sessionDestroyed(HttpSessionEvent se) {
     }
 }

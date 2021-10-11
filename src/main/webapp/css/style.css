@@ -1,0 +1,55 @@
+body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+.success-message {
+    color: #4caf50;
+}
+
+.fail-message{
+    color: #a80202;
+}
+
+.simple-btn {
+    color: #fff; /* цвет текста */
+    text-decoration: none; /* убирать подчёркивание у ссылок */
+    user-select: none; /* убирать выделение текста */
+    background: #7fbcf3; /* фон кнопки */
+    padding: .5em 1.5em; /* отступ от текста */
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 2px;
+    border-color: #7fbcf3;
+}
+
+.simple-btn:hover {
+    background: #fff;
+    color: #7fbcf3;
+    cursor: pointer
+}
+
+.simple-btn:active {
+    background:#4c91f6;
+}
+
+.red-btn {
+    color: #fff; /* цвет текста */
+    text-decoration: none; /* убирать подчёркивание у ссылок */
+    user-select: none; /* убирать выделение текста */
+    background: #c90000; /* фон кнопки */
+    padding: .5em 1.5em; /* отступ от текста */
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 2px;
+    border-color: #c90000;
+}
+
+.red-btn:hover {
+    background: #fff;
+    color: #c90000;
+    cursor: pointer
+}
+
+.red-btn:active {
+    background: #a80202;
+}

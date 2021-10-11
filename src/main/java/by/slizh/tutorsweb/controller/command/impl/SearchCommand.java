@@ -45,7 +45,6 @@ public class SearchCommand implements Command {
 
             if (tutorValidator.validateCity(city) && tutorValidator.validatePrice(minPrice)
                     && tutorValidator.validatePrice(maxPrice)) {
-                System.out.println(1);
                 request.setAttribute(SORT, sort);
                 try {
                     List<Tutor> tutors = tutorService.searchTutors(Integer.parseInt(subjectId), city, Integer.parseInt(minPrice), Integer.parseInt(maxPrice), DEFAULT_OFFSET, TUTORS_ON_SEARCH_PAGE_NUMBER, sort);
@@ -59,7 +58,6 @@ public class SearchCommand implements Command {
                 }
             }
         } else {
-            System.out.println(2);
             request.setAttribute(PAGE_NUM, Integer.parseInt(pageNumber));
             request.setAttribute(SORT, sort);
             try {

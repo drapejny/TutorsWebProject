@@ -8,6 +8,7 @@
     <title><fmt:message key="application.title"/></title>
 </head>
 <body>
+<c:import url="/jsp/fragment/header.jsp"/>
 <form action="${pageContext.request.contextPath}/controller" method="post">
     <input type="hidden" name="command" value="add_application">
     <c:forEach var="element" items="${applicationScope.subjects}" varStatus="status">
@@ -18,8 +19,8 @@
     <fmt:message key="application.education"/><textarea name="education" required maxlength="300">${requestScope.education}</textarea><br>
     <fmt:message key="application.info"/><textarea name="info" required maxlength="500">${requestScope.info}</textarea> <br>
     <fmt:message key="application.price"/><input type="number" name="price" value="${requestScope.price}" required min="1" max="999"><br>
-    <input type="submit" value="<fmt:message key="application.submit.button"/>">
-    ${errorWrongDataMessage}
+    <button type="submit" class="simple-btn"><fmt:message key="application.submit.button"/></button>
+    <span class="fail-message">${errorWrongDataMessage}</span>
 </form>
 </body>
 </html>

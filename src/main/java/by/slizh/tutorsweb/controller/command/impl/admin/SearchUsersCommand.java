@@ -22,7 +22,6 @@ public class SearchUsersCommand implements Command {
         UserService userService = new UserServiceImpl();
         try {
             List<User> users = userService.searchUsers(searchLine);
-            System.out.println(users);
             request.setAttribute(RequestAttribute.USERS, users);
         } catch (ServiceException e) {
             logger.error("Executing searchUsers command error", e);

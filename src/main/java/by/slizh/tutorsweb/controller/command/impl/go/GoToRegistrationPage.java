@@ -8,6 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 public class GoToRegistrationPage implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
-        return new Router(PagePath.REGISTRATION_PAGE, Router.RouteType.REDIRECT);
+        return new Router(PagePath.REGISTRATION_PAGE, Router.RouteType.FORWARD);
     }
 }

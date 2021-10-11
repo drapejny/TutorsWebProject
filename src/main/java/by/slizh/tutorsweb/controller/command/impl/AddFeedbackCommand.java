@@ -38,9 +38,6 @@ public class AddFeedbackCommand implements Command {
         int userID = ((User) request.getSession().getAttribute(SessionAttribute.USER)).getUserId();
         FeedbackValidator feedbackValidator = FeedbackValidatorImpl.getInstance();
         FeedbackService feedbackService = FeedbackServiceImpl.getInstance();
-        TutorService tutorService = TutorServiceImpl.getInstance();
-        UserService userService = UserServiceImpl.getInstance();
-        SubjectService subjectService = SubjectServiceImpl.getInstance();
         if (feedbackValidator.validateFeedbackText(text) && rating != null) {
             Feedback feedback = new Feedback.FeedbackBuilder()
                     .setText(text)
@@ -49,27 +46,13 @@ public class AddFeedbackCommand implements Command {
                     .setTutorId(tutorId)
                     .setUserId(userID)
                     .createFeedback();
-
             try {
                 feedbackService.addFeedback(feedback);
+                request.getSession().setAttribute(RequestAttribute.TUTOR_ID, tutorId);
             } catch (ServiceException e) {
                 throw new CommandException("Executing addFeedback command error", e);
             }
         }
-        try {
-            Optional<Tutor> tutor = tutorService.findTutorById(tutorId);
-            if (tutor.isPresent()) {
-                request.setAttribute(RequestAttribute.TUTOR, tutor.get());
-            }
-            List<Feedback> feedbacks = feedbackService.findFeedbacksByTutor(tutorId);
-            List<Subject> subjects = subjectService.findSubjectsByTutorId(tutorId);
-            Map<Feedback, User> feedbackUserMap = userService.findUsersForFeedbacks(feedbacks);
-            request.setAttribute(RequestAttribute.SUBJECTS,subjects);
-            request.setAttribute(RequestAttribute.FEEDBACKS, feedbacks);
-            request.setAttribute(RequestAttribute.USERS, feedbackUserMap);
-        } catch (ServiceException e) {
-            throw new CommandException("Executing addFeedback command error", e);
-        }
-        return new Router(PagePath.TUTOR_PROFILE_PAGE, Router.RouteType.FORWARD);
+        return new Router(PagePath.GO_TO_TUTOR_PROFILE_PAGE, Router.RouteType.REDIRECT);
     }
 }

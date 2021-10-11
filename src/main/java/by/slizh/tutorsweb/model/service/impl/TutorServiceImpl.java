@@ -119,6 +119,12 @@ public class TutorServiceImpl implements TutorService {
             tutorDao.update(tutor);
         } catch (DaoException e) {
             throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Failed to end transaction in updateTutor method", e);
+            }
         }
     }
 

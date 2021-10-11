@@ -61,7 +61,8 @@ public class RegistrationCommand implements Command {
                 logger.error("Executing registration command error", e);
                 throw new CommandException("Executing registration command error", e);
             }
-            return new Router(PagePath.CONFIRMATION_PAGE, Router.RouteType.REDIRECT);
+            session.setAttribute(SessionAttribute.SUCCESS_REGISTRATION_MESSAGE,MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(SessionAttribute.SUCCESS_REGISTRATION_MESSAGE));
+            return new Router(PagePath.GO_TO_LOGIN_PAGE, Router.RouteType.REDIRECT);
         } else {
             request.setAttribute(ERROR_WRONG_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_DATA));
             return new Router(PagePath.REGISTRATION_PAGE, Router.RouteType.FORWARD);

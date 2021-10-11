@@ -76,14 +76,15 @@ public class EditTutorProfileCommand implements Command {
                 subjectService.editTutorSubjects(tutor.getTutorId(), oldSubjects, newSubjects);
                 List<Subject> subjects = subjectService.findSubjectsByTutorId(tutor.getTutorId());
                 session.setAttribute(SessionAttribute.SUBJECTS, subjects);
-                request.setAttribute(RequestAttribute.SUCCESSFUL_EDIT_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(SUCCESSFUL_EDIT_DATA));
+                request.getSession().setAttribute(RequestAttribute.SUCCESSFUL_EDIT_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(SUCCESSFUL_EDIT_DATA));
+                return new Router(PagePath.GO_TO_EDIT_TUTOR_PROFILE_PAGE, Router.RouteType.REDIRECT);
             } catch (ServiceException e) {
                 logger.error("Executing editTutorProfile command error", e);
                 throw new CommandException("Executing editTutorProfile command error", e);
             }
         } else {
             request.setAttribute(RequestAttribute.ERROR_WRONG_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_DATA));
+            return new Router(PagePath.EDIT_TUTOR_PROFILE_PAGE, Router.RouteType.FORWARD);
         }
-        return new Router(PagePath.EDIT_TUTOR_PROFILE_PAGE, Router.RouteType.FORWARD);
     }
 }

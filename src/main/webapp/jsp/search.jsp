@@ -7,12 +7,11 @@
 <html>
 <head>
     <title><fmt:message key="search.tittle"/></title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/search.css" />
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
 <div class="search-block">
-    <form action="${pageContext.request.contextPath}/controller" method="get">
+    <form action="${pageContext.request.contextPath}/controller" method="post">
         <input type="hidden" name="command" value="search">
         <select name="subject">
             <c:forEach var="element" items="${applicationScope.subjects}">
@@ -30,7 +29,7 @@
         </select>
         <input type="number" id="amount1" name="min_price" required min="1" max="999" value="${minPrice}"  >
         <input type="number" id="amount2" name="max_price" required min="1" max="999" value="${maxPrice}"  >
-        <input type="submit" value="<fmt:message key="search.button"/>"><br>
+        <button type="submit" class="simple-btn"><fmt:message key="search.button"/></button>
     </form>
 </div>
 
@@ -60,7 +59,5 @@
     </div>
 </c:if>
 <br>
-
-
 </body>
 </html>

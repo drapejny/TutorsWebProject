@@ -11,11 +11,11 @@ import java.util.Optional;
 
 public interface UserService {
 
+
     Optional<User> authenticate(String email, String password) throws ServiceException;
 
     void registrate(String firstName, String lastName, String email, String password) throws ServiceException;
 
-    boolean validateUserData(Map<String, String> userMap);
 
     boolean isEmailExist(String email) throws ServiceException;
 
@@ -27,12 +27,17 @@ public interface UserService {
 
     void updateUser(User user) throws ServiceException;
 
-    void updatePassword(User user,String password) throws ServiceException;
+    void updatePassword(User user, String password) throws ServiceException;
 
     Map<Feedback, User> findUsersForFeedbacks(List<Feedback> feedbacks) throws ServiceException;
 
     void makeUserToTutor(int userId) throws ServiceException;
 
     List<User> searchUsers(String searchLine) throws ServiceException;
+
+    boolean blockUser(int userId) throws ServiceException;
+
+    boolean unblockUser(int userId) throws ServiceException;
+
 
 }

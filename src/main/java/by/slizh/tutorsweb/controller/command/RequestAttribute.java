@@ -12,6 +12,8 @@ public final class RequestAttribute {
 
     public static String CITIES = "cities";
 
+    public static String TUTOR_ID = "tutorId";
+
     public static String FEEDBACKS = "feedbacks";
     public static String USERS = "users";
     public static String TUTOR_SUBJECTS = "tutorSubjects";
@@ -38,6 +40,8 @@ public final class RequestAttribute {
     public static final String SUCCESSFUL_EDIT_DATA = "successEditMessage";
     public static final String ERROR_WRONG_PASSWORD = "errorWrongPasswordMessage";
     public static final String SUCCESSFUL_EDIT_PASSWORD = "successEditPassword";
+    public static final String SUCCESSFUL_USER_BLOCK = "successBlockUserMessage";
+    public static final String SUCCESSFUL_USER_UNBLOCK = "successUnblockUserMessage";
 
     public static final int APPLICATIONS_ON_PAGE_NUMBER = 2;
     public static final int TUTORS_ON_SEARCH_PAGE_NUMBER = 2;

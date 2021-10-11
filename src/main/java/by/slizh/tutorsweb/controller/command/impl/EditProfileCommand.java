@@ -46,11 +46,11 @@ public class EditProfileCommand implements Command {
                 logger.error("Failed to update user in edit profile command", e);
                 throw new CommandException("Failed to update user in edit profile command", e);
             }
-            request.setAttribute(RequestAttribute.SUCCESSFUL_EDIT_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(SUCCESSFUL_EDIT_DATA));
+            request.getSession().setAttribute(RequestAttribute.SUCCESSFUL_EDIT_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(SUCCESSFUL_EDIT_DATA));
+            return new Router(PagePath.GO_TO_EDIT_PROFILE_PAGE, Router.RouteType.REDIRECT);
         } else {
             request.setAttribute(RequestAttribute.ERROR_WRONG_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_DATA));
+            return new Router(PagePath.EDIT_PROFILE_PAGE, Router.RouteType.FORWARD);
         }
-        return new Router(PagePath.EDIT_PROFILE_PAGE, Router.RouteType.FORWARD);
-
     }
 }

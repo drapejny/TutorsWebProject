@@ -46,7 +46,12 @@ public class EditPasswordCommand implements Command {
             if (isCorrectPassword) {
                 try {
                     service.updatePassword(user, newPassword);
-                    request.setAttribute(SUCCESSFUL_EDIT_PASSWORD, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(SUCCESSFUL_EDIT_PASSWORD));
+                    request.getSession().setAttribute(SUCCESSFUL_EDIT_PASSWORD, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(SUCCESSFUL_EDIT_PASSWORD));
+                    if (user.getRole() == User.Role.TUTOR) {
+                        return new Router(PagePath.GO_TO_EDIT_TUTOR_PROFILE_PAGE, Router.RouteType.REDIRECT);
+                    } else {
+                        return new Router(PagePath.GO_TO_EDIT_PROFILE_PAGE, Router.RouteType.REDIRECT);
+                    }
                 } catch (ServiceException e) {
                     logger.error("Failed to update password in edit password command", e);
                     throw new CommandException("Failed to update password in edit password command", e);

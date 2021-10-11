@@ -37,6 +37,11 @@ public class FeedbackServiceImpl implements FeedbackService {
             List<Feedback> feedbacks = feedbackDao.findByTutorId(tutorId);
             return feedbacks;
         } catch (DaoException e) {
+            try {
+                transaction.rollback();
+            } catch (DaoException ex) {
+                logger.error("Failed to rollback transaction in findFeedbacksByTutorId method", e);
+            }
             logger.error("Failed to make transaction in findFeedbacksByTutorId method", e);
             throw new ServiceException("Failed to make transaction in findFeedbacksByTutorId method", e);
         } finally {
@@ -54,7 +59,14 @@ public class FeedbackServiceImpl implements FeedbackService {
         FeedbackDao feedbackDao = new FeedbackDaoImpl();
         try {
             transaction.init(feedbackDao);
-            return feedbackDao.create(feedback);
+            Optional<Feedback> optionalFeedback = feedbackDao.findByTutorIdAndUserId(feedback.getTutorId(), feedback.getUserId());
+            if (optionalFeedback.isPresent()) {
+                System.out.println("false");
+                return false;
+            }
+            System.out.println("true");
+            boolean result = feedbackDao.create(feedback);
+            return result;
         } catch (DaoException e) {
             throw new ServiceException(e);
         } finally {

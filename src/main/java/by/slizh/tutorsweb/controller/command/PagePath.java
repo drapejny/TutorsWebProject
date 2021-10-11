@@ -5,10 +5,9 @@ public final class PagePath {
     public static final String ERROR_404_PAGE = "/jsp/error/404.jsp";
     public static final String ERROR_PAGE = "/jsp/error/error.jsp";
     public static final String LOGIN_PAGE = "/jsp/login.jsp";
-    public static final String PROFILE_PAGE = "/jsp/profile.jsp";
+    public static final String PROFILE_PAGE = "/jsp/user/profile.jsp";
     public static final String MAIN_PAGE = "/jsp/main.jsp";
     public static final String REGISTRATION_PAGE = "/jsp/registration.jsp";
-    public static final String CONFIRMATION_PAGE = "/jsp/confirmation.jsp";
     public static final String EDIT_PROFILE_PAGE = "/jsp/edit_profile.jsp";
     public static final String ADD_APPLICATION_PAGE = "/jsp/tutor/add_application.jsp";
     public static final String APPLICATION_PAGE = "/jsp/application.jsp";
@@ -19,6 +18,10 @@ public final class PagePath {
     public static final String EDIT_TUTOR_PROFILE_PAGE = "/jsp/tutor/edit_tutor_profile.jsp";
     public static final String SEARCH_USERS_PAGE = "/jsp/admin/search_users.jsp";
 
+    public static final String GO_TO_LOGIN_PAGE = "/controller?command=login_page";
+    public static final String GO_TO_TUTOR_PROFILE_PAGE = "/controller?command=tutor_profile_page";
+    public static final String GO_TO_EDIT_TUTOR_PROFILE_PAGE  = "/controller?command=edit_tutor_profile_page";
+    public static final String GO_TO_EDIT_PROFILE_PAGE = "/controller?command=edit_profile_page";
     private PagePath() {
     }
 }

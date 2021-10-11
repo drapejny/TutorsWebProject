@@ -19,7 +19,6 @@
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
-
 <form class="registration-form" action="${pageContext.request.contextPath}/controller" method="post">
     <input type="hidden" name="command" value="registration">
     <fmt:message key="registration.first_name"/>
@@ -32,9 +31,9 @@
     <input id="password" type="password" name="password" required pattern="^\w{6,20}$" maxlength="20"><br>
     <fmt:message key="registration.password_repeat"/>
     <input id="password-repeat" type="password" name="password_repeat" required pattern="^\w{6,20}$" maxlength="20"><br>
-    ${errorEmailExistsMessage}
-    ${errorWrongDataMessage}
-    <input class="submit-btn" type="submit" value="<fmt:message key="registration.button.signup"/>">
+    <span class="fail-message">${errorEmailExistsMessage}</span>
+    <span class="fail-message">${errorWrongDataMessage}</span>
+    <button type="submit" class="simple-btn"><fmt:message key="registration.button.signup"/></button>
 </form>
 </body>
 </html>
