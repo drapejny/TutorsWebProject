@@ -15,11 +15,9 @@ import java.util.Locale;
 public class RoleFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("roleFilter start");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute(SessionAttribute.USER);
 
         filterChain.doFilter(servletRequest, servletResponse);  //// TODO: 07.10.2021 удалить это и расскомментить код выше
 

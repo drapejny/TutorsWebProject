@@ -7,6 +7,7 @@
 <html>
 <head>
     <title><fmt:message key="edit.profile.title"/></title>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/edit_tutor_form_validation.js"></script>
 </head>
 <body>
 <c:import url="/jsp/fragment/header.jsp"/>
@@ -18,30 +19,51 @@
 </form>
 <span class="fail-message">${errorWrongDataMessage}</span>
 <span class="success-message">${successEditMessage}</span>
-<form action="${pageContext.request.contextPath}/controller" method="post">
+<form id="edit_tutor_form" action="${pageContext.request.contextPath}/controller" method="post">
     <input type="hidden" name="command" value="edit_tutor_profile">
-    <c:forEach var="element" items="${applicationScope.subjects}" varStatus="status">
-        <input type="checkbox" name="subject" value="${element.subjectId}"
-            <c:set var="contains" value="false"/>
-        <c:forEach var="item" items="${sessionScope.subjects}">
-        <c:if test="${item.subjectId eq element.subjectId}">
-            <c:set var="contains" value="true"/>
-        </c:if>
+    <div class="form_input_container subjects">
+        <span class="validation-message"><fmt:message key="validation.subjects"/></span>
+        <c:forEach var="element" items="${applicationScope.subjects}" varStatus="status">
+            <input class="subject_checkbox" type="checkbox" name="subject" value="${element.subjectId}"
+                <c:set var="contains" value="false"/>
+            <c:forEach var="item" items="${sessionScope.subjects}">
+            <c:if test="${item.subjectId eq element.subjectId}">
+                <c:set var="contains" value="true"/>
+            </c:if>
+            </c:forEach>
+                   <c:if test="${contains eq true}">checked</c:if>
+            >${element.subjectName}<br>
         </c:forEach>
-               <c:if test="${contains eq true}">checked</c:if>
-        >${element.subjectName}<br>
-    </c:forEach>
-    <fmt:message key="profile.first_name"/><input type="text" name="first_name" value="${sessionScope.user.firstName}"
-                                                  required pattern="[A-zА-яЁё`'.-]{1,32}" maxlength="32"><br>
-    <fmt:message key="profile.last_name"/><input type="text" name="last_name" value="${sessionScope.user.lastName}"
-                                                 required pattern="[A-zА-яЁё`'.-]{1,32}" maxlength="32"><br>
-    <fmt:message key="profile.phone"/><input type="text" name="phone" value="${sessionScope.user.phone}" required
-                                             pattern="^\+375[0-9]{9}$" maxlength="13"><br>
-    <fmt:message key="profile.info"/><textarea name="info" required maxlength="500">${sessionScope.user.info}</textarea><br>
-    <fmt:message key="profile.price"/><input type="number" name="price" value="${sessionScope.user.pricePerHour}"
-                                             required min="1" max="999"><br>
-    <fmt:message key="profile.isActive"/><input type="checkbox" name="is_active" value="${user.isActive}"
-                                                <c:if test="${user.isActive eq true}">checked</c:if>><br>
+    </div>
+    <div class="form_input_container firstname">
+        <fmt:message key="profile.first_name"/>
+        <input class="form_input" type="text" name="first_name" value="${sessionScope.user.firstName}"
+               maxlength="32"><br>
+        <span class="validation-message"><fmt:message key="validation.firstname"/></span>
+    </div>
+    <div class="form_input_container lastname">
+        <fmt:message key="profile.last_name"/>
+        <input type="text" name="last_name" value="${sessionScope.user.lastName}" maxlength="32"><br>
+        <span class="validation-message"><fmt:message key="validation.lastname"/></span>
+    </div>
+    <div class="form_input_container phone">
+        <fmt:message key="profile.phone"/>
+        <input type="text" name="phone" value="${sessionScope.user.phone}" maxlength="13"><br>
+        <span class="validation-message"><fmt:message key="validation.phone"/></span>
+    </div>
+    <div class="form_input_container info">
+        <fmt:message key="profile.info"/>
+        <textarea name="info" maxlength="500"><c:out value="${sessionScope.user.info}"/></textarea><br>
+        <span class="validation-message"><fmt:message key="validation.info"/></span>
+    </div>
+    <div class="form_input_container price">
+        <fmt:message key="profile.price"/>
+        <input type="text" name="price" value="${sessionScope.user.pricePerHour}" maxlength="3"><br>
+        <span class="validation-message"><fmt:message key="validation.price"/></span>
+    </div>
+    <fmt:message key="profile.isActive"/>
+    <input type="checkbox" name="is_active" value="${user.isActive}"
+           <c:if test="${user.isActive eq true}">checked</c:if>><br>
     <button type="submit" class="simple-btn"><fmt:message key="edit.profile.button"/></button>
     <button type="reset" class="simple-btn"><fmt:message key="edit.reset"/></button>
     <hr>
@@ -50,8 +72,8 @@
 <span class="fail-message">${errorWrongPasswordMessage}</span>
 <form action="${pageContext.request.contextPath}/controller" method="post">
     <input type="hidden" name="command" value="edit_password">
-    <fmt:message key="profile.password"/><input name="password" type="text"><br>
-    <fmt:message key="profile.new_password"/><input name="new_password" type="text"><br>
+    <fmt:message key="profile.password"/><input name="password" type="password" required pattern="^\w{6,20}$" maxlength="20"><br>
+    <fmt:message key="profile.new_password"/><input name="new_password" type="password" required pattern="^\w{6,20}$" maxlength="20"><br>
     <button type="submit" class="simple-btn"><fmt:message key="edit.profile.button"/></button>
 </form>
 </body>

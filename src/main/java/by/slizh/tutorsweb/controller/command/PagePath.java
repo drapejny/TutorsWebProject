@@ -22,6 +22,10 @@ public final class PagePath {
     public static final String GO_TO_TUTOR_PROFILE_PAGE = "/controller?command=tutor_profile_page";
     public static final String GO_TO_EDIT_TUTOR_PROFILE_PAGE  = "/controller?command=edit_tutor_profile_page";
     public static final String GO_TO_EDIT_PROFILE_PAGE = "/controller?command=edit_profile_page";
+    public static final String GO_TO_APPLICATION_PAGE = "/controller?command=become_tutor";
+    public static final String GO_TO_ALL_APPLICATIONS_PAGE = "/controller?command=all_applications_page";
+    public static final String GO_TO_ALL_SUBJECTS_PAGE  = "/controller?command=all_subjects_page";
+    public static final String GO_TO_SEARCH_USERS_PAGE = "/controller?command=search_users_page";
     private PagePath() {
     }
 }

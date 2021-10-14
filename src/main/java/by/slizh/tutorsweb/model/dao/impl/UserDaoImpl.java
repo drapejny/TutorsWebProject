@@ -73,13 +73,12 @@ public class UserDaoImpl extends UserDao {
     public List<User> findAll() throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_USERS)) {
             List<User> users = new LinkedList<User>();
-            try (ResultSet resultSet = statement.executeQuery();) {
-                while (resultSet.next()) {
-                    User user = buildUser(resultSet);
-                    users.add(user);
-                }
-                return users;
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                User user = buildUser(resultSet);
+                users.add(user);
             }
+            return users;
         } catch (SQLException e) {
             logger.error("Failed to find all users", e);
             throw new DaoException("Failed to find all users", e);
@@ -90,13 +89,12 @@ public class UserDaoImpl extends UserDao {
     public Optional<User> findById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ID)) {
             statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    User user = buildUser(resultSet);
-                    return Optional.of(user);
-                } else {
-                    return Optional.empty();
-                }
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                User user = buildUser(resultSet);
+                return Optional.of(user);
+            } else {
+                return Optional.empty();
             }
         } catch (SQLException e) {
             logger.error("Failed to find user by id", e);
@@ -133,12 +131,11 @@ public class UserDaoImpl extends UserDao {
             statement.setInt(5, user.getRole().getId());
             statement.setInt(6, user.getStatus().getId());
             boolean result = statement.executeUpdate() == 1;
-            try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                if (resultSet.next()) {
-                    user.setUserId(resultSet.getInt(1));
-                }
-                return result;
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                user.setUserId(resultSet.getInt(1));
             }
+            return result;
         } catch (SQLException e) {
             logger.error("Failed to create user", e);
             throw new DaoException("Failed to create user", e);
@@ -181,13 +178,12 @@ public class UserDaoImpl extends UserDao {
     public Optional<User> findUserByEmail(String email) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_EMAIL)) {
             statement.setString(1, email);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    User user = buildUser(resultSet);
-                    return Optional.of(user);
-                } else {
-                    return Optional.empty();
-                }
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                User user = buildUser(resultSet);
+                return Optional.of(user);
+            } else {
+                return Optional.empty();
             }
         } catch (SQLException e) {
             logger.error("Failed to find user by email", e);
@@ -200,15 +196,14 @@ public class UserDaoImpl extends UserDao {
         String passwordHash;
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_PASSWORD)) {
             statement.setInt(1, user.getUserId());
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    passwordHash = resultSet.getString(ColumnName.PASSWORD);
-                } else {
-                    logger.error("Can't find user with this id");
-                    throw new DaoException("Can't find user with this id");
-                }
-                return passwordHash;
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                passwordHash = resultSet.getString(ColumnName.PASSWORD);
+            } else {
+                logger.error("Can't find user with this id");
+                throw new DaoException("Can't find user with this id");
             }
+            return passwordHash;
         } catch (SQLException e) {
             logger.error("Failed to find user password", e);
             throw new DaoException("Failed to find user password", e);

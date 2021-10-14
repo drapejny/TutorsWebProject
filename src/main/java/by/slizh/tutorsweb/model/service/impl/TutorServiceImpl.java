@@ -13,6 +13,7 @@ import by.slizh.tutorsweb.model.service.TutorService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -226,6 +227,31 @@ public class TutorServiceImpl implements TutorService {
                 logger.error("Can't end transaction in findApplications method", e);
             }
         }
+    }
+
+    @Override
+    public Map<User, Tutor> findTutorsByUsers(List<User> users) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        TutorDao tutorDao = new TutorDaoImpl();
+        Map<User, Tutor> tutorMap = new HashMap<>();
+        try {
+            transaction.init(tutorDao);
+            for (User user : users) {
+                Optional<Tutor> tutor = tutorDao.findTutorByEmail(user.getEmail());
+                if (tutor.isPresent()) {
+                    tutorMap.put(user, tutor.get());
+                }
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Failed to end transaction in findTutorsByUsers method", e);
+            }
+        }
+        return tutorMap;
     }
 
     @Override

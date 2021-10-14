@@ -14,7 +14,7 @@
 <body>
 <c:import url="fragment/header.jsp"/>
 <c:if test="${user.role eq 'USER'}">
-    <span class="wait-tittle"><fmt:message key="application.wait"/></span>
+    <span class="success-message"><fmt:message key="application.wait"/></span>
 </c:if>
 <div class="tutor_profile">
     <div class="left_part">
@@ -26,19 +26,16 @@
         <div class="name">${requestScope.application.firstName} ${application.lastName}</div>
         <div class="phone">${application.phone}</div>
         <div class="email">${application.email}</div>
-        <div class="city"><span><fmt:message key="application.city"/></span>${application.city}</div>
-        <ul class="subjects-list">
+        <ul>
             <c:forEach var="element" items="${requestScope.subjects}">
-                <li class="subjects-list-item">
-                    ${element.subjectName}
-
-                </li>
+                <li>${element.subjectName}</li>
             </c:forEach>
         </ul>
+        <div class="city"><span><fmt:message key="application.city"/></span>${application.city}</div>
         <div class="education_title"><fmt:message key="application.education"/></div>
-        <div class="education"><span>${application.education}</span></div>
+        <div class="education"><c:out value="${application.education}"/></div>
         <div class="info_title"><fmt:message key="application.info"/></div>
-        <div class="info">${application.info}</div>
+        <div class="info"><c:out value="${application.info}"/></div>
         <div class="price_per_hour"><fmt:message key="application.price"/> <span>${application.pricePerHour} BYN</span></div>
         <c:if test="${user.role eq 'ADMIN'}">
             <div class="controls">

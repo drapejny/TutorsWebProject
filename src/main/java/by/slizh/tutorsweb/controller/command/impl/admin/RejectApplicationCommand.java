@@ -31,16 +31,10 @@ public class RejectApplicationCommand implements Command {
         TutorService tutorService = TutorServiceImpl.getInstance();
         try {
             tutorService.deleteTutorById(Integer.parseInt(tutorId));
-            List<Tutor> applications = tutorService.findApplications(DEFAULT_OFFSET, APPLICATIONS_ON_PAGE_NUMBER);
-            int applicationsCount = tutorService.countApplications();
-            int pageCount = applicationsCount % APPLICATIONS_ON_PAGE_NUMBER == 0 ? applicationsCount / APPLICATIONS_ON_PAGE_NUMBER : applicationsCount / APPLICATIONS_ON_PAGE_NUMBER + 1;
-            request.setAttribute(APPLICATIONS, applications);
-            request.setAttribute(PAGE_NUM, FIRST_PAGE_NUMBER);
-            request.setAttribute(PAGE_COUNT, pageCount);
         } catch (ServiceException e) {
             logger.error("Executing rejectApplication command error", e);
             throw new CommandException();
         }
-        return new Router(PagePath.ALL_APPLICATIONS_PAGE, Router.RouteType.FORWARD);
+        return new Router(PagePath.GO_TO_ALL_APPLICATIONS_PAGE, Router.RouteType.REDIRECT);
     }
 }

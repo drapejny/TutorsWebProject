@@ -50,7 +50,9 @@ public class TutorDaoImpl extends TutorDao {
              WHERE email = ?;
             """;
     private static final String SQL_FIND_ALL_CITIES = """
-            SELECT DISTINCT city FROM tutors;
+            SELECT DISTINCT city, role_id FROM tutors
+            JOIN users ON tutors.user_id = users.user_id
+            WHERE role_id = 3;
             """;
     private static final String SQL_DELETE_TUTOR_BY_ID = """
             DELETE FROM tutors WHERE tutor_id = ?;
@@ -74,7 +76,8 @@ public class TutorDaoImpl extends TutorDao {
             city LIKE ? AND
             price_per_hour > ? AND tutors.price_per_hour < ? AND
             is_active = true AND
-            role_name = 'tutor' 
+            role_name = 'tutor' AND
+            status_name = 'activated' 
             """;
     private static final String SQL_SEARCH_TUTORS_LIMIT_PART = "LIMIT ?, ?;";
     private static final String SQL_COUNT_SEARCHED_RECORDS = """
@@ -87,7 +90,8 @@ public class TutorDaoImpl extends TutorDao {
              city LIKE ? AND
              price_per_hour > ? AND tutors.price_per_hour < ? AND
              is_active = true AND
-             role_name = 'tutor';
+             role_name = 'tutor' AND
+             status_name = 'activated';
             """;
     private static final String SQL_FIND_APPLICATIONS = """
              SELECT tutor_id, phone, education, info, price_per_hour, is_active,
@@ -112,13 +116,13 @@ public class TutorDaoImpl extends TutorDao {
     public List<Tutor> findAll() throws DaoException {
         List<Tutor> tutors = new LinkedList<Tutor>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_TUTORS)) {
-            try (ResultSet resultSet = statement.executeQuery()) {
+            ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     Tutor tutor = buildTutor(resultSet);
                     tutors.add(tutor);
                 }
                 return tutors;
-            }
+
         } catch (SQLException e) {
             logger.error("Failed to find all tutors", e);
             throw new DaoException("Failed to find all tutors", e);
@@ -130,14 +134,14 @@ public class TutorDaoImpl extends TutorDao {
     public Optional<Tutor> findTutorByEmail(String email) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TUTOR_BY_EMAIL)) {
             statement.setString(1, email);
-            try (ResultSet resultSet = statement.executeQuery()) {
+            ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     Tutor tutor = buildTutor(resultSet);
                     return Optional.of(tutor);
                 } else {
                     return Optional.empty();
                 }
-            }
+
         } catch (SQLException e) {
             logger.error("Failed to find tutor by email", e);
             throw new DaoException("Failed to find tutor by email", e);
@@ -155,13 +159,12 @@ public class TutorDaoImpl extends TutorDao {
             statement.setInt(4, maxPrice + 1);
             statement.setInt(5, offset);
             statement.setInt(6, numberOfRecords);
-            try (ResultSet resultSet = statement.executeQuery()) {
+            ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     Tutor tutor = buildTutor(resultSet);
                     tutors.add(tutor);
                 }
                 return tutors;
-            }
         } catch (SQLException e) {
             logger.error("Failed to search tutors", e);
             throw new DaoException("Failed to search tutors", e);
@@ -175,13 +178,12 @@ public class TutorDaoImpl extends TutorDao {
             statement.setString(2, "%" + city + "%");
             statement.setInt(3, minPrice - 1);
             statement.setInt(4, maxPrice + 1);
-            try (ResultSet resultSet = statement.executeQuery()) {
+            ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     return resultSet.getInt(1);
                 } else {
                     return 0;
                 }
-            }
         } catch (SQLException e) {
             logger.error("Failed to count searched tutors", e);
             throw new DaoException("Failed to count searched tutors", e);
@@ -192,11 +194,10 @@ public class TutorDaoImpl extends TutorDao {
     public List<String> findAllCities() throws DaoException {
         List<String> cities = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_CITIES)) {
-            try (ResultSet resultSet = statement.executeQuery()) {
+            ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     cities.add(resultSet.getString(1));
                 }
-            }
             return cities;
         } catch (SQLException e) {
             logger.error("Failed to find all cities", e);
@@ -240,14 +241,13 @@ public class TutorDaoImpl extends TutorDao {
     public Optional<Tutor> findById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TUTOR_BY_ID)) {
             statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
+            ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     Tutor tutor = buildTutor(resultSet);
                     return Optional.of(tutor);
                 } else {
                     return Optional.empty();
                 }
-            }
         } catch (SQLException e) {
             logger.error("Failed to find tutor by id", e);
             throw new DaoException("Failed to find tutor by id", e);
@@ -278,12 +278,11 @@ public class TutorDaoImpl extends TutorDao {
             statement.setInt(6, tutor.getPricePerHour());
             statement.setByte(7, (byte) (tutor.getIsActive() ? 1 : 0));
             boolean result = statement.executeUpdate() == 1;
-            try (ResultSet resultSet = statement.getGeneratedKeys()) {
+            ResultSet resultSet = statement.getGeneratedKeys();
                 if (resultSet.next()) {
                     tutor.setTutorId(resultSet.getInt(1));
                 }
                 return result;
-            }
         } catch (SQLException e) {
             logger.error("Failed to create tutor", e);
             throw new DaoException("Failed to create tutor", e);

@@ -31,16 +31,20 @@ public class MainServlet extends HttpServlet {
         Router router;
         try {
             router = command.execute(request);
+            switch (router.getRouteType()) {
+                case FORWARD:
+                    request.getRequestDispatcher(router.getPagePath()).forward(request, response);
+                    break;
+                case REDIRECT:
+                    response.sendRedirect(request.getContextPath() + router.getPagePath());
+                    break;
+                default:
+                    logger.error("Incorrect route type " + router.getRouteType());
+                    response.sendRedirect(request.getContextPath() + PagePath.ERROR_PAGE);
+            }
         } catch (CommandException e) {
-            router = new Router(PagePath.ERROR_PAGE, Router.RouteType.REDIRECT);
-        }
-        switch (router.getRouteType()) {
-            case FORWARD:
-                request.getRequestDispatcher(router.getPagePath()).forward(request, response);
-                break;
-            case REDIRECT:
-                response.sendRedirect(request.getContextPath() + router.getPagePath());
-                break;
+            request.setAttribute(RequestAttribute.EXCEPTION, e);
+            request.getRequestDispatcher(PagePath.ERROR_PAGE).forward(request, response);
         }
     }
 

@@ -49,6 +49,7 @@ public class AddFeedbackCommand implements Command {
             try {
                 feedbackService.addFeedback(feedback);
                 request.getSession().setAttribute(RequestAttribute.TUTOR_ID, tutorId);
+                System.out.println("добавили в сессию");
             } catch (ServiceException e) {
                 throw new CommandException("Executing addFeedback command error", e);
             }

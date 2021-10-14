@@ -31,23 +31,19 @@ public class AddApplicationCommand implements Command {
         String locale = (String) request.getSession().getAttribute(LOCALE);
         Map<String, String[]> tutorMap = request.getParameterMap();
         TutorValidator tutorValidator = TutorValidatorImpl.getInstance();
-
+        System.out.println(123);
         if (tutorValidator.validateTutorMap(tutorMap)) {
             User user = (User) request.getSession().getAttribute(SessionAttribute.USER);
             TutorService service = TutorServiceImpl.getInstance();
             try {
                 service.createTutor(user, tutorMap);
+                System.out.println(112);
             } catch (ServiceException e) {
                 logger.error("Executing add application command error", e);
                 throw new CommandException("Executing add application command error", e);
             }
-            return new Router(PagePath.PROFILE_PAGE, Router.RouteType.REDIRECT);
+            return new Router(PagePath.GO_TO_APPLICATION_PAGE, Router.RouteType.REDIRECT);
         } else {
-            request.setAttribute(PHONE, tutorMap.get(PHONE)[0]);
-            request.setAttribute(CITY, tutorMap.get(CITY)[0]);
-            request.setAttribute(EDUCATION, tutorMap.get(EDUCATION)[0]);
-            request.setAttribute(INFORMATION, tutorMap.get(INFORMATION)[0]);
-            request.setAttribute(PRICE, tutorMap.get(PRICE)[0]);
             request.setAttribute(RequestAttribute.ERROR_WRONG_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_DATA));
             return new Router(PagePath.ADD_APPLICATION_PAGE, Router.RouteType.FORWARD);
         }

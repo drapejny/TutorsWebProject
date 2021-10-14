@@ -14,8 +14,8 @@ public class TutorValidatorImpl implements TutorValidator {
     private static final String REGEXP_PHONE = "^\\+375[0-9]{9}$";
     private static final String REGEXP_EDUCATION = "^.{1,300}$";
     private static final String REGEXP_INFO = "^.{1,500}$";
-    private static final String REGEXP_PRICE = "^[0-9]{1,3}$";
-    private static final String REGEXP_CITY = "[A-zА-яЁё`'.-]{1,32}$";
+    private static final String REGEXP_PRICE = "^[1-9][0-9]{0,2}$";
+    private static final String REGEXP_CITY = "[А-яЁё`'.-]{1,32}$";
 
     private TutorValidatorImpl() {
     }

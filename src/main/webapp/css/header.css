@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .header__section {
     display: flex;
     align-items: center;
@@ -87,11 +92,16 @@ header {
     display: flex;
     justify-content: space-between;
     background-color: #7fbcf3;
-    padding: 10px;
+    margin: 10px;
     border-width: 3px;
     border-style: solid;
     border-color: black;
-
-
+    position: fixed;
+    top: 0;
+    left: 0px;
+    width: calc(100% - 20px);
+    padding: 20px 10px;
 }
-
+body {
+    padding-top: 126px;
+}

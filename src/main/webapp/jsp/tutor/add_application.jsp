@@ -6,21 +6,52 @@
 <html>
 <head>
     <title><fmt:message key="application.title"/></title>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/form_validation.js"></script>
 </head>
 <body>
 <c:import url="/jsp/fragment/header.jsp"/>
-<form action="${pageContext.request.contextPath}/controller" method="post">
+<form id="app_form" action="${pageContext.request.contextPath}/controller" method="post">
     <input type="hidden" name="command" value="add_application">
-    <c:forEach var="element" items="${applicationScope.subjects}" varStatus="status">
-        <input type="checkbox" name="subject" value="${element.subjectId}">${element.subjectName}<br>
-    </c:forEach>
-    <fmt:message key="application.phone"/><input type="text" name="phone" value="${requestScope.phone}" required pattern="^\+375[0-9]{9}$" maxlength="13"><br>
-    <fmt:message key="application.city"/><input type="text" name="city" value="${requestScope.city}" required pattern="[A-zА-яЁё`'.-]{1,32}" maxlength="32"><br>
-    <fmt:message key="application.education"/><textarea name="education" required maxlength="300">${requestScope.education}</textarea><br>
-    <fmt:message key="application.info"/><textarea name="info" required maxlength="500">${requestScope.info}</textarea> <br>
-    <fmt:message key="application.price"/><input type="number" name="price" value="${requestScope.price}" required min="1" max="999"><br>
-    <button type="submit" class="simple-btn"><fmt:message key="application.submit.button"/></button>
-    <span class="fail-message">${errorWrongDataMessage}</span>
+    <div class="form_container">
+        <div class="left_part">
+            <div class="form_input_container subjects">
+                <span class="validation-message"><fmt:message key="validation.subjects"/></span>
+                <c:forEach var="element" items="${applicationScope.subjects}">
+                    <input class="subject_checkbox" type="checkbox" name="subject"
+                           value="${element.subjectId}">${element.subjectName}<br>
+                </c:forEach>
+            </div>
+        </div>
+        <div class="right_part">
+            <fmt:message key="application.phone"/>
+            <div class="form_input_container phone">
+                <input class="form_input" type="text" name="phone" value="${requestScope.phone}" maxlength="13"><br>
+                <span class="validation-message"><fmt:message key="validation.phone"/></span>
+            </div>
+            <fmt:message key="application.city"/>
+            <div class="form_input_container city">
+                <input class="form_input" type="text" name="city" value="${requestScope.city}" maxlength="32"><br>
+                <span class="validation-message"><fmt:message key="validation.city"/></span>
+            </div>
+            <fmt:message key="application.education"/>
+            <div class="form_input_container education">
+                    <textarea class="form_input" name="education"
+                              maxlength="300" rows="6" cols="50">${requestScope.education}</textarea><br>
+                <span class="validation-message"><fmt:message key="validation.education"/></span>
+            </div>
+            <fmt:message key="application.info"/>
+            <div class="form_input_container info">
+                <textarea class="form_input" name="info" maxlength="500" rows="10" cols="50">${requestScope.info}</textarea><br>
+                <span class="validation-message"><fmt:message key="validation.info"/></span>
+            </div>
+            <fmt:message key="application.price"/>
+            <div class="form_input_container price">
+                <input class="form_input" type="text" name="price" value="${requestScope.price}" maxlength="3"><br>
+                <span class="validation-message"><fmt:message key="validation.price"/></span>
+            </div>
+            <button type="submit" class="simple-btn"><fmt:message key="application.submit.button"/></button>
+        </div>
+    </div>
 </form>
 </body>
 </html>

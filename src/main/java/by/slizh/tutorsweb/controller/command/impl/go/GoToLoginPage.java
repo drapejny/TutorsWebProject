@@ -3,10 +3,9 @@ package by.slizh.tutorsweb.controller.command.impl.go;
 import by.slizh.tutorsweb.controller.command.Command;
 import by.slizh.tutorsweb.controller.command.PagePath;
 import by.slizh.tutorsweb.controller.command.Router;
-import by.slizh.tutorsweb.controller.command.SessionAttribute;
 import jakarta.servlet.http.HttpServletRequest;
 
-import static by.slizh.tutorsweb.controller.command.SessionAttribute.*;
+import static by.slizh.tutorsweb.controller.command.RequestAttribute.SUCCESS_REGISTRATION_MESSAGE;
 
 public class GoToLoginPage implements Command {
     @Override

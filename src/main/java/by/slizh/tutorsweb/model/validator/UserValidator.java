@@ -1,10 +1,6 @@
 package by.slizh.tutorsweb.model.validator;
 
-import java.util.Map;
-
 public interface UserValidator {
-
-    boolean validateUserData(Map<String, String> userMap);
 
     boolean validateFirstName(String firstName);
 

@@ -15,9 +15,6 @@ public class UserValidatorImpl implements UserValidator {
     private static final String REGEXP_EMAIL = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
     private static final String REGEXP_PASSWORD = "^\\w{6,20}$";
 
-
-    private static final String EMPTY_LINE = "";
-
     private UserValidatorImpl() {
     }
 
@@ -25,27 +22,27 @@ public class UserValidatorImpl implements UserValidator {
         return instance;
     }
 
-    @Override
-    public boolean validateUserData(Map<String, String> userMap) {
-        boolean result = true;
-        if (!validateFirstName(userMap.get(FIRST_NAME))) {
-            userMap.put(FIRST_NAME, EMPTY_LINE);
-            result = false;
-        }
-        if (!validateLastName(userMap.get(LAST_NAME))) {
-            userMap.put(LAST_NAME, EMPTY_LINE);
-            result = false;
-        }
-        if (!validateEmail(userMap.get(EMAIL))) {
-            userMap.put(EMAIL, EMPTY_LINE);
-            result = false;
-        }
-        if (!validatePassword(userMap.get(PASSWORD))) {
-            userMap.put(PASSWORD, EMPTY_LINE);
-            result = false;
-        }
-        return result;
-    }
+//    @Override
+//    public boolean validateUserData(Map<String, String> userMap) {
+//        boolean result = true;
+//        if (!validateFirstName(userMap.get(FIRST_NAME))) {
+//            userMap.put(FIRST_NAME, EMPTY_LINE);
+//            result = false;
+//        }
+//        if (!validateLastName(userMap.get(LAST_NAME))) {
+//            userMap.put(LAST_NAME, EMPTY_LINE);
+//            result = false;
+//        }
+//        if (!validateEmail(userMap.get(EMAIL))) {
+//            userMap.put(EMAIL, EMPTY_LINE);
+//            result = false;
+//        }
+//        if (!validatePassword(userMap.get(PASSWORD))) {
+//            userMap.put(PASSWORD, EMPTY_LINE);
+//            result = false;
+//        }
+//        return result;
+//    }
 
     @Override
     public boolean validateFirstName(String firstName) {

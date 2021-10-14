@@ -24,7 +24,6 @@ public class AddSubjectCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        HttpSession session = request.getSession();
         String locale = (String) request.getSession().getAttribute(SessionAttribute.LOCALE);
         SubjectService subjectService = SubjectServiceImpl.getInstance();
         SubjectValidator subjectValidator = SubjectValidatorImpl.getInstance();
@@ -33,11 +32,13 @@ public class AddSubjectCommand implements Command {
             Subject subject = new Subject(subjectName);
             try {
                 if (subjectService.addSubject(subject)) {
-                    List<Subject> subjects = (List<Subject>) request.getServletContext().getAttribute(SUBJECTS);
-                    subjects.add(subject);
-                    return new Router(PagePath.ALL_SUBJECTS_PAGE, Router.RouteType.FORWARD);
+                    List<Subject> subjects = subjectService.findAllSubjects();
+                    request.getServletContext().setAttribute(SUBJECTS, subjects);
+                    request.getSession().setAttribute(SUCCESSFUL_ADD_SUBJECT, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(SUCCESSFUL_ADD_SUBJECT));
+                    return new Router(PagePath.GO_TO_ALL_SUBJECTS_PAGE, Router.RouteType.REDIRECT);
                 } else {
-                    return new Router(PagePath.MAIN_PAGE, Router.RouteType.FORWARD);
+                    request.setAttribute(ERROR_ADD_SUBJECT, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_ADD_SUBJECT));
+                    return new Router(PagePath.ALL_SUBJECTS_PAGE, Router.RouteType.FORWARD);
                 }
             } catch (ServiceException e) {
                 logger.error("Executing delete subject command error", e);

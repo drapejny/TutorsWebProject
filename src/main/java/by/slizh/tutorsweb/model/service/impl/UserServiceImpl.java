@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     private static UserServiceImpl instance;
 
-    public UserServiceImpl() {
+    private UserServiceImpl() {
     }
 
     public static UserServiceImpl getInstance() {
@@ -312,7 +312,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean blockUser(int userId) throws ServiceException {
+    public Optional<User> blockUser(int userId) throws ServiceException {
         EntityTransaction transaction = new EntityTransaction();
         UserDao userDao = new UserDaoImpl();
         try {
@@ -321,8 +321,9 @@ public class UserServiceImpl implements UserService {
             if (user.isPresent() && user.get().getRole() != User.Role.ADMIN) {
                 user.get().setStatus(User.Status.BLOCKED);
                 userDao.update(user.get());
-                return true;
+                return user;
             }
+
         } catch (DaoException e) {
             throw new ServiceException(e);
         } finally {
@@ -332,11 +333,11 @@ public class UserServiceImpl implements UserService {
                 logger.error("Can't end transaction in blockUser method", e);
             }
         }
-        return false;
+        return Optional.empty();
     }
 
     @Override
-    public boolean unblockUser(int userId) throws ServiceException {
+    public Optional<User> unblockUser(int userId) throws ServiceException {
         EntityTransaction transaction = new EntityTransaction();
         UserDao userDao = new UserDaoImpl();
         try {
@@ -345,7 +346,7 @@ public class UserServiceImpl implements UserService {
             if (user.isPresent() && user.get().getRole() != User.Role.ADMIN) {
                 user.get().setStatus(User.Status.ACTIVATED);
                 userDao.update(user.get());
-                return true;
+                return user;
             }
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -356,6 +357,6 @@ public class UserServiceImpl implements UserService {
                 logger.error("Can't end transaction in unblockUser method", e);
             }
         }
-        return false;
+        return Optional.empty();
     }
 }

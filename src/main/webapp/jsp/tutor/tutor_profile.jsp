@@ -37,8 +37,8 @@
     </c:otherwise>
 </c:choose><br>
 <fmt:message key="profile.city"/>${requestScope.tutor.city}<br>
-<fmt:message key="profile.education"/>${requestScope.tutor.education}<br>
-<fmt:message key="profile.info"/>${requestScope.tutor.info}<br>
+<fmt:message key="profile.education"/><c:out value="${requestScope.tutor.education}"/><br>
+<fmt:message key="profile.info"/><c:out value="${requestScope.tutor.info}"/><br>
 <fmt:message key="profile.price"/>${requestScope.tutor.pricePerHour}<br>
 <fmt:message key="profile.rating"/>
 <c:set var="sumRating" value="${0}"/>
@@ -76,7 +76,7 @@ ${averageRating}
                             </c:forEach>
                         </div>
                     </div>
-                    <textarea name="text" required maxlength="300">${yourFeedback.text}</textarea>
+                    <textarea name="text" required maxlength="300"><c:out value="${yourFeedback.text}"/></textarea>
                     <button type="submit" class="simple-btn"><fmt:message key="profile.edit"/></button>
                 </form>
                 <form action="${pageContext.request.contextPath}/controller" method="post">
@@ -115,31 +115,31 @@ ${averageRating}
 <p><fmt:message key="profile.feedbacks"/>${fn:length(feedbacks)}</p>
 
 <c:forEach var="element" items="${feedbacks}">
-    <ctg:user-photo photo="${users[element].photo}" height="20" width="20"/>
-    <p>${users[element].firstName} ${users[element].lastName}</p>
-    ${element.date}<br>
-    ${element.text}<br>
-    <div class="rating-mini">
-        <c:forEach var="i" begin="1" end="5">
-            <c:choose>
-                <c:when test="${i <= element.rating}">
-                    <span class="active"></span>
-                </c:when>
-                <c:otherwise>
-                    <span></span>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
-    </div>
-    <c:if test="${user.role eq 'ADMIN' || user.userId eq tutor.userId}">
-        <form action="${pageContext.request.contextPath}/controller" method="post">
-            <input type="hidden" name="command" value="delete_feedback">
-            <input type="hidden" name="tutor_id" value="${tutor.tutorId}">
-            <input type="hidden" name="feedback_id" value="${element.feedbackId}">
-            <button type="submit" class="red-btn"><fmt:message key="profile.delete"/></button>
-        </form>
-    </c:if>
-    <hr>
+        <ctg:user-photo photo="${users[element].photo}" height="20" width="20"/>
+        <p>${users[element].firstName} ${users[element].lastName}</p>
+        ${element.date}<br>
+        <c:out value="${element.text}"/><br>
+        <div class="rating-mini">
+            <c:forEach var="i" begin="1" end="5">
+                <c:choose>
+                    <c:when test="${i <= element.rating}">
+                        <span class="active"></span>
+                    </c:when>
+                    <c:otherwise>
+                        <span></span>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </div>
+        <c:if test="${user.role eq 'ADMIN' || user.userId eq tutor.userId}">
+            <form action="${pageContext.request.contextPath}/controller" method="post">
+                <input type="hidden" name="command" value="delete_feedback">
+                <input type="hidden" name="tutor_id" value="${tutor.tutorId}">
+                <input type="hidden" name="feedback_id" value="${element.feedbackId}">
+                <button type="submit" class="red-btn"><fmt:message key="profile.delete"/></button>
+            </form>
+        </c:if>
+        <hr>
 </c:forEach>
 </body>
 </html>

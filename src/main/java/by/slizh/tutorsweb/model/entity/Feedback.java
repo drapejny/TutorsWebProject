@@ -14,46 +14,6 @@ public class Feedback extends Entity {
     public Feedback() {
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Feedback feedback = (Feedback) o;
-        return feedback.feedbackId == feedbackId &&
-                feedback.text == null ? text == null : feedback.text.equals(text) &&
-                feedback.date == null ? date == null : feedback.date.equals(date) &&
-                feedback.rating == rating &&
-                feedback.userId == userId &&
-                feedback.tutorId == tutorId;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = feedbackId;
-        result = 31 * result + (text == null ? 0 : text.hashCode());
-        result = 31 * result + (date == null ? 0 : date.hashCode());
-        result = 31 * result + rating;
-        result = 31 * result + userId;
-        result = 31 * result + tutorId;
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder("Feedback{");
-        stringBuilder.append("feedbackId=").append(feedbackId);
-        stringBuilder.append(", text='").append(text).append("'");
-        stringBuilder.append(", date=").append(date);
-        stringBuilder.append(", rating=").append(rating);
-        stringBuilder.append(", userId=").append(userId);
-        stringBuilder.append(", tutorId=").append(tutorId).append("}");
-        return stringBuilder.toString();
-    }
-
     public Feedback(int feedbackId, String text, LocalDate date, int rating, int userId, int tutorId) {
         this.feedbackId = feedbackId;
         this.text = text;
@@ -109,6 +69,46 @@ public class Feedback extends Entity {
 
     public void setTutorId(int tutorId) {
         this.tutorId = tutorId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Feedback feedback = (Feedback) o;
+        return feedback.feedbackId == feedbackId &&
+                feedback.text == null ? text == null : feedback.text.equals(text) &&
+                feedback.date == null ? date == null : feedback.date.equals(date) &&
+                feedback.rating == rating &&
+                feedback.userId == userId &&
+                feedback.tutorId == tutorId;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = feedbackId;
+        result = 31 * result + (text == null ? 0 : text.hashCode());
+        result = 31 * result + (date == null ? 0 : date.hashCode());
+        result = 31 * result + rating;
+        result = 31 * result + userId;
+        result = 31 * result + tutorId;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder("Feedback{");
+        stringBuilder.append("feedbackId=").append(feedbackId);
+        stringBuilder.append(", text='").append(text).append("'");
+        stringBuilder.append(", date=").append(date);
+        stringBuilder.append(", rating=").append(rating);
+        stringBuilder.append(", userId=").append(userId);
+        stringBuilder.append(", tutorId=").append(tutorId).append("}");
+        return stringBuilder.toString();
     }
 
     public static class FeedbackBuilder {

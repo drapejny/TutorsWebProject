@@ -12,7 +12,7 @@ public class EntityTransaction {
 
     private ProxyConnection connection;
 
-    public void initTransaction(AbstractDao dao, AbstractDao... daos) throws DaoException {
+    public void initTransaction(AbstractDao... daos) throws DaoException {
         if (connection == null) {
             connection = ConnectionPool.getInstance().getConnection();
         }
@@ -21,7 +21,6 @@ public class EntityTransaction {
         } catch (SQLException e) {
             throw new DaoException("Failed to disable auto-commit for transaction", e);
         }
-        dao.setConnection(connection);
         for (AbstractDao daoElement : daos) {
             daoElement.setConnection(connection);
         }

@@ -35,9 +35,9 @@ public interface UserService {
 
     List<User> searchUsers(String searchLine) throws ServiceException;
 
-    boolean blockUser(int userId) throws ServiceException;
+    Optional<User> blockUser(int userId) throws ServiceException;
 
-    boolean unblockUser(int userId) throws ServiceException;
+    Optional<User> unblockUser(int userId) throws ServiceException;
 
 
 }

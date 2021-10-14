@@ -28,6 +28,8 @@ public interface TutorService {
 
     List<Tutor> findApplications(int offset, int numberOfRecords) throws ServiceException;
 
+    Map<User,Tutor> findTutorsByUsers(List<User> users) throws ServiceException;
+
     int countApplications() throws ServiceException;
 
     boolean deleteTutorById(int tutorId) throws ServiceException;

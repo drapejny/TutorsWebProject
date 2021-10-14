@@ -5,6 +5,7 @@ import by.slizh.tutorsweb.model.entity.Subject;
 import by.slizh.tutorsweb.model.entity.Tutor;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SubjectService {
     List<Subject> findAllSubjects() throws ServiceException;
@@ -16,6 +17,4 @@ public interface SubjectService {
     List<Subject> findSubjectsByTutorId(int tutorId) throws ServiceException;
 
     void editTutorSubjects(int tutorId, List<Integer> oldSubjectIds, List<Integer> newSubjectIds) throws ServiceException;
-
-
 }

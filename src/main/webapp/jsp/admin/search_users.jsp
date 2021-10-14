@@ -8,8 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/search_user.css" />
+    <title><fmt:message key="users.title"/></title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
 </head>
 <body>
 <c:import url="/jsp/fragment/header.jsp"/>
@@ -18,7 +18,7 @@
         <form action="${pageContext.request.contextPath}/controller" method="get">
             <input type="hidden" name="command" value="search_users">
             <input type="text" class="search-line" name="search_line">
-            <input type="submit" class="search-button" value="<fmt:message key="search.button"/>">
+            <button type="submit" class="simple-btn"><fmt:message key="search.button"/></button>
         </form>
     </div>
     <br>
@@ -28,8 +28,17 @@
         <div class="table_body">
             <c:forEach var="element" items="${users}">
                 <div class="table_row">
-                    <div class="table_item"><ctg:user-photo photo="${element.photo}" height="50" width="50"/></div>
-                    <div class="table_item">${element.lastName} ${element.firstName}</div>
+                    <c:choose>
+                        <c:when test="${element.role eq 'TUTOR'}">
+                            <div class="table_item"><a href="${pageContext.request.contextPath}/controller?command=tutor_profile_page&tutor_id=${tutorsMap[element].tutorId}"><ctg:user-photo photo="${element.photo}" height="50" width="50"/></a></div>
+                            <div class="table_item"><a href="${pageContext.request.contextPath}/controller?command=tutor_profile_page&tutor_id=${tutorsMap[element].tutorId}">${element.lastName} ${element.firstName}</a></div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="table_item"><ctg:user-photo photo="${element.photo}" height="50" width="50"/></div>
+                            <div class="table_item">${element.lastName} ${element.firstName}</div>
+                        </c:otherwise>
+                    </c:choose>
+
                     <div class="table_item">${element.email}</div>
                     <div class="table_item">${element.role}</div>
                     <div class="table_item">${element.status}</div>

@@ -30,6 +30,11 @@ public class SubjectDaoImpl extends SubjectDao {
             FROM subjects
             WHERE subject_id = ?;
             """;
+    private static final String SQL_FIND_SUBJECT_BY_NAME = """
+            SELECT subject_id, subject_name
+            FROM subjects
+            WHERE subject_name = ?;
+            """;
     private static final String SQL_DELETE_SUBJECT_BY_ID = """
             DELETE FROM subjects
             WHERE subject_id = ?;
@@ -67,15 +72,14 @@ public class SubjectDaoImpl extends SubjectDao {
     public List<Subject> findAll() throws DaoException {
         List<Subject> subjects = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_SUBJECTS)) {
-            try (ResultSet resultSet = statement.executeQuery();) {
-                while (resultSet.next()) {
-                    Subject subject = new Subject();
-                    subject.setSubjectId(resultSet.getInt(ColumnName.SUBJECT_ID));
-                    subject.setSubjectName(resultSet.getString(ColumnName.SUBJECT_NAME));
-                    subjects.add(subject);
-                }
-                return subjects;
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Subject subject = new Subject();
+                subject.setSubjectId(resultSet.getInt(ColumnName.SUBJECT_ID));
+                subject.setSubjectName(resultSet.getString(ColumnName.SUBJECT_NAME));
+                subjects.add(subject);
             }
+            return subjects;
         } catch (SQLException e) {
             logger.error("Failed to find all subjects", e);
             throw new DaoException("Failed to find all subjects", e);
@@ -86,15 +90,14 @@ public class SubjectDaoImpl extends SubjectDao {
     public Optional<Subject> findById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_SUBJECT_BY_ID)) {
             statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    Subject subject = new Subject();
-                    subject.setSubjectId(resultSet.getInt(ColumnName.SUBJECT_ID));
-                    subject.setSubjectName(resultSet.getString(ColumnName.SUBJECT_NAME));
-                    return Optional.of(subject);
-                } else {
-                    return Optional.empty();
-                }
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Subject subject = new Subject();
+                subject.setSubjectId(resultSet.getInt(ColumnName.SUBJECT_ID));
+                subject.setSubjectName(resultSet.getString(ColumnName.SUBJECT_NAME));
+                return Optional.of(subject);
+            } else {
+                return Optional.empty();
             }
         } catch (SQLException e) {
             logger.error("Failed to find subject by id", e);
@@ -119,12 +122,11 @@ public class SubjectDaoImpl extends SubjectDao {
         try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_SUBJECT, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, subject.getSubjectName());
             boolean result = statement.executeUpdate() == 1;
-            try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                if (resultSet.next()) {
-                    subject.setSubjectId(resultSet.getInt(1));
-                }
-                return result;
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                subject.setSubjectId(resultSet.getInt(1));
             }
+            return result;
         } catch (SQLException e) {
             logger.error("Failed to create subject", e);
             throw new DaoException("Failed to create subject", e);
@@ -159,11 +161,11 @@ public class SubjectDaoImpl extends SubjectDao {
     }
 
     @Override
-    public void deleteTutorSubject(int tutorId, int subjectId) throws DaoException {
+    public int deleteTutorSubject(int tutorId, int subjectId) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_TUTOR_SUBJECT)) {
             statement.setInt(1, tutorId);
             statement.setInt(2, subjectId);
-            statement.executeUpdate();
+            return statement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Failed to delete tutorSubject record", e);
             throw new DaoException("Failed to delete tutorSubject record", e);
@@ -174,18 +176,37 @@ public class SubjectDaoImpl extends SubjectDao {
     public List<Subject> findSubjectsByTutorId(int tutorId) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_SUBJECTS_BY_TUTOR_ID)) {
             statement.setInt(1, tutorId);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                List<Subject> subjects = new ArrayList<>();
-                while (resultSet.next()) {
-                    int subjectId = resultSet.getInt(ColumnName.SUBJECT_ID);
-                    String subjectName = resultSet.getString(ColumnName.SUBJECT_NAME);
-                    subjects.add(new Subject(subjectId, subjectName));
-                }
-                return subjects;
+            ResultSet resultSet = statement.executeQuery();
+            List<Subject> subjects = new ArrayList<>();
+            while (resultSet.next()) {
+                int subjectId = resultSet.getInt(ColumnName.SUBJECT_ID);
+                String subjectName = resultSet.getString(ColumnName.SUBJECT_NAME);
+                subjects.add(new Subject(subjectId, subjectName));
             }
+            return subjects;
+
         } catch (SQLException e) {
             logger.error("Failed to find subjects by tutor id", e);
             throw new DaoException("Failed to find subjects by tutor id", e);
+        }
+    }
+
+    @Override
+    public Optional<Subject> findSubjectByName(String name) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_SUBJECT_BY_NAME)) {
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Subject subject = new Subject();
+                subject.setSubjectId(resultSet.getInt(ColumnName.SUBJECT_ID));
+                subject.setSubjectName(resultSet.getString(ColumnName.SUBJECT_NAME));
+                return Optional.of(subject);
+            } else {
+                return Optional.empty();
+            }
+        } catch (SQLException e) {
+            logger.error("Failed to find subjects by name", e);
+            throw new DaoException("Failed to find subjects by name", e);
         }
     }
 

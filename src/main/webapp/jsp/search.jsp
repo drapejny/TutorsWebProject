@@ -27,8 +27,8 @@
                 </c:if>>${element}</option>
             </c:forEach>
         </select>
-        <input type="number" id="amount1" name="min_price" required min="1" max="999" value="${minPrice}"  >
-        <input type="number" id="amount2" name="max_price" required min="1" max="999" value="${maxPrice}"  >
+        <input type="number" id="amount1" name="min_price" required min="1" max="999" value="${minPrice}">
+        <input type="number" id="amount2" name="max_price" required min="1" max="999" value="${maxPrice}">
         <button type="submit" class="simple-btn"><fmt:message key="search.button"/></button>
     </form>
 </div>
@@ -39,8 +39,12 @@
 
 <c:if test="${not empty requestScope.tutors}">
     <div class="sort-block">
-        <a href="${pageContext.request.contextPath}/controller?command=search&sort=price_asc&page_number=1&subject=${subjectId}&city=${city}&min_price=${minPrice}&max_price=${maxPrice}"><fmt:message key="search.sort.low_high"/></a>
-        <a href="${pageContext.request.contextPath}/controller?command=search&sort=price_desc&page_number=1&subject=${subjectId}&city=${city}&min_price=${minPrice}&max_price=${maxPrice}"><fmt:message key="search.sort.high_low"/></a>
+        <a href="${pageContext.request.contextPath}/controller?command=search&sort=price_asc&page_number=1&subject=${subjectId}&city=${city}&min_price=${minPrice}&max_price=${maxPrice}">
+            <img src="${pageContext.request.contextPath}/img/up-arrow.svg" width="20" height="20">
+        </a>
+        <a href="${pageContext.request.contextPath}/controller?command=search&sort=price_desc&page_number=1&subject=${subjectId}&city=${city}&min_price=${minPrice}&max_price=${maxPrice}">
+            <img src="${pageContext.request.contextPath}/img/down-arrow.svg" width="20" height="20">
+        </a>
     </div>
     <c:forEach var="element" items="${requestScope.tutors}">
         <ctg:user-photo photo="${element.photo}" height="100" width="100"/>
@@ -50,11 +54,13 @@
     </c:forEach>
     <div class="pages-block">
         <c:if test="${pageNumber != 1}">
-            <a href="${pageContext.request.contextPath}/controller?command=search&page_number=${pageNumber - 1}&sort=${sort}&subject=${subjectId}&city=${city}&min_price=${minPrice}&max_price=${maxPrice}"><fmt:message key="search.prev"/></a>
+            <a href="${pageContext.request.contextPath}/controller?command=search&page_number=${pageNumber - 1}&sort=${sort}&subject=${subjectId}&city=${city}&min_price=${minPrice}&max_price=${maxPrice}"><fmt:message
+                    key="search.prev"/></a>
         </c:if>
         <span class="pages-text">${pageNumber} <fmt:message key="search.of"/> ${pageCount}</span>
         <c:if test="${pageNumber != pageCount}">
-            <a href="${pageContext.request.contextPath}/controller?command=search&page_number=${pageNumber + 1}&sort=${sort}&subject=${subjectId}&city=${city}&min_price=${minPrice}&max_price=${maxPrice}"><fmt:message key="search.next"/></a>
+            <a href="${pageContext.request.contextPath}/controller?command=search&page_number=${pageNumber + 1}&sort=${sort}&subject=${subjectId}&city=${city}&min_price=${minPrice}&max_price=${maxPrice}"><fmt:message
+                    key="search.next"/></a>
         </c:if>
     </div>
 </c:if>

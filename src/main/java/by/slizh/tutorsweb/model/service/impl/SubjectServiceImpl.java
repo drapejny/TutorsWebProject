@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class SubjectServiceImpl implements SubjectService {
 
@@ -70,6 +71,10 @@ public class SubjectServiceImpl implements SubjectService {
         SubjectDao subjectDao = new SubjectDaoImpl();
         try {
             transaction.init(subjectDao);
+            Optional<Subject> optionalSubject = subjectDao.findSubjectByName(subject.getSubjectName());
+            if(optionalSubject.isPresent()){
+                return false;
+            }
             return subjectDao.create(subject);
         } catch (DaoException e) {
             logger.error("Failed ot add subject in addSubject method", e);
