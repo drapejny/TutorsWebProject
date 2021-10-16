@@ -22,28 +22,6 @@ public class UserValidatorImpl implements UserValidator {
         return instance;
     }
 
-//    @Override
-//    public boolean validateUserData(Map<String, String> userMap) {
-//        boolean result = true;
-//        if (!validateFirstName(userMap.get(FIRST_NAME))) {
-//            userMap.put(FIRST_NAME, EMPTY_LINE);
-//            result = false;
-//        }
-//        if (!validateLastName(userMap.get(LAST_NAME))) {
-//            userMap.put(LAST_NAME, EMPTY_LINE);
-//            result = false;
-//        }
-//        if (!validateEmail(userMap.get(EMAIL))) {
-//            userMap.put(EMAIL, EMPTY_LINE);
-//            result = false;
-//        }
-//        if (!validatePassword(userMap.get(PASSWORD))) {
-//            userMap.put(PASSWORD, EMPTY_LINE);
-//            result = false;
-//        }
-//        return result;
-//    }
-
     @Override
     public boolean validateFirstName(String firstName) {
         return firstName.matches(REGEXP_FIRST_NAME);
