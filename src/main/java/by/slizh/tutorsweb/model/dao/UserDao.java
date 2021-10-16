@@ -18,4 +18,6 @@ public abstract class UserDao extends AbstractDao<User> {
 
     public abstract List<User> searchUsers(String searchLine) throws DaoException;
 
+    public abstract List<User> findAllAdmins() throws DaoException;
+
 }

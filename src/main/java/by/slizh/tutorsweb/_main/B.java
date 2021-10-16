@@ -1,5 +1,5 @@
 package by.slizh.tutorsweb._main;
 
-public class B extends A {
+public interface B {
 
 }

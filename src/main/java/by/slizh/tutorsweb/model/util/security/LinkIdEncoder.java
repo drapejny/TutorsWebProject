@@ -1,4 +1,4 @@
-package by.slizh.tutorsweb.util.security;
+package by.slizh.tutorsweb.model.util.security;
 
 public final class LinkIdEncoder {
 

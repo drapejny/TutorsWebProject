@@ -1,4 +1,4 @@
-package by.slizh.tutorsweb.util.mail;
+package by.slizh.tutorsweb.model.util.mail;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

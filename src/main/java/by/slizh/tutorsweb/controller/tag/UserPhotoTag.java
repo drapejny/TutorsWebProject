@@ -1,4 +1,4 @@
-package by.slizh.tutorsweb.tag;
+package by.slizh.tutorsweb.controller.tag;
 
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.tagext.TagSupport;

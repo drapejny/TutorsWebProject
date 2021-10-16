@@ -1,8 +1,5 @@
 package by.slizh.tutorsweb._main;
 
-public class A {
+public class A implements B {
 
-    public  int met() {
-        return 1;
-    }
 }

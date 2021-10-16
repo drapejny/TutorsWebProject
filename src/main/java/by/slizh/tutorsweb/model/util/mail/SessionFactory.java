@@ -1,4 +1,4 @@
-package by.slizh.tutorsweb.util.mail;
+package by.slizh.tutorsweb.model.util.mail;
 
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;

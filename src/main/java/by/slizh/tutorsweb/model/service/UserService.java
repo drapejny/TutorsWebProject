@@ -39,5 +39,12 @@ public interface UserService {
 
     Optional<User> unblockUser(int userId) throws ServiceException;
 
+    List<User> findAllAdmins() throws ServiceException;
+
+    boolean makeAdmin(int userId) throws ServiceException;
+
+    boolean deleteAdmin(int userId) throws ServiceException;
+
+
 
 }

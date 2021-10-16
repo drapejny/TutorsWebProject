@@ -11,19 +11,13 @@ import by.slizh.tutorsweb.model.dao.EntityTransaction;
 import by.slizh.tutorsweb.model.dao.UserDao;
 import by.slizh.tutorsweb.model.dao.impl.UserDaoImpl;
 import by.slizh.tutorsweb.model.service.UserService;
-import by.slizh.tutorsweb.model.validator.impl.UserValidatorImpl;
-import by.slizh.tutorsweb.util.Base64Coder;
-import by.slizh.tutorsweb.util.mail.MailSender;
-import by.slizh.tutorsweb.util.security.LinkIdEncoder;
-import by.slizh.tutorsweb.util.security.PasswordEncoder;
+import by.slizh.tutorsweb.model.util.Base64Coder;
+import by.slizh.tutorsweb.model.util.mail.MailSender;
+import by.slizh.tutorsweb.model.util.security.LinkIdEncoder;
+import by.slizh.tutorsweb.model.util.security.PasswordEncoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static by.slizh.tutorsweb.controller.command.RequestParameter.*;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -358,5 +352,72 @@ public class UserServiceImpl implements UserService {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<User> findAllAdmins() throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
+        try {
+            transaction.init(userDao);
+            List<User> admins = userDao.findAllAdmins();
+            return admins;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in finaAllAdmins method", e);
+            }
+        }
+    }
+
+    @Override
+    public boolean makeAdmin(int userId) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
+        try {
+            transaction.init(userDao);
+            Optional<User> user = userDao.findById(userId);
+            if(user.isPresent()){
+                user.get().setRole(User.Role.ADMIN);
+                userDao.update(user.get());
+                return true;
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in makeAdmin method", e);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteAdmin(int userId) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
+        try {
+            transaction.init(userDao);
+            Optional<User> admin = userDao.findById(userId);
+            if (admin.isPresent()) {
+                admin.get().setRole(User.Role.USER);
+                userDao.update(admin.get());
+                return true;
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in deleteAdmin method", e);
+            }
+        }
+        return false;
     }
 }

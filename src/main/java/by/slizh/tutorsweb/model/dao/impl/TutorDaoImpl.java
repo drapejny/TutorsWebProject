@@ -4,7 +4,7 @@ import by.slizh.tutorsweb.model.entity.Tutor;
 import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.model.dao.TutorDao;
-import by.slizh.tutorsweb.util.Base64Coder;
+import by.slizh.tutorsweb.model.util.Base64Coder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

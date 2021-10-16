@@ -4,8 +4,8 @@ import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.model.dao.ColumnName;
 import by.slizh.tutorsweb.model.dao.UserDao;
-import by.slizh.tutorsweb.util.Base64Coder;
-import by.slizh.tutorsweb.util.security.PasswordEncoder;
+import by.slizh.tutorsweb.model.util.Base64Coder;
+import by.slizh.tutorsweb.model.util.security.PasswordEncoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -68,11 +68,19 @@ public class UserDaoImpl extends UserDao {
             WHERE last_name LIKE ? OR email LIKE ?
             ORDER BY last_name, first_name;
             """;
+    private static final String SQL_FIND_ALL_ADMINS = """
+            SELECT user_id, first_name, last_name, email, photo, role_name, status_name
+            FRваOM users
+            JOIN role ON users.role_id = role.role_id
+            JOIN status ON users.status_id = status.status_id
+            WHERE role_name = 'admin' AND email != 'admin@admin.com'
+            ORDER BY first_name, last_name;
+            """;
 
     @Override
     public List<User> findAll() throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_USERS)) {
-            List<User> users = new LinkedList<User>();
+            List<User> users = new ArrayList<>();
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 User user = buildUser(resultSet);
@@ -224,6 +232,22 @@ public class UserDaoImpl extends UserDao {
         } catch (SQLException e) {
             logger.error("Failed to search users", e);
             throw new DaoException("Failed to search users", e);
+        }
+    }
+
+    @Override
+    public List<User> findAllAdmins() throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_ADMINS)) {
+            ResultSet resultSet = statement.executeQuery();
+            List<User> admins = new ArrayList<>();
+            while (resultSet.next()) {
+                User admin = buildUser(resultSet);
+                admins.add(admin);
+            }
+            return admins;
+        } catch (SQLException e) {
+            logger.error("Failed to find all admins", e);
+            throw new DaoException();
         }
     }
 

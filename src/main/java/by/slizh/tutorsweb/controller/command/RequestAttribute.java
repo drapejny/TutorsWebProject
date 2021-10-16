@@ -29,6 +29,7 @@ public final class RequestAttribute {
     public static final String UNBLOCKED_USER = "unblockedUser";
     public static final String TUTORS_MAP = "tutorsMap";
     public static final String EXCEPTION = "exception";
+    public static final String ADMINS = "admins";
 
 
     public static String ERROR_USER_NON_ACTIVATED = "errorNonActivatedMessage";

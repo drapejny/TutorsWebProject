@@ -8,26 +8,84 @@ import static by.slizh.tutorsweb.controller.command.CommandType.*;
 import java.util.EnumSet;
 import java.util.Set;
 
-public class RoleCommandProvider {
+class RoleCommandProvider {
 
     private static RoleCommandProvider instance;
 
     private EnumSet<CommandType> guestCommands = EnumSet.of(
             DEFAULT,
+            CONFIRMATION_PAGE,
             LOGIN_PAGE,
             MAIN_PAGE,
             REGISTRATION_PAGE,
             SEARCH_PAGE,
             TUTOR_PROFILE_PAGE,
+            LOGIN,
+            REGISTRATION,
+            SEARCH,
+            VERIFICATION,
             CHANGE_LOCALE
     );
 
-    private EnumSet<CommandType> userCommands = EnumSet.of(DEFAULT,
-            MAIN_PAGE);
+    private EnumSet<CommandType> userCommands = EnumSet.of(
+            DEFAULT,
+            EDIT_PROFILE_PAGE,
+            MAIN_PAGE,
+            SEARCH_PAGE,
+            TUTOR_PROFILE_PAGE,
+            ADD_APPLICATION,
+            ADD_FEEDBACK,
+            BECOME_TUTOR,
+            DELETE_FEEDBACK,
+            EDIT_FEEDBACK,
+            EDIT_PASSWORD,
+            EDIT_PROFILE,
+            LOGOUT,
+            SEARCH,
+            CHANGE_LOCALE
+    );
 
-    private EnumSet<CommandType> tutorCommands = EnumSet.of(DEFAULT);
+    private EnumSet<CommandType> tutorCommands = EnumSet.of(
+            DEFAULT,
+            EDIT_TUTOR_PROFILE_PAGE,
+            MAIN_PAGE,
+            SEARCH_PAGE,
+            TUTOR_PROFILE_PAGE,
+            DELETE_FEEDBACK,
+            EDIT_PASSWORD,
+            EDIT_TUTOR_PROFILE,
+            LOGOUT,
+            SEARCH,
+            CHANGE_LOCALE
+    );
 
-    private EnumSet<CommandType> adminCommands = EnumSet.of(DEFAULT);
+    private EnumSet<CommandType> adminCommands = EnumSet.of(
+            DEFAULT,
+            ACCEPT_APPLICATION,
+            ADD_ADMIN,
+            ADD_SUBJECT,
+            BLOCK_USER,
+            DELETE_ADMIN,
+            DELETE_SUBJECT,
+            REJECT_APPLICATION,
+            SEARCH_USERS,
+            UNBLOCK_USER,
+            ALL_ADMINS_PAGE,
+            ALL_APPLICATIONS_PAGE,
+            ALL_SUBJECTS_PAGE,
+            APPLICATION_PAGE,
+            EDIT_PROFILE_PAGE,
+            MAIN_PAGE,
+            SEARCH_PAGE,
+            SEARCH_USERS_PAGE,
+            TUTOR_PROFILE_PAGE,
+            ADD_FEEDBACK,
+            DELETE_FEEDBACK,
+            EDIT_FEEDBACK,
+            EDIT_PASSWORD,
+            EDIT_PROFILE,
+            LOGOUT,
+            SEARCH);
 
     private RoleCommandProvider() {
     }
@@ -43,7 +101,6 @@ public class RoleCommandProvider {
         boolean checkFlag = false;
         switch (role) {
             case GUEST:
-                System.out.println(11);
                 checkFlag = guestCommands.contains(commandType);
                 break;
             case USER:

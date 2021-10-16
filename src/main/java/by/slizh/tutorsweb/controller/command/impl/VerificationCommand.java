@@ -7,6 +7,11 @@ import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.model.service.UserService;
 import by.slizh.tutorsweb.model.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
+import java.util.Locale;
+
+import static by.slizh.tutorsweb.controller.command.RequestAttribute.SUCCESS_REGISTRATION_MESSAGE;
 
 public class VerificationCommand implements Command {
     @Override
@@ -14,11 +19,16 @@ public class VerificationCommand implements Command {
         UserService service = UserServiceImpl.getInstance();
         String userId = request.getParameter(RequestParameter.USER_ID);
         try {
-            service.verify(userId);
+            if (service.verify(userId)) {
+                HttpSession session = request.getSession();
+                String locale = (String) session.getAttribute(SessionAttribute.LOCALE);
+                session.setAttribute(SUCCESS_REGISTRATION_MESSAGE, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(SUCCESS_REGISTRATION_MESSAGE));
+                return new Router(PagePath.GO_TO_LOGIN_PAGE, Router.RouteType.REDIRECT);
+            }
         } catch (ServiceException e) {
             throw new CommandException("Executing verify command error", e);
         }
-        return new Router(PagePath.MAIN_PAGE, Router.RouteType.REDIRECT);
+        return new Router(PagePath.MAIN_PAGE, Router.RouteType.FORWARD);
 
     }
 }

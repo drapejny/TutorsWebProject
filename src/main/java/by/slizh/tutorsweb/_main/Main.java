@@ -1,32 +1,14 @@
 package by.slizh.tutorsweb._main;
 
-import by.slizh.tutorsweb.exception.DaoException;
-import by.slizh.tutorsweb.exception.ServiceException;
-import by.slizh.tutorsweb.model.dao.*;
-import by.slizh.tutorsweb.model.dao.impl.FeedbackDaoImpl;
-import by.slizh.tutorsweb.model.dao.impl.SubjectDaoImpl;
-import by.slizh.tutorsweb.model.dao.impl.TutorDaoImpl;
-import by.slizh.tutorsweb.model.dao.impl.UserDaoImpl;
-import by.slizh.tutorsweb.model.entity.Feedback;
-import by.slizh.tutorsweb.model.entity.Subject;
-import by.slizh.tutorsweb.model.entity.Tutor;
-import by.slizh.tutorsweb.model.entity.User;
-import by.slizh.tutorsweb.util.mail.MailSender;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Stream;
 
 public class Main {
     private static final Logger logger = LogManager.getLogger();
 
 
     public static void main(String[] args) {
+
 //        User user = new User.UserBuilder()
 //                .setFirstName("admin")
 //                .setLastName("admin")

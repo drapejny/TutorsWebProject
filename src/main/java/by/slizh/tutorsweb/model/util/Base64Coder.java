@@ -1,4 +1,4 @@
-package by.slizh.tutorsweb.util;
+package by.slizh.tutorsweb.model.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Base64;
 
 public final class Base64Coder {

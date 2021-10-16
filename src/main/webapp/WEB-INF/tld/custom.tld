@@ -5,7 +5,7 @@
         <uri>customtags</uri>
         <tag>
             <name>user-photo</name>
-            <tag-class>by.slizh.tutorsweb.tag.UserPhotoTag</tag-class>
+            <tag-class>by.slizh.tutorsweb.controller.tag.UserPhotoTag</tag-class>
             <body-content>empty</body-content>
 
             <attribute>

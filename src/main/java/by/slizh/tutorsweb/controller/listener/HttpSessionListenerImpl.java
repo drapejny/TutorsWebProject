@@ -27,12 +27,13 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
 
     @Override
     public void sessionCreated(HttpSessionEvent event) {
+        System.out.println("SessionCreated");
         HttpSession session = event.getSession();
         session.setAttribute(LOCALE, Locale.getDefault().toString());
-       User user = new User.UserBuilder()
-                .setRole(User.Role.GUEST)
-                .createUser();
-        session.setAttribute(SessionAttribute.USER, user);
+//       User user = new User.UserBuilder()
+//                .setRole(User.Role.GUEST)
+//                .createUser();
+//        session.setAttribute(SessionAttribute.USER, user);
     }
 
     @Override

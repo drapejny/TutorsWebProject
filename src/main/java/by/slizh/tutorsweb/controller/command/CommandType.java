@@ -8,7 +8,6 @@ public enum CommandType {
     DEFAULT(new DefaultCommand()),
     LOGIN(new LoginCommand()),
     LOGIN_PAGE(new GoToLoginPage()),
-    PROFILE_PAGE(new GoToProfilePage()),
     CHANGE_LOCALE(new ChangeLocaleCommand()),
     REGISTRATION_PAGE(new GoToRegistrationPage()),
     REGISTRATION(new RegistrationCommand()),
@@ -19,7 +18,6 @@ public enum CommandType {
     EDIT_PROFILE(new EditProfileCommand()),
     EDIT_PASSWORD(new EditPasswordCommand()),
     ADD_APPLICATION(new AddApplicationCommand()),
-    DELETE_APPLICATION(new DeleteApplication()),
     ALL_APPLICATIONS_PAGE(new GoToAllApplicationsPage()),
     ALL_SUBJECTS_PAGE(new GoToAllSubjectsPage()),
     ADD_SUBJECT(new AddSubjectCommand()),
@@ -39,7 +37,11 @@ public enum CommandType {
     SEARCH_USERS_PAGE(new GoToSearchUsersPage()),
     SEARCH_USERS(new SearchUsersCommand()),
     BLOCK_USER(new BlockUserCommand()),
-    UNBLOCK_USER(new UnblockUserCommand());
+    UNBLOCK_USER(new UnblockUserCommand()),
+    ALL_ADMINS_PAGE(new GoToAllAdminsPage()),
+    DELETE_ADMIN(new DeleteAdminCommand()),
+    ADD_ADMIN(new AddAdminCommand()),
+    CONFIRMATION_PAGE(new GoToConfirmationPage());
 
     private Command command;
 

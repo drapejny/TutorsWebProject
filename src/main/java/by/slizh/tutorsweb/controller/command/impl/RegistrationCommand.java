@@ -7,18 +7,12 @@ import by.slizh.tutorsweb.model.service.UserService;
 import by.slizh.tutorsweb.model.service.impl.UserServiceImpl;
 import by.slizh.tutorsweb.model.validator.UserValidator;
 import by.slizh.tutorsweb.model.validator.impl.UserValidatorImpl;
-import by.slizh.tutorsweb.util.Base64Coder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import static by.slizh.tutorsweb.controller.command.RequestParameter.*;
 import static by.slizh.tutorsweb.controller.command.RequestAttribute.*;
@@ -61,8 +55,7 @@ public class RegistrationCommand implements Command {
                 logger.error("Executing registration command error", e);
                 throw new CommandException("Executing registration command error", e);
             }
-            session.setAttribute(SUCCESS_REGISTRATION_MESSAGE,MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(SUCCESS_REGISTRATION_MESSAGE));
-            return new Router(PagePath.GO_TO_LOGIN_PAGE, Router.RouteType.REDIRECT);
+            return new Router(PagePath.GO_TO_CONFIRMATION_PAGE, Router.RouteType.REDIRECT);
         } else {
             request.setAttribute(ERROR_WRONG_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_DATA));
             return new Router(PagePath.REGISTRATION_PAGE, Router.RouteType.FORWARD);

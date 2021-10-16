@@ -51,6 +51,13 @@
                                         <input type="hidden" name="user_id" value="${element.userId}">
                                         <button type="submit" class="block_btn"><fmt:message key="admin.block.btn"/></button>
                                     </form>
+                                    <c:if test="${element.role eq 'USER' && sessionScope.user.email eq 'admin@admin.com'}">
+                                        <form action="${pageContext.request.contextPath}/controller" method="post">
+                                            <input type="hidden" name="command" value="add_admin">
+                                            <input type="hidden" name="user_id" value="${element.userId}">
+                                            <button type="submit" class="unblock_btn"><fmt:message key="admin.add-admin"/></button>
+                                        </form>
+                                    </c:if>
                                 </c:when>
                                 <c:when test="${element.status eq 'BLOCKED'}">
                                     <form action="${pageContext.request.contextPath}/controller" method="post">
@@ -61,13 +68,12 @@
                                 </c:when>
                             </c:choose>
                         </c:if>
+
                     </div>
                 </div>
             </c:forEach>
         </div>
     </div>
-
-    </ul>
 </div>
 
 </body>
