@@ -114,7 +114,7 @@ public class TutorDaoImpl extends TutorDao {
 
     @Override
     public List<Tutor> findAll() throws DaoException {
-        List<Tutor> tutors = new LinkedList<Tutor>();
+        List<Tutor> tutors = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_TUTORS)) {
             ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {

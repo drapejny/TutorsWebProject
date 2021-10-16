@@ -1,5 +1,8 @@
 package by.slizh.tutorsweb._main;
 
-public class A implements B {
+import java.util.*;
+
+public class A {
+
 
 }

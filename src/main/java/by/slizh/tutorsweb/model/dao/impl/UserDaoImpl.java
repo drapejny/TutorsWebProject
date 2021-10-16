@@ -12,6 +12,8 @@ import org.apache.logging.log4j.Logger;
 import static by.slizh.tutorsweb.model.dao.ColumnName.*;
 
 import java.sql.*;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class UserDaoImpl extends UserDao {

@@ -1,14 +1,24 @@
 package by.slizh.tutorsweb._main;
 
+import by.slizh.tutorsweb.model.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Main {
     private static final Logger logger = LogManager.getLogger();
 
 
     public static void main(String[] args) {
-
+        List<User> list1 = new ArrayList<>();
+        List<User> list2 = new ArrayList<>();
+        List<User> list3 = Collections.singletonList(new User());
+        List<User> list4 = Collections.singletonList(new User());
+        System.out.println(list1 == list2);
+        System.out.println(list3 == list4);
 //        User user = new User.UserBuilder()
 //                .setFirstName("admin")
 //                .setLastName("admin")
