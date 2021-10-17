@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="right_part">
-        <div class="name">${requestScope.application.firstName} ${application.lastName}</div>
+        <div class="name">${application.firstName} ${application.lastName}</div>
         <div class="phone">${application.phone}</div>
         <div class="email">${application.email}</div>
         <ul>

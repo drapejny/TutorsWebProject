@@ -72,7 +72,7 @@ public class UserDaoImpl extends UserDao {
             """;
     private static final String SQL_FIND_ALL_ADMINS = """
             SELECT user_id, first_name, last_name, email, photo, role_name, status_name
-            FRваOM users
+            FROM users
             JOIN role ON users.role_id = role.role_id
             JOIN status ON users.status_id = status.status_id
             WHERE role_name = 'admin' AND email != 'admin@admin.com'

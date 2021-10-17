@@ -8,6 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 public class DefaultCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
-        return new Router(PagePath.ERROR_404_PAGE, Router.RouteType.REDIRECT);
+        return new Router(PagePath.GO_TO_MAIN_PAGE, Router.RouteType.REDIRECT);
     }
 }

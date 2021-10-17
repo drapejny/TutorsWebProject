@@ -11,7 +11,7 @@
 <body>
 <c:import url="fragment/header.jsp"/>
 <div class="search-block">
-    <form action="${pageContext.request.contextPath}/controller" method="post">
+    <form action="${pageContext.request.contextPath}/controller" method="get">
         <input type="hidden" name="command" value="search">
         <select name="subject">
             <c:forEach var="element" items="${applicationScope.subjects}">

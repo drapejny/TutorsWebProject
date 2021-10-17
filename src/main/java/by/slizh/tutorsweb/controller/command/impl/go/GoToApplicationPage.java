@@ -5,6 +5,7 @@ import by.slizh.tutorsweb.exception.CommandException;
 import by.slizh.tutorsweb.exception.ServiceException;
 import by.slizh.tutorsweb.model.entity.Subject;
 import by.slizh.tutorsweb.model.entity.Tutor;
+import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.model.service.SubjectService;
 import by.slizh.tutorsweb.model.service.TutorService;
 import by.slizh.tutorsweb.model.service.impl.SubjectServiceImpl;
@@ -27,15 +28,20 @@ public class GoToApplicationPage implements Command {
         SubjectService subjectService = SubjectServiceImpl.getInstance();
         try {
             Optional<Tutor> tutor = tutorService.findTutorById(Integer.parseInt(tutorId));
-            if (tutor.isPresent()) {
+            if (tutor.isPresent() && tutor.get().getRole() == User.Role.USER
+                    && tutor.get().getStatus() != User.Status.BLOCKED) {
                 request.setAttribute(RequestAttribute.APPLICATION, tutor.get());
+                List<Subject> subjects = subjectService.findSubjectsByTutorId(Integer.parseInt(tutorId));
+                request.setAttribute(RequestAttribute.SUBJECTS, subjects);
+                return new Router(PagePath.APPLICATION_PAGE, Router.RouteType.FORWARD);
+            } else {
+                return new Router(PagePath.GO_TO_ALL_APPLICATIONS_PAGE, Router.RouteType.FORWARD);
             }
-            List<Subject> subjects = subjectService.findSubjectsByTutorId(Integer.parseInt(tutorId));
-            request.setAttribute(RequestAttribute.SUBJECTS, subjects);
+
         } catch (ServiceException e) {
             logger.error("Executing goToApplicationPage command error", e);
             throw new CommandException("Executing goToApplicationPage command error", e);
         }
-        return new Router(PagePath.APPLICATION_PAGE, Router.RouteType.FORWARD);
+
     }
 }

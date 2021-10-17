@@ -6,23 +6,11 @@ import by.slizh.tutorsweb.controller.command.RequestParameter;
 import by.slizh.tutorsweb.controller.command.Router;
 import by.slizh.tutorsweb.exception.CommandException;
 import by.slizh.tutorsweb.exception.ServiceException;
-import by.slizh.tutorsweb.model.entity.Subject;
-import by.slizh.tutorsweb.model.entity.Tutor;
-import by.slizh.tutorsweb.model.entity.User;
-import by.slizh.tutorsweb.model.service.SubjectService;
-import by.slizh.tutorsweb.model.service.TutorService;
 import by.slizh.tutorsweb.model.service.UserService;
-import by.slizh.tutorsweb.model.service.impl.SubjectServiceImpl;
-import by.slizh.tutorsweb.model.service.impl.TutorServiceImpl;
 import by.slizh.tutorsweb.model.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.List;
-import java.util.Optional;
-
-import static by.slizh.tutorsweb.controller.command.RequestAttribute.*;
 
 public class AcceptApplicationCommand implements Command {
 

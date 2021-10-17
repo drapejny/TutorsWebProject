@@ -39,7 +39,7 @@
                 </c:if>
 
             </c:if>
-            <a href="#">
+            <a href="${pageContext.request.contextPath}/controller?command=about_us_page">
                 <fmt:message key="main.aboutus"/>
             </a>
         </nav>
@@ -73,9 +73,9 @@
             </div>
         </c:if>
 
-        <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=ru_RU&current_url=${pageContext.request.requestURL}"><img
+        <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=ru_RU"><img
                 src="${pageContext.request.contextPath}/img/ru.png" alt="ru"></a>
-        <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=en_EN&current_url=${pageContext.request.requestURL}"><img
+        <a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=en_EN"><img
                 src="${pageContext.request.contextPath}/img/en.png" alt="en"></a>
         <hr>
     </div>

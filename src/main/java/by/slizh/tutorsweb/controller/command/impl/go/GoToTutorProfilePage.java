@@ -41,16 +41,18 @@ public class GoToTutorProfilePage implements Command {
         UserService userService = UserServiceImpl.getInstance();
         try {
             Optional<Tutor> tutor = tutorService.findTutorById(tutorId);
-            if (tutor.isPresent()) {
+            if (tutor.isPresent() && tutor.get().getRole() == User.Role.TUTOR
+                    && tutor.get().getStatus() != User.Status.BLOCKED) {
                 request.setAttribute(RequestAttribute.TUTOR, tutor.get());
-            }
-            List<Subject> subjects = subjectService.findSubjectsByTutorId(tutorId);
-            List<Feedback> feedbacks = feedbackService.findFeedbacksByTutor(tutorId);
-            Map<Feedback, User> feedbackUserMap = userService.findUsersForFeedbacks(feedbacks);
+                List<Subject> subjects = subjectService.findSubjectsByTutorId(tutorId);
+                List<Feedback> feedbacks = feedbackService.findFeedbacksByTutor(tutorId);
+                Map<Feedback, User> feedbackUserMap = userService.findUsersForFeedbacks(feedbacks);
 
-            request.setAttribute(RequestAttribute.SUBJECTS, subjects);
-            request.setAttribute(RequestAttribute.FEEDBACKS, feedbacks);
-            request.setAttribute(RequestAttribute.USERS, feedbackUserMap);
+                request.setAttribute(RequestAttribute.SUBJECTS, subjects);
+                request.setAttribute(RequestAttribute.FEEDBACKS, feedbacks);
+                request.setAttribute(RequestAttribute.USERS, feedbackUserMap);
+
+            }
 
             return new Router(PagePath.TUTOR_PROFILE_PAGE, Router.RouteType.FORWARD);
         } catch (ServiceException e) {

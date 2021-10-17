@@ -41,7 +41,8 @@ public enum CommandType {
     ALL_ADMINS_PAGE(new GoToAllAdminsPage()),
     DELETE_ADMIN(new DeleteAdminCommand()),
     ADD_ADMIN(new AddAdminCommand()),
-    CONFIRMATION_PAGE(new GoToConfirmationPage());
+    CONFIRMATION_PAGE(new GoToConfirmationPage()),
+    ABOUT_US_PAGE(new GoToAboutUsPage());
 
     private Command command;
 

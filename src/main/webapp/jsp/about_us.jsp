@@ -5,12 +5,13 @@
 <%@ taglib uri="customtags" prefix="ctg" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="prop.pagecontent"/>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title><fmt:message key="confirmaion.title"/></title>
+    <title>Title</title>
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
-<h3><fmt:message key="confirmation.text"/></h3>
+Something about us
 </body>
 </html>

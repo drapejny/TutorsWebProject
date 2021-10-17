@@ -24,7 +24,8 @@ class RoleCommandProvider {
             REGISTRATION,
             SEARCH,
             VERIFICATION,
-            CHANGE_LOCALE
+            CHANGE_LOCALE,
+            ABOUT_US_PAGE
     );
 
     private EnumSet<CommandType> userCommands = EnumSet.of(
@@ -42,7 +43,8 @@ class RoleCommandProvider {
             EDIT_PROFILE,
             LOGOUT,
             SEARCH,
-            CHANGE_LOCALE
+            CHANGE_LOCALE,
+            ABOUT_US_PAGE
     );
 
     private EnumSet<CommandType> tutorCommands = EnumSet.of(
@@ -56,7 +58,8 @@ class RoleCommandProvider {
             EDIT_TUTOR_PROFILE,
             LOGOUT,
             SEARCH,
-            CHANGE_LOCALE
+            CHANGE_LOCALE,
+            ABOUT_US_PAGE
     );
 
     private EnumSet<CommandType> adminCommands = EnumSet.of(
@@ -85,7 +88,9 @@ class RoleCommandProvider {
             EDIT_PASSWORD,
             EDIT_PROFILE,
             LOGOUT,
-            SEARCH);
+            SEARCH,
+            CHANGE_LOCALE,
+            ABOUT_US_PAGE);
 
     private RoleCommandProvider() {
     }

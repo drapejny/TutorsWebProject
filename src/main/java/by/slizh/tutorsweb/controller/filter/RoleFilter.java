@@ -7,12 +7,18 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.io.PipedReader;
 import java.util.Locale;
 
 @WebFilter(urlPatterns = "/controller")
 public class RoleFilter implements Filter {
+
+    private static final Logger logger = LogManager.getLogger();
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         System.out.println("RoleFilter");
@@ -20,7 +26,6 @@ public class RoleFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
         if (session.getAttribute(SessionAttribute.USER) == null) {
-            System.out.println("---guest created---");
             User user = new User.UserBuilder()
                     .setRole(User.Role.GUEST)
                     .createUser();
@@ -29,7 +34,19 @@ public class RoleFilter implements Filter {
         String commandName = request.getParameter(RequestParameter.COMMAND);
         CommandType commandType;
         if (commandName != null) {
-            commandType = CommandType.valueOf(commandName.toUpperCase(Locale.ROOT));
+            try {
+                commandType = CommandType.valueOf(commandName.toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException e) {
+                logger.error("Invalid command name", e);
+                commandType = CommandType.DEFAULT;
+            }
+            if (commandType != CommandType.CHANGE_LOCALE) {
+                if (request.getQueryString() != null) {
+                    session.setAttribute(SessionAttribute.CURRENT_URL, "/controller?" + request.getQueryString());
+                    System.out.println(session.getAttribute(SessionAttribute.CURRENT_URL));
+                }
+            }
+
         } else {
             commandType = CommandType.DEFAULT;
         }
@@ -37,9 +54,9 @@ public class RoleFilter implements Filter {
         User user = (User) session.getAttribute(SessionAttribute.USER);
         if (!roleCommandProvider.checkCommand(user.getRole(), commandType)) {
             response.sendRedirect(request.getContextPath() + PagePath.GO_TO_MAIN_PAGE);
-            // request.getRequestDispatcher(PagePath.MAIN_PAGE).forward(request, response);
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }
     }
+
 }

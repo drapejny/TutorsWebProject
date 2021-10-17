@@ -19,6 +19,7 @@ public final class PagePath {
     public static final String SEARCH_USERS_PAGE = "/jsp/admin/search_users.jsp";
     public static final String ALL_ADMINS_PAGE = "/jsp/admin/all_admins.jsp";
     public static final String CONFIRMATION_PAGE = "/jsp/confirmation.jsp";
+    public static final String ABOUT_US_PAGE = "jsp/about_us.jsp";
 
     public static final String GO_TO_LOGIN_PAGE = "/controller?command=login_page";
     public static final String GO_TO_TUTOR_PROFILE_PAGE = "/controller?command=tutor_profile_page";

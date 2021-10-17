@@ -11,8 +11,8 @@ import java.util.List;
 public class Main {
     private static final Logger logger = LogManager.getLogger();
 
-
     public static void main(String[] args) {
+
         List<User> list1 = new ArrayList<>();
         List<User> list2 = new ArrayList<>();
         List<User> list3 = Collections.singletonList(new User());
