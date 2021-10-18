@@ -13,13 +13,14 @@
 <ctg:user-photo photo="${sessionScope.user.photo}" height="200" width="200"/>
 <form action="${pageContext.request.contextPath}/uploadServlet" method="post" enctype="multipart/form-data">
     <input type="hidden" name="command" value="upload_user_photo">
-    <input type="file" name="file" multiple accept="image/*,image/jpeg"><br>
+    <input id="file" type="file" name="file" multiple accept="image/*,image/jpeg"><br>
     <input type="submit" value="<fmt:message key="edit.photo.change"/>">
 </form>
 <span class="success-message">${successEditMessage}</span>
 <span class="fail-message">${errorWrongDataMessage}</span>
 <form action="${pageContext.request.contextPath}/controller" method="post">
     <input type="hidden" name="command" value="edit_profile">
+    <fmt:message key="profile.email"/> ${sessionScope.user.email}<br>
     <fmt:message key="profile.first_name"/><input type="text" name="first_name" value="${sessionScope.user.firstName}" required pattern="[A-zА-яЁё`'.-]{1,32}" maxlength="32"><br>
     <fmt:message key="profile.last_name"/><input type="text" name="last_name" value="${sessionScope.user.lastName}" required pattern="[A-zА-яЁё`'.-]{1,32}" maxlength="32"><br>
     <button type="submit" class="simple-btn"><fmt:message key="edit.profile.button"/></button>

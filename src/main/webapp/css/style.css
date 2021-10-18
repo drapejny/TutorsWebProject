@@ -2,6 +2,115 @@ body {
     font-family: 'Helvetica', 'Arial', sans-serif;
 }
 
+/*--------------------------------------------------HEADER-----------------------------------------------------*/
+
+
+
+.header__section {
+    display: flex;
+    align-items: center;
+}
+
+.header__section > a {
+    color: black;
+}
+
+
+.header__section > a {
+    margin-right: 30px;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+}
+
+nav > a {
+    margin-right: 30px;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+}
+
+nav > a:hover{
+    transform: scale(1.1);
+}
+
+
+
+
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: #7fbcf3;
+    display: flex;
+    align-items: center;
+    color: black;
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #29a8b9;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 140px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+
+
+
+
+
+header {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    background-color: #7fbcf3;
+    margin: 10px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: black;
+    position: fixed;
+    top: 0;
+    left: 0px;
+    width: calc(100% - 20px);
+    padding: 20px 10px;
+}
+body {
+    padding-top: 126px;
+}
+
+
+/*-------------------------------------------------------MAIN---------------------------------------------------*/
 .success-message {
     color: #4caf50;
 }
@@ -220,4 +329,28 @@ body {
     background: #149124;
     color: #fff;
     border: 1px solid #149124;
+}
+
+
+.wrapper{
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.main{
+    padding: 30px;
+    flex: 1 1 auto;
+}
+
+.footer{
+    font-size: 12px;
+    color: rgba(147, 144, 144, 0.96);
+    font-style: italic;
+    text-align: center;
+    padding: 12px;
+    background-color: rgba(217, 217, 217, 0.96);
+    border-width: 1px;
+    border-style:solid;
+    border-color: rgba(182, 179, 179, 0.96);
 }

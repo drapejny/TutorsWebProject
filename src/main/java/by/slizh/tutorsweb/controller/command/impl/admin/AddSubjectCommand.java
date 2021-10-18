@@ -9,7 +9,6 @@ import by.slizh.tutorsweb.model.service.impl.SubjectServiceImpl;
 import by.slizh.tutorsweb.model.validator.SubjectValidator;
 import by.slizh.tutorsweb.model.validator.impl.SubjectValidatorImpl;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

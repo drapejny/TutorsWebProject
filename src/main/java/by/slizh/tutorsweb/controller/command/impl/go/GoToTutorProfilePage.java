@@ -16,13 +16,17 @@ import by.slizh.tutorsweb.model.service.impl.SubjectServiceImpl;
 import by.slizh.tutorsweb.model.service.impl.TutorServiceImpl;
 import by.slizh.tutorsweb.model.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 public class GoToTutorProfilePage implements Command {
+
+    private static final Logger logger = LogManager.getLogger();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
@@ -56,6 +60,7 @@ public class GoToTutorProfilePage implements Command {
 
             return new Router(PagePath.TUTOR_PROFILE_PAGE, Router.RouteType.FORWARD);
         } catch (ServiceException e) {
+            logger.error("Executing search command error", e);
             throw new CommandException("Executing search command error", e);
         }
     }

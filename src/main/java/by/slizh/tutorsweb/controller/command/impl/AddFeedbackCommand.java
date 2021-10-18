@@ -4,17 +4,9 @@ import by.slizh.tutorsweb.controller.command.*;
 import by.slizh.tutorsweb.exception.CommandException;
 import by.slizh.tutorsweb.exception.ServiceException;
 import by.slizh.tutorsweb.model.entity.Feedback;
-import by.slizh.tutorsweb.model.entity.Subject;
-import by.slizh.tutorsweb.model.entity.Tutor;
 import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.model.service.FeedbackService;
-import by.slizh.tutorsweb.model.service.SubjectService;
-import by.slizh.tutorsweb.model.service.TutorService;
-import by.slizh.tutorsweb.model.service.UserService;
 import by.slizh.tutorsweb.model.service.impl.FeedbackServiceImpl;
-import by.slizh.tutorsweb.model.service.impl.SubjectServiceImpl;
-import by.slizh.tutorsweb.model.service.impl.TutorServiceImpl;
-import by.slizh.tutorsweb.model.service.impl.UserServiceImpl;
 import by.slizh.tutorsweb.model.validator.FeedbackValidator;
 import by.slizh.tutorsweb.model.validator.impl.FeedbackValidatorImpl;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,9 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 public class AddFeedbackCommand implements Command {
 
@@ -49,8 +38,8 @@ public class AddFeedbackCommand implements Command {
             try {
                 feedbackService.addFeedback(feedback);
                 request.getSession().setAttribute(RequestAttribute.TUTOR_ID, tutorId);
-                System.out.println("добавили в сессию");
             } catch (ServiceException e) {
+                logger.error("Executing addFeedback command error", e);
                 throw new CommandException("Executing addFeedback command error", e);
             }
         }

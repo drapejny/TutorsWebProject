@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title><fmt:message key="admin.all-admins.title"/></title>
 </head>
 <body>
 <c:import url="/jsp/fragment/header.jsp"/>

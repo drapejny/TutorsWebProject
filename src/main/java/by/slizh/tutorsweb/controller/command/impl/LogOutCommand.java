@@ -9,8 +9,6 @@ import by.slizh.tutorsweb.model.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-import java.io.IOException;
-
 public class LogOutCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

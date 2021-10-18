@@ -2,13 +2,9 @@ package by.slizh.tutorsweb.controller.command.impl.go;
 
 import by.slizh.tutorsweb.controller.command.Command;
 import by.slizh.tutorsweb.controller.command.PagePath;
-import by.slizh.tutorsweb.controller.command.RequestAttribute;
 import by.slizh.tutorsweb.controller.command.Router;
 import by.slizh.tutorsweb.exception.CommandException;
-import by.slizh.tutorsweb.exception.ServiceException;
 import by.slizh.tutorsweb.model.entity.Subject;
-import by.slizh.tutorsweb.model.service.SubjectService;
-import by.slizh.tutorsweb.model.service.impl.SubjectServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +15,6 @@ import static by.slizh.tutorsweb.controller.command.RequestAttribute.*;
 import java.util.List;
 
 public class GoToAllSubjectsPage implements Command {
-    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {

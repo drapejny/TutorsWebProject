@@ -1,16 +1,8 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Slizh Anton
-  Date: 05.09.2021
-  Time: 01:07
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="prop.pagecontent"/>
+<footer class="footer">
+    <fmt:message key="footer.contacts"/><br>
+    <fmt:message key="footer.copyright"/>
+</footer>

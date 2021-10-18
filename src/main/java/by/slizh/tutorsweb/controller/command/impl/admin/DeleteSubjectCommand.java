@@ -7,7 +7,6 @@ import by.slizh.tutorsweb.model.entity.Subject;
 import by.slizh.tutorsweb.model.service.SubjectService;
 import by.slizh.tutorsweb.model.service.impl.SubjectServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,6 +40,5 @@ public class DeleteSubjectCommand implements Command {
             logger.error("Executing delete subject command error", e);
             throw new CommandException("Executing delete subject command error", e);
         }
-
     }
 }

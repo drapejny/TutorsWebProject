@@ -13,9 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Arrays;
 import java.util.Locale;
-import java.util.Map;
 
 import static by.slizh.tutorsweb.controller.command.RequestAttribute.*;
 import static by.slizh.tutorsweb.controller.command.RequestParameter.*;
@@ -43,8 +41,8 @@ public class EditProfileCommand implements Command {
             try {
                 service.updateUser(user);
             } catch (ServiceException e) {
-                logger.error("Failed to update user in edit profile command", e);
-                throw new CommandException("Failed to update user in edit profile command", e);
+                logger.error("Executing editProfile command error", e);
+                throw new CommandException("Executing editProfile command error", e);
             }
             request.getSession().setAttribute(RequestAttribute.SUCCESSFUL_EDIT_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(SUCCESSFUL_EDIT_DATA));
             return new Router(PagePath.GO_TO_EDIT_PROFILE_PAGE, Router.RouteType.REDIRECT);

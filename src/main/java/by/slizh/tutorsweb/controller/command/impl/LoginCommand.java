@@ -62,6 +62,7 @@ public class LoginCommand implements Command {
                 router = new Router(PagePath.LOGIN_PAGE, Router.RouteType.FORWARD);
             }
         } catch (ServiceException e) {
+            logger.error("Executing login command error", e);
             throw new CommandException("Executing login command error", e);
         }
         return router;

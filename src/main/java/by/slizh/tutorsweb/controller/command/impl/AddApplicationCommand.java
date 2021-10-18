@@ -3,7 +3,6 @@ package by.slizh.tutorsweb.controller.command.impl;
 import by.slizh.tutorsweb.controller.command.*;
 import by.slizh.tutorsweb.exception.CommandException;
 import by.slizh.tutorsweb.exception.ServiceException;
-import by.slizh.tutorsweb.model.entity.Subject;
 import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.model.service.TutorService;
 import by.slizh.tutorsweb.model.service.impl.TutorServiceImpl;
@@ -13,8 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -23,7 +20,6 @@ import static by.slizh.tutorsweb.controller.command.RequestParameter.*;
 
 public class AddApplicationCommand implements Command {
 
-
     private static final Logger logger = LogManager.getLogger();
 
     @Override
@@ -31,13 +27,11 @@ public class AddApplicationCommand implements Command {
         String locale = (String) request.getSession().getAttribute(LOCALE);
         Map<String, String[]> tutorMap = request.getParameterMap();
         TutorValidator tutorValidator = TutorValidatorImpl.getInstance();
-        System.out.println(123);
         if (tutorValidator.validateTutorMap(tutorMap)) {
             User user = (User) request.getSession().getAttribute(SessionAttribute.USER);
             TutorService service = TutorServiceImpl.getInstance();
             try {
                 service.createTutor(user, tutorMap);
-                System.out.println(112);
             } catch (ServiceException e) {
                 logger.error("Executing add application command error", e);
                 throw new CommandException("Executing add application command error", e);

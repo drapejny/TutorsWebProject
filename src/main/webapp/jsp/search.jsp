@@ -39,6 +39,7 @@
 
 <c:if test="${not empty requestScope.tutors}">
     <div class="sort-block">
+        <span><fmt:message key="search.sort-by-price"/></span>
         <a href="${pageContext.request.contextPath}/controller?command=search&sort=price_asc&page_number=1&subject=${subjectId}&city=${city}&min_price=${minPrice}&max_price=${maxPrice}">
             <img src="${pageContext.request.contextPath}/img/up-arrow.svg" width="20" height="20">
         </a>

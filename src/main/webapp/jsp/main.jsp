@@ -9,6 +9,13 @@
     <title><fmt:message key="main.title"/></title>
 </head>
 <body>
-<c:import url="fragment/header.jsp"/>
+<div class="wrapper">
+    <c:import url="fragment/header.jsp"/>
+    <main class="main">
+
+    </main>
+    <c:import url="fragment/footer.jsp"/>
+</div>
+
 </body>
 </html>

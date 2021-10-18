@@ -17,7 +17,7 @@
     <div class="search-block">
         <form action="${pageContext.request.contextPath}/controller" method="get">
             <input type="hidden" name="command" value="search_users">
-            <input type="text" class="search-line" name="search_line">
+            <input type="text" class="search-line" name="search_line" required maxlength="100">
             <button type="submit" class="simple-btn"><fmt:message key="search.button"/></button>
         </form>
     </div>

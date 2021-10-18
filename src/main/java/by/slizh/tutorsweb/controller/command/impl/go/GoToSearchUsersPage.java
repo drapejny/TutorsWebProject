@@ -4,13 +4,8 @@ import by.slizh.tutorsweb.controller.command.Command;
 import by.slizh.tutorsweb.controller.command.PagePath;
 import by.slizh.tutorsweb.controller.command.Router;
 import by.slizh.tutorsweb.exception.CommandException;
-import by.slizh.tutorsweb.model.entity.Tutor;
-import by.slizh.tutorsweb.model.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-
-import java.util.List;
-import java.util.Map;
 
 import static by.slizh.tutorsweb.controller.command.RequestAttribute.*;
 
