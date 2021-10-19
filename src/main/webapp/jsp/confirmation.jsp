@@ -10,7 +10,12 @@
     <title><fmt:message key="confirmaion.title"/></title>
 </head>
 <body>
-<c:import url="fragment/header.jsp"/>
-<h3><fmt:message key="confirmation.text"/></h3>
+<div class="wrapper">
+    <c:import url="fragment/header.jsp"/>
+    <main class="main">
+        <h3><fmt:message key="confirmation.text"/></h3>
+    </main>
+    <c:import url="fragment/footer.jsp"/>
+</div>
 </body>
 </html>

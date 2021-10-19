@@ -6,22 +6,28 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="prop.pagecontent"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html><title>Error Page</title>
+<html>
+<head>
+    <title>Error</title>
+</head>
 <body>
 <c:if test="${not empty pageContext.exception}">
-<c:set var="exception" value="${pageContext.exception}"/>
-        <h1 >${head}</h1>
-        <h3>${error_head} ${exception} </h3>
-        <h3> Stack trace:</h3>
-            <c:forEach var="element" items="${exception.stackTrace}">
-                ${element}
-                <br/>
-            </c:forEach>
-        </p>
+    <h3>${pageContext.exception} </h3>
+    <h3> Stack trace:</h3>
+    <c:forEach var="element" items="${pageContext.exception.stackTrace}">
+        ${element}
+        <br/>
+    </c:forEach>
 </c:if>
-Exception: ${exception}
-<br/>
-<hr/>
-Message from exception: ${exception.message}
+<c:if test="${not empty requestScope.exception}">
+    <c:set var="exception" value="${requestScope.exception}"/>
+    <h3>${exception} </h3>
+    <h3> Stack trace:</h3>
+    <c:forEach var="element" items="${exception.stackTrace}">
+        ${element}
+        <br/>
+    </c:forEach>
+    </p>
+</c:if>
 </body>
 </html>

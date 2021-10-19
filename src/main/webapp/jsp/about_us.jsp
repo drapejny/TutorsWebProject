@@ -8,10 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title><fmt:message key="main.aboutus"/></title>
 </head>
 <body>
-<c:import url="fragment/header.jsp"/>
-Something about us
+<div class="wrapper">
+    <c:import url="fragment/header.jsp"/>
+    <main class="main">
+        Something about us
+    </main>
+    <c:import url="fragment/footer.jsp"/>
+</div>
 </body>
 </html>

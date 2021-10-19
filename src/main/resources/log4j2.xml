@@ -1,31 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
+<Configuration status="WARN">
     <Properties>
-        <property name="pattern_layout_console">%d{dd MMM yyyy HH:mm:ss} %p %c{1} - %m%n</property>
-        <property name="pattern_layout_file">%d %p [%t] %c - %m%n</property>
-        <property name="pattern_file">logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz</property>
+        <property name="pattern_console">%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5p] - %m%n</property>
+        <property name="pattern_file">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%-5level] %logger{5}- %msg%n</property>
     </Properties>
     <Appenders>
-        <Console name="ConsoleAppender"
-                 target="SYSTEM_OUT">
-            <PatternLayout pattern="${pattern_layout_console}"/>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern_console}"/>
         </Console>
-
-        <RollingFile name="FileAppender"
-                     fileName="logs/recent.log"
-                     filePattern="${pattern_file}">
-            <PatternLayout pattern="${pattern_layout_file}"/>
+        <RollingFile name="RollingFile" fileName="logs/log4j2.log"
+                     filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>${pattern_file}</Pattern>
+            </PatternLayout>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1"/>
-                <SizeBasedTriggeringPolicy size="20 KB"/>
+                <SizeBasedTriggeringPolicy size="5 KB"/>
             </Policies>
         </RollingFile>
     </Appenders>
-
     <Loggers>
-        <Root level="DEBUG">
-            <AppenderRef ref="ConsoleAppender"/>
-            <AppenderRef ref="FileAppender"/>
+        <Logger name="Log_Console" level="debug" additivity="true">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="Rolling_File" level="debug" additivity="false">
+            <AppenderRef ref="FileRolling"/>
+        </Logger>
+        <Logger name="Log_Console" level="debug" additivity="true">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="Rolling_File" level="debug" additivity="false">
+            <AppenderRef ref="FileRolling"/>
+        </Logger>
+        <Root level="debug">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="STDOUT"/>
         </Root>
     </Loggers>
 </Configuration>

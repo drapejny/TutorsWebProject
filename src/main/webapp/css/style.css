@@ -111,6 +111,33 @@ body {
 
 
 /*-------------------------------------------------------MAIN---------------------------------------------------*/
+
+.main__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+}
+.main__left_part {
+    flex: 0 0 150px;
+    margin-right: 20px;
+}
+
+.main__left_part .img {
+    padding-bottom: 120%;
+    position: relative;
+}
+.main__left_part .img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+
 .success-message {
     color: #4caf50;
 }
