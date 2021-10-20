@@ -29,8 +29,10 @@
                         </c:if>>${element}</option>
                     </c:forEach>
                 </select>
-                <input type="number" id="amount1" name="min_price" required min="1" max="999" value="${minPrice}">
-                <input type="number" id="amount2" name="max_price" required min="1" max="999" value="${maxPrice}">
+                <input type="number" id="amount1" name="min_price" required min="1" max="999" value="${minPrice}" placeholder="<fmt:message key="search.min.placeholder"/>">
+                <span class="byn">BYN</span>
+                <input type="number" id="amount2" name="max_price" required min="1" max="999" value="${maxPrice}" placeholder="<fmt:message key="search.max.placeholder"/>">
+                <span class="byn">BYN</span>
                 <button type="submit" class="simple-btn"><fmt:message key="search.button"/></button>
             </form>
         </div>
@@ -50,10 +52,25 @@
                 </a>
             </div>
             <c:forEach var="element" items="${requestScope.tutors}">
-                <ctg:user-photo photo="${element.photo}" height="100" width="100"/>
-                <a href="${pageContext.request.contextPath}/controller?command=tutor_profile_page&tutor_id=${element.tutorId}">${element.firstName} ${element.lastName}</a>
-                ${element.pricePerHour}
-                <hr>
+                <div class="tutor_container">
+                    <div class="tutor_left_part">
+                        <a href="${pageContext.request.contextPath}/controller?command=tutor_profile_page&tutor_id=${element.tutorId}">
+                            <ctg:user-photo photo="${element.photo}" height="100" width="100"/>
+                        </a>
+                    </div>
+                    <div class="tutor_right_part">
+                        <a class="tutor_name"
+                           href="${pageContext.request.contextPath}/controller?command=tutor_profile_page&tutor_id=${element.tutorId}">
+                                ${element.firstName} ${element.lastName}
+                        </a>
+                        <br>
+                        <br>
+                        <span class="tutor_price">${element.pricePerHour} BYN</span>
+                        <br>
+                        <br>
+                        <span class="tutor_info"><c:out value="${element.info}"/></span>
+                    </div>
+                </div>
             </c:forEach>
             <div class="pages-block">
                 <c:if test="${pageNumber != 1}">
