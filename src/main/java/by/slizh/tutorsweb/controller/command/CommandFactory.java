@@ -2,6 +2,9 @@ package by.slizh.tutorsweb.controller.command;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * The CommandFactory creates {@link Command}.
+ */
 public class CommandFactory {
 
     private static CommandFactory instance = new CommandFactory();
@@ -9,10 +12,21 @@ public class CommandFactory {
     private CommandFactory() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static CommandFactory getInstance() {
         return instance;
     }
 
+    /**
+     * Create {@link Command} instance by {@link HttpServletRequest} request from Controller.
+     *
+     * @param request the {@link HttpServletRequest} request from Controller
+     * @return the command
+     */
     public Command createCommand(HttpServletRequest request) {
         String commandName = request.getParameter(RequestParameter.COMMAND);
         Command command;

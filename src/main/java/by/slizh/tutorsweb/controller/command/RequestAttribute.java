@@ -2,18 +2,14 @@ package by.slizh.tutorsweb.controller.command;
 
 public final class RequestAttribute {
 
-    public static String REGISTRATION_USER_DATA = "userMap";
+    /**
+     * Describes all request attributes.
+     */
 
     public static String TUTOR = "tutor";
-
     public static String SUBJECTS = "subjects";
-
     public static String TUTORS = "tutors";
-
-    public static String CITIES = "cities";
-
     public static String TUTOR_ID = "tutorId";
-
     public static String FEEDBACKS = "feedbacks";
     public static String USERS = "users";
     public static String APPLICATIONS = "applications";
@@ -25,13 +21,9 @@ public final class RequestAttribute {
     public static final String MIN_PRICE = "minPrice";
     public static final String MAX_PRICE = "maxPrice";
     public static final String SUBJECT_ID = "subjectId";
-    public static final String BLOCKED_USER = "blockedUser";
-    public static final String UNBLOCKED_USER = "unblockedUser";
     public static final String TUTORS_MAP = "tutorsMap";
     public static final String EXCEPTION = "exception";
     public static final String ADMINS = "admins";
-
-
     public static String ERROR_USER_NON_ACTIVATED = "errorNonActivatedMessage";
     public static String ERROR_USER_BLOCKED = "errorBlockedMessage";
     public static String ERROR_WRONG_PASSWORD_OR_EMAIL = "errorLogInMessage";
@@ -47,7 +39,6 @@ public final class RequestAttribute {
     public static final String SUCCESSFUL_DELETE_SUBJECT = "successDeleteSubjectMessage";
     public static final String ERROR_DELETE_SUBJECT = "errorDeleteSubjectMessage";
     public static final String SUCCESS_REGISTRATION_MESSAGE = "successRegistrationMessage";
-
     public static final int APPLICATIONS_ON_PAGE_NUMBER = 2;
     public static final int TUTORS_ON_SEARCH_PAGE_NUMBER = 2;
     public static final int DEFAULT_OFFSET = 0;

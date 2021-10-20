@@ -1,11 +1,12 @@
 package by.slizh.tutorsweb.controller.command;
 
+/**
+ * Describes all pages paths.
+ */
+
 public final class PagePath {
-    public static final String CONTROLLER = "/controller?";
-    public static final String ERROR_404_PAGE = "/jsp/error/404.jsp";
     public static final String ERROR_PAGE = "/jsp/error/error.jsp";
     public static final String LOGIN_PAGE = "/jsp/login.jsp";
-    public static final String PROFILE_PAGE = "/jsp/user/profile.jsp";
     public static final String MAIN_PAGE = "/jsp/main.jsp";
     public static final String REGISTRATION_PAGE = "/jsp/registration.jsp";
     public static final String EDIT_PROFILE_PAGE = "/jsp/edit_profile.jsp";

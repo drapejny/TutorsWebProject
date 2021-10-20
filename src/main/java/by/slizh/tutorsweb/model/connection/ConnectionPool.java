@@ -20,7 +20,6 @@ public class ConnectionPool {
     private static final ReentrantLock locker = new ReentrantLock();
     private BlockingQueue<ProxyConnection> freeConnections;
     private BlockingQueue<ProxyConnection> givenAwayConnections;
-    private static final String PATH_TO_PROPERTIES = "database/database.properties";
     private static final int DEFAULT_POOL_SIZE = 4;
 
     private ConnectionPool() {
