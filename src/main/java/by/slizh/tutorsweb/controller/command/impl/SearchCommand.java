@@ -27,51 +27,66 @@ public class SearchCommand implements Command {
         TutorValidator tutorValidator = TutorValidatorImpl.getInstance();
         TutorService tutorService = TutorServiceImpl.getInstance();
 
-        String pageNumber = request.getParameter(RequestParameter.PAGE_NUMBER);
+
         String sort = request.getParameter(RequestParameter.SORT);
         String city = request.getParameter(RequestParameter.CITY);
-        String subjectId = request.getParameter(RequestParameter.SUBJECT);
         String minPrice = request.getParameter(RequestParameter.MIN_PRICE);
         String maxPrice = request.getParameter(RequestParameter.MAX_PRICE);
+        String subjectIdString = request.getParameter(RequestParameter.SUBJECT);
+        String pageNumberString = request.getParameter(RequestParameter.PAGE_NUMBER);
 
         if (sort == null) {
             sort = DEFAULT_SORT;
         }
 
-        if (pageNumber == null) {
-
-            if (tutorValidator.validateCity(city) && tutorValidator.validatePrice(minPrice)
-                    && tutorValidator.validatePrice(maxPrice)) {
-                request.setAttribute(SORT, sort);
+        if (city != null && minPrice != null && maxPrice != null && subjectIdString != null) {
+            if (tutorValidator.validateCity(city) && tutorValidator.validatePrice(minPrice) && tutorValidator.validatePrice(maxPrice)) {
+                int subjectId;
+                int pageNumber;
                 try {
-                    List<Tutor> tutors = tutorService.searchTutors(Integer.parseInt(subjectId), city, Integer.parseInt(minPrice), Integer.parseInt(maxPrice), DEFAULT_OFFSET, TUTORS_ON_SEARCH_PAGE_NUMBER, sort);
-                    request.setAttribute(RequestAttribute.TUTORS, tutors);
-                    int searchedRecordsCount = tutorService.countSearchedRecords(Integer.parseInt(subjectId), city, Integer.parseInt(minPrice), Integer.parseInt(maxPrice));
-                    int pagesCount = searchedRecordsCount % TUTORS_ON_SEARCH_PAGE_NUMBER == 0 ? searchedRecordsCount / TUTORS_ON_SEARCH_PAGE_NUMBER : searchedRecordsCount / TUTORS_ON_SEARCH_PAGE_NUMBER + 1;
-                    request.setAttribute(PAGE_NUM, 1);
-                    request.setAttribute(PAGE_COUNT, pagesCount);
-                } catch (ServiceException e) {
-                    logger.error("Executing search command error", e);
-                    throw new CommandException("Executing search command error", e);
+                    subjectId = Integer.parseInt(subjectIdString);
+                } catch (NumberFormatException e) {
+                    return new Router(PagePath.SEARCH_PAGE, Router.RouteType.FORWARD);
+                }
+                if (pageNumberString == null) {
+                    request.setAttribute(SORT, sort);
+                    try {
+                        List<Tutor> tutors = tutorService.searchTutors(subjectId, city, Integer.parseInt(minPrice), Integer.parseInt(maxPrice), DEFAULT_OFFSET, TUTORS_ON_SEARCH_PAGE_NUMBER, sort);
+                        request.setAttribute(RequestAttribute.TUTORS, tutors);
+                        int searchedRecordsCount = tutorService.countSearchedRecords(subjectId, city, Integer.parseInt(minPrice), Integer.parseInt(maxPrice));
+                        int pagesCount = searchedRecordsCount % TUTORS_ON_SEARCH_PAGE_NUMBER == 0 ? searchedRecordsCount / TUTORS_ON_SEARCH_PAGE_NUMBER : searchedRecordsCount / TUTORS_ON_SEARCH_PAGE_NUMBER + 1;
+                        request.setAttribute(PAGE_NUM, 1);
+                        request.setAttribute(PAGE_COUNT, pagesCount);
+                    } catch (ServiceException e) {
+                        logger.error("Executing search command error", e);
+                        throw new CommandException("Executing search command error", e);
+                    }
+                } else {
+                    try {
+                        pageNumber = Integer.parseInt(pageNumberString);
+                    } catch (NumberFormatException e) {
+                        return new Router(PagePath.SEARCH_PAGE, Router.RouteType.FORWARD);
+                    }
+                    request.setAttribute(PAGE_NUM, pageNumber);
+                    request.setAttribute(SORT, sort);
+                    try {
+                        int offset = (pageNumber - 1) * TUTORS_ON_SEARCH_PAGE_NUMBER;
+                        List<Tutor> tutors = tutorService.searchTutors(subjectId, city, Integer.parseInt(minPrice), Integer.parseInt(maxPrice), offset, TUTORS_ON_SEARCH_PAGE_NUMBER, sort);
+                        int searchedRecordsCount = tutorService.countSearchedRecords(subjectId, city, Integer.parseInt(minPrice), Integer.parseInt(maxPrice));
+                        int pagesCount = searchedRecordsCount % TUTORS_ON_SEARCH_PAGE_NUMBER == 0 ? searchedRecordsCount / TUTORS_ON_SEARCH_PAGE_NUMBER : searchedRecordsCount / TUTORS_ON_SEARCH_PAGE_NUMBER + 1;
+                        request.setAttribute(TUTORS, tutors);
+                        request.setAttribute(PAGE_COUNT, pagesCount);
+                        request.setAttribute(SORT, sort);
+                    } catch (ServiceException e) {
+                        logger.error("Executing search command error", e);
+                        throw new CommandException("Executing search command error", e);
+                    }
                 }
             }
-        } else {
-            request.setAttribute(PAGE_NUM, Integer.parseInt(pageNumber));
-            request.setAttribute(SORT, sort);
-            try {
-                int offset = (Integer.parseInt(pageNumber) - 1) * TUTORS_ON_SEARCH_PAGE_NUMBER;
-                List<Tutor> tutors = tutorService.searchTutors(Integer.parseInt(subjectId), city, Integer.parseInt(minPrice), Integer.parseInt(maxPrice), offset, TUTORS_ON_SEARCH_PAGE_NUMBER, sort);
-                int searchedRecordsCount = tutorService.countSearchedRecords(Integer.parseInt(subjectId), city, Integer.parseInt(minPrice), Integer.parseInt(maxPrice));
-                int pagesCount = searchedRecordsCount % TUTORS_ON_SEARCH_PAGE_NUMBER == 0 ? searchedRecordsCount / TUTORS_ON_SEARCH_PAGE_NUMBER : searchedRecordsCount / TUTORS_ON_SEARCH_PAGE_NUMBER + 1;
-                request.setAttribute(TUTORS, tutors);
-                request.setAttribute(PAGE_COUNT, pagesCount);
-                request.setAttribute(SORT, sort);
-            } catch (ServiceException e) {
-                logger.error("Executing search command error", e);
-                throw new CommandException("Executing search command error", e);
-            }
+
         }
-        request.setAttribute(SUBJECT_ID, subjectId);
+
+        request.setAttribute(SUBJECT_ID, subjectIdString);
         request.setAttribute(CITY, city);
         request.setAttribute(MIN_PRICE, minPrice);
         request.setAttribute(MAX_PRICE, maxPrice);
