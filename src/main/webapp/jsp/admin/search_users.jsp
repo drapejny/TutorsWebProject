@@ -23,7 +23,6 @@
                     <button type="submit" class="simple-btn"><fmt:message key="search.button"/></button>
                 </form>
             </div>
-            <br>
             <span class="success-message">${successBlockUserMessage}</span>
             <span class="success-message">${successUnblockUserMessage}</span>
             <div class="main_table">

@@ -15,11 +15,12 @@
         <div class="search-block">
             <form action="${pageContext.request.contextPath}/controller" method="get">
                 <input type="hidden" name="command" value="search">
-                <select name="subject">
+                <select  name="subject">
                     <c:forEach var="element" items="${applicationScope.subjects}">
-                        <option value="${element.subjectId}" <c:if test="${subjectId == element.subjectId}">
+                        <option  value="${element.subjectId}" <c:if test="${subjectId == element.subjectId}">
                             selected
-                        </c:if>>${element.subjectName}</option>
+                        </c:if>>
+                                ${element.subjectName}</option>
                     </c:forEach>
                 </select>
                 <select name="city">

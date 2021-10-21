@@ -20,25 +20,35 @@
             </c:when>
             <c:otherwise>
                 <div class="applications__container">
-                    <ul class="applications__list">
-                        <c:forEach var="element" items="${requestScope.applications}">
-                            <a style="display: block"
-                               href="${pageContext.request.contextPath}/controller?command=application_page&tutor_id=${element.tutorId}">
-                                <li class="applications__item">
-                                    <ctg:user-photo photo="${element.photo}" height="50" width="50"/>
-                                    <span class="first-last-name">${element.firstName} ${element.lastName}</span>
+                    <c:forEach var="element" items="${requestScope.applications}">
+                        <div class="application__item">
+                            <div class="application__item__left">
+                                <ctg:user-photo photo="${element.photo}" height="100" width="100"/>
+                            </div>
+                            <div class="application__item___right">
+                                <div class="name">
+                                    <a href="${pageContext.request.contextPath}/controller?command=application_page&tutor_id=${element.tutorId}">
+                                        <span>${element.firstName} ${element.lastName}</span>
+                                    </a>
+                                </div>
+                                <div class="phone">
                                     <span class="phone">${element.phone}</span>
-                                </li>
-                            </a>
-                        </c:forEach>
-                    </ul>
-                    <c:if test="${pageNumber != 1}">
-                        <a href="${pageContext.request.contextPath}/controller?command=all_applications_page&page_number=${pageNumber - 1}">предыдущая</a>
-                    </c:if>
-                        ${pageNumber}из${pageCount}
-                    <c:if test="${pageNumber != pageCount}">
-                        <a href="${pageContext.request.contextPath}/controller?command=all_applications_page&page_number=${pageNumber + 1}">следующая</a>
-                    </c:if>
+                                </div>
+                                <div class="email">
+                                    <span class="email">${element.email}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                    <div class="pages-block">
+                        <c:if test="${pageNumber != 1}">
+                            <a href="${pageContext.request.contextPath}/controller?command=all_applications_page&page_number=${pageNumber - 1}">предыдущая</a>
+                        </c:if>
+                            ${pageNumber}из${pageCount}
+                        <c:if test="${pageNumber != pageCount}">
+                            <a href="${pageContext.request.contextPath}/controller?command=all_applications_page&page_number=${pageNumber + 1}">следующая</a>
+                        </c:if>
+                    </div>
                 </div>
             </c:otherwise>
         </c:choose>

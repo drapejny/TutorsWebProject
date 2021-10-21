@@ -20,7 +20,7 @@
                         <span class="validation-message"><fmt:message key="validation.subjects"/></span>
                         <c:forEach var="element" items="${applicationScope.subjects}">
                             <input class="subject_checkbox" type="checkbox" name="subject"
-                                   value="${element.subjectId}">${element.subjectName}<br>
+                                   value="${element.subjectId}"> ${element.subjectName}<br>
                         </c:forEach>
                     </div>
                 </div>

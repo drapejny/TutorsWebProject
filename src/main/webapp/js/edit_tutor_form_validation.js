@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
             if (el.classList.contains('info')) {
-                if (!/^.{1,500}$/.test(el.querySelector('textarea').value)) {
+                if (!/^(.|\n){1,500}$/.test(el.querySelector('textarea').value)) {
                     errors++
                     el.classList.add("_error")
                 }

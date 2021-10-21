@@ -5,7 +5,6 @@ body {
 /*--------------------------------------------------HEADER-----------------------------------------------------*/
 
 
-
 .header__section {
     display: flex;
     align-items: center;
@@ -30,12 +29,9 @@ nav > a {
     font-size: 20px;
 }
 
-nav > a:hover{
+nav > a:hover {
     transform: scale(1.1);
 }
-
-
-
 
 
 /* Dropdown Button */
@@ -80,14 +76,14 @@ nav > a:hover{
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd}
+.dropdown-content a:hover {
+    background-color: #ddd
+}
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {display:block;}
-
-
-
-
+.show {
+    display: block;
+}
 
 
 header {
@@ -105,6 +101,7 @@ header {
     width: calc(100% - 20px);
     padding: 20px 10px;
 }
+
 body {
     padding-top: 126px;
 }
@@ -118,6 +115,7 @@ body {
     display: flex;
     align-items: flex-start;
 }
+
 .main__left_part {
     flex: 0 0 150px;
     margin-right: 20px;
@@ -127,6 +125,7 @@ body {
     padding-bottom: 120%;
     position: relative;
 }
+
 .main__left_part .img img {
     position: absolute;
     top: 0;
@@ -142,7 +141,7 @@ body {
     color: #4caf50;
 }
 
-.fail-message{
+.fail-message {
     color: #a80202;
 }
 
@@ -165,7 +164,7 @@ body {
 }
 
 .simple-btn:active {
-    background:#4c91f6;
+    background: #4c91f6;
 }
 
 .red-btn {
@@ -190,7 +189,7 @@ body {
     background: #a80202;
 }
 
-.subject_checkbox{
+.subject_checkbox {
     margin-top: 3px;
     margin-bottom: 3px;
 }
@@ -198,59 +197,63 @@ body {
 
 .form_container {
     font-size: 20px;
-    max-width: 0px;
+    max-width: 700px;
     margin: 0 auto;
     display: flex;
     align-items: flex-start;
 }
 
-.form_input_container{
+.form_input_container {
     margin-top: 5px;
     margin-bottom: 5px;
 }
-.left_part{
+
+.left_part {
     flex: 0 0 250px;
     margin-right: 20px;
 }
 
-.form_container_registration_item{
+.form_container_registration_item {
     flex: 0 0 50px;
     margin-right: 20px;
 }
 
-.form_input_container._error .form_input{
+.form_input_container._error .form_input {
     border: 1px solid #f00;
 }
-.form_input_container._bad-passwords .form_input{
+
+.form_input_container._bad-passwords .form_input {
     border: 1px solid #f00;
 }
+
 .form_input_container .validation-message {
     display: none;
 }
-.form_input_container .bad-passwords-message{
+
+.form_input_container .bad-passwords-message {
     display: none;
 }
-.form_input_container._error .validation-message{
+
+.form_input_container._error .validation-message {
     color: #f00;
     font-size: 10px;
     display: block;
 }
-.form_input_container._bad-passwords .bad-passwords-message{
+
+.form_input_container._bad-passwords .bad-passwords-message {
     color: #f00;
     font-size: 10px;
     display: block;
 }
 
 
-
-
-
-.search-container{
+.search-container {
     display: flex;
     flex-direction: column;
 
 
 }
+
 .search-block {
     margin: auto;
 }
@@ -318,6 +321,10 @@ body {
     border-right: none;
 }
 
+.table_row .table_item {
+    font-size: 20px;
+}
+
 .block_btn {
     transition: 0.2s;
     border: 1px solid #b00724;
@@ -359,18 +366,18 @@ body {
 }
 
 
-.wrapper{
+.wrapper {
     min-height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.main{
+.main {
     padding: 30px;
     flex: 1 1 auto;
 }
 
-.footer{
+.footer {
     font-size: 12px;
     color: rgba(147, 144, 144, 0.96);
     font-style: italic;
@@ -378,6 +385,193 @@ body {
     padding: 12px;
     background-color: rgba(217, 217, 217, 0.96);
     border-width: 1px;
-    border-style:solid;
+    border-style: solid;
     border-color: rgba(182, 179, 179, 0.96);
+}
+
+.search-block {
+    margin: 10px auto;
+    max-width: 700px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.sort-block {
+    margin: 40px auto;
+    max-width: 700px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.tutor_container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px 20px 20px 20px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.tutor_left_part {
+    flex: 0 0 150px;
+}
+
+.tutor_left_part .img {
+    padding-bottom: 120%;
+    position: relative;
+}
+
+.tutor_right_part {
+    padding-left: 20px;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-left-color: black;
+}
+
+.tutor_right_part .tutor_name {
+    font-size: 30px;
+    color: rgba(36, 79, 234, 0.74);
+}
+
+.tutor_right_part .tutor_name:hover {
+    color: rgba(5, 30, 131, 0.74);
+    transform: scale(1.1);
+}
+
+.tutor_right_part .tutor_price {
+    font-size: 15px;
+    color: #149124;
+}
+
+.tutor_right_part .tutor_info {
+    font-size: 15px;
+    color: black;
+    font-style: italic;
+}
+
+.comment-block{
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+}
+
+.comment-block textarea{
+    resize: none;
+}
+.feedbacks-block{
+    margin: 40px auto;
+    max-width: 700px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.feedbacks-block__item{
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 50px;
+}
+
+.feedbacks-block__item__left{
+    flex: 0 0 40px;
+    padding-right: 10px;
+}
+
+.feedbacks-block__item__right .feedback-name {
+    color: #023a6c;
+    font-size: 20px;
+}
+
+.feedbacks-block__item__right textarea{
+    resize: none;
+}
+
+.feedbacks-block__item__right .feedback-date{
+    color: #777575;
+    font-size: 10px;
+}
+
+.feedback-textarea textarea{
+    font-style: italic;
+    border: none;
+    outline: none;
+}
+
+.search-block option {
+    font-size: 15px;
+}
+
+.search-block select {
+    font-size: 15px;
+}
+
+.search-block input[type='number'] {
+    font-size: 15px;
+}
+
+.search-block .byn {
+    font-size: 10px;
+}
+
+.pages-block {
+    text-align: center;
+}
+
+.subjects-block {
+    font-size: 20px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.subjects-block_item{
+    margin-bottom: 5px;
+}
+
+.subjects-block a{
+    text-decoration: none;
+    color: #a80202;
+    padding: 2px 2px 2px 2px;
+    border-style: solid;
+    border-radius: 4px;
+    border-width: 1px;
+    border-color: #a80202;
+}
+
+.subjects-block a:hover{
+    background-color: #a80202;
+    color: white;
+}
+
+.applications__container{
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+.application__item{
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.application__item__left{
+    flex: 0 0 20px;
+    padding-right: 10px;
+}
+
+.edit_profile_container{
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit_profile_container_item    {
+    margin-bottom: 20px;
+}
+
+.login-container{
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
 }

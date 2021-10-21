@@ -31,14 +31,14 @@ textarea {
 }
 
 .tutor_profile {
-    max-width: 1200px;
+    max-width: 700px;
     margin: 0 auto;
     display: flex;
     align-items: flex-start;
 }
 .left_part {
     flex: 0 0 150px;
-    margin-right: 20px;
+    padding-right: 20px;
 }
 
 .left_part .img {
@@ -56,38 +56,49 @@ textarea {
 }
 
 .right_part .name {
-    font-size: 20px;
+    font-size: 40px;
     color: #1976d2;
-    text-decoration: underline;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .right_part .phone,
 .right_part .email {
-    font-size: 14px;
+    font-size: 20px;
     margin-bottom: 10px;
-    color: #d8a200;
+    color: #b98c07;
 }
 
+.right_part ul{
+    color: #3c3c3c;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+
 .right_part .city {
-    font-size: 14px;
+    font-size: 20px;
+    color: #b98c07;
 }
 .right_part .city span {
     font-size: 20px;
 }
 
 .right_part .education_title {
+    color: #1976d2;
     font-size: 20px;
-    color: #000;
     margin-bottom: 5px;
     margin-top: 25px;
 }
 
-.right_part .education {
+.right_part .education span{
+    white-space: pre-line;
     list-style: none;
+    font-style: italic;
+    color: #3c3c3c;
     margin: 0;
     padding: 0;
 }
+
 
 .right_part .ed_item {
     padding-left: 15px;
@@ -96,23 +107,41 @@ textarea {
 }
 
 .right_part .info_title {
+    color: #1976d2;
     font-size: 20px;
-    color: #000;
     margin-bottom: 5px;
     margin-top: 25px;
 }
 
-.right_part .info {
-    padding-left: 15px;
+.right_part .info{
+    margin-bottom: 20px;
+}
+
+.right_part .info span {
+    white-space: pre-line;
+    font-style: italic;
+    color: #3c3c3c;
     margin-bottom: 20px;
 }
 
 .right_part .price_per_hour {
+    color: #1976d2;
     font-size: 20px;
+}
+
+.right_part .rating_title{
+    color: #1976d2;
+    font-size: 20px;
+    margin-bottom: 5px;
+    margin-top: 25px;
+}
+.right_part .rating_text{
+
 }
 .right_part .price_per_hour span {
     font-size: 25px;
     font-weight: 500;
+    color: #149124;
 }
 .right_part .controls {
     display: flex;
@@ -136,4 +165,13 @@ textarea {
 }
 .right_part .controls .reject {
     background-color: #af4c4c;
+}
+
+.right_part .controls a{
+    text-decoration: none;
+}
+
+
+.red-btn-form{
+    margin-top: auto;
 }
