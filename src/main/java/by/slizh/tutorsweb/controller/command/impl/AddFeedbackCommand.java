@@ -27,20 +27,23 @@ public class AddFeedbackCommand implements Command {
         int userID = ((User) request.getSession().getAttribute(SessionAttribute.USER)).getUserId();
         FeedbackValidator feedbackValidator = FeedbackValidatorImpl.getInstance();
         FeedbackService feedbackService = FeedbackServiceImpl.getInstance();
-        if (feedbackValidator.validateFeedbackText(text) && rating != null) {
-            Feedback feedback = new Feedback.FeedbackBuilder()
-                    .setText(text)
-                    .setDate(LocalDate.now())
-                    .setRating(Integer.parseInt(rating))
-                    .setTutorId(tutorId)
-                    .setUserId(userID)
-                    .createFeedback();
-            try {
-                feedbackService.addFeedback(feedback);
-                request.getSession().setAttribute(RequestAttribute.TUTOR_ID, tutorId);
-            } catch (ServiceException e) {
-                logger.error("Executing addFeedback command error", e);
-                throw new CommandException("Executing addFeedback command error", e);
+        if (text != null) {
+            text = text.replaceAll("\r\n", "\n");
+            if (feedbackValidator.validateFeedbackText(text) && rating != null) {
+                Feedback feedback = new Feedback.FeedbackBuilder()
+                        .setText(text)
+                        .setDate(LocalDate.now())
+                        .setRating(Integer.parseInt(rating))
+                        .setTutorId(tutorId)
+                        .setUserId(userID)
+                        .createFeedback();
+                try {
+                    feedbackService.addFeedback(feedback);
+                    request.getSession().setAttribute(RequestAttribute.TUTOR_ID, tutorId);
+                } catch (ServiceException e) {
+                    logger.error("Executing addFeedback command error", e);
+                    throw new CommandException("Executing addFeedback command error", e);
+                }
             }
         }
         return new Router(PagePath.GO_TO_TUTOR_PROFILE_PAGE, Router.RouteType.REDIRECT);

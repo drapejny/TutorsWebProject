@@ -68,6 +68,61 @@ public class Tutor extends User {
         isActive = active;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Tutor tutor = (Tutor) o;
+        return tutorId == tutor.tutorId &&
+                tutor.phone == null ? phone == null : phone.equals(tutor.phone) &&
+                tutor.city == null ? city == null : city.equals(tutor.city) &&
+                tutor.education == null ? education == null : education.equals(tutor.education) &&
+                tutor.info == null ? info == null : info.equals(tutor.info) &&
+                pricePerHour == tutor.pricePerHour &&
+                isActive == tutor.isActive;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + tutorId;
+        result = 31 * result + (phone == null ? 0 : phone.hashCode());
+        result = 31 * result + (city == null ? 0 : city.hashCode());
+        result = 31 * result + (education == null ? 0 : education.hashCode());
+        result = 31 * result + (info == null ? 0 : info.hashCode());
+        result = 31 * result + pricePerHour;
+        result = 31 * result + (isActive ? 1 : 0);
+        return result;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder("Tutor{");
+        stringBuilder.append("userId=").append(getUserId());
+        stringBuilder.append(", firstName='").append(getFirstName()).append("'");
+        stringBuilder.append(", lastName='").append(getLastName()).append("'");
+        stringBuilder.append(", email='").append(getEmail()).append("'");
+        stringBuilder.append(", photo='").append(getPhoto()).append("'");
+        stringBuilder.append(", role=").append(getRole());
+        stringBuilder.append(", status=").append(getStatus());
+        stringBuilder.append(", tutorId=").append(tutorId);
+        stringBuilder.append(", phone='").append(phone).append("'");
+        stringBuilder.append(", city='").append(city).append("'");
+        stringBuilder.append(", education='").append(education).append("'");
+        stringBuilder.append(", info='").append(info).append("'");
+        stringBuilder.append(", pricePerHour=").append(pricePerHour);
+        stringBuilder.append(", isActive=").append(isActive).append("}");
+        return stringBuilder.toString();
+    }
+
+
     public static class TutorBuilder {
 
         Tutor tutor;

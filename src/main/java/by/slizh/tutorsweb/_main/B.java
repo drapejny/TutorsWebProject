@@ -1,5 +1,9 @@
 package by.slizh.tutorsweb._main;
 
-public interface B {
+public class B {
+    static A a;
 
+    public static void main(String[] args) {
+        a.met();
+    }
 }

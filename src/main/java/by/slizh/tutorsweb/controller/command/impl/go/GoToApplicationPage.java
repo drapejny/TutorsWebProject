@@ -24,6 +24,14 @@ public class GoToApplicationPage implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         String tutorId = request.getParameter(RequestParameter.TUTOR_ID);
+        if (tutorId == null) {
+            return new Router(PagePath.GO_TO_ALL_APPLICATIONS_PAGE, Router.RouteType.FORWARD);
+        }
+        try {
+            Integer.parseInt(tutorId);
+        } catch (NumberFormatException e) {
+            return new Router(PagePath.GO_TO_ALL_APPLICATIONS_PAGE, Router.RouteType.FORWARD);
+        }
         TutorService tutorService = TutorServiceImpl.getInstance();
         SubjectService subjectService = SubjectServiceImpl.getInstance();
         try {

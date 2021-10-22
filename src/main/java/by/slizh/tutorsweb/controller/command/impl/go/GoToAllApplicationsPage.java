@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+
 import static by.slizh.tutorsweb.controller.command.RequestAttribute.*;
 
 public class GoToAllApplicationsPage implements Command {
@@ -22,12 +23,20 @@ public class GoToAllApplicationsPage implements Command {
         String pageNumber = request.getParameter(RequestParameter.PAGE_NUMBER);
 
         TutorService tutorService = TutorServiceImpl.getInstance();
-        int offset = 0;
-        int page = 1;
-        if (pageNumber != null) {
+        int offset;
+        int page;
+        try {
             offset = (Integer.parseInt(pageNumber) - 1) * APPLICATIONS_ON_PAGE_NUMBER;
             page = Integer.parseInt(pageNumber);
+            if (page < 1) {
+                page = 1;
+                offset = 0;
+            }
+        } catch (NumberFormatException | NullPointerException e) {
+            offset = 0;
+            page = 1;
         }
+
         try {
             List<Tutor> applications = tutorService.findApplications(offset, APPLICATIONS_ON_PAGE_NUMBER);
             int applicationsCount = tutorService.countApplications();

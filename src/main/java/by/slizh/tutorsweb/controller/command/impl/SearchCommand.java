@@ -64,6 +64,9 @@ public class SearchCommand implements Command {
                 } else {
                     try {
                         pageNumber = Integer.parseInt(pageNumberString);
+                        if (pageNumber < 1) {
+                            pageNumber = 1;
+                        }
                     } catch (NumberFormatException e) {
                         return new Router(PagePath.SEARCH_PAGE, Router.RouteType.FORWARD);
                     }

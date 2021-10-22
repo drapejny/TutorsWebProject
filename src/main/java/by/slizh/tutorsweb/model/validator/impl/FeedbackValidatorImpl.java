@@ -6,7 +6,7 @@ public class FeedbackValidatorImpl implements FeedbackValidator {
 
     private static FeedbackValidatorImpl instance = new FeedbackValidatorImpl();
 
-    private static final String REGEXP_FEEDBACK_TEXT = "^.{1,300}$";
+    private static final String REGEXP_FEEDBACK_TEXT = "^(.|\n){1,300}$";
 
     private FeedbackValidatorImpl() {
     }

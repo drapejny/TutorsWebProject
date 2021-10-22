@@ -54,7 +54,9 @@ public class EditTutorProfileCommand implements Command {
         }
 
         String[] subjectIds = request.getParameterValues(SUBJECT);
-
+        if (info != null) {
+            info = info.replaceAll("\r\n", "\n");
+        }
         if (userValidator.validateFirstName(firstName) && userValidator.validateLastName(lastName)
                 && tutorValidator.validatePhone(phone) && tutorValidator.validateInfo(info)
                 && tutorValidator.validatePrice(price) && subjectIds != null) {

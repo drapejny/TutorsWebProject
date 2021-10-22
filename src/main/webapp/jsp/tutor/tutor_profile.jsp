@@ -7,7 +7,7 @@
 <fmt:setBundle basename="prop.pagecontent"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/tutor/tutor_profile.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/tutor_profile.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/application.css">
 
 <html>

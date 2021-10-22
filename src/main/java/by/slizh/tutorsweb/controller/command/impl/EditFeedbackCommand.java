@@ -27,22 +27,26 @@ public class EditFeedbackCommand implements Command {
         int tutorId = Integer.parseInt(request.getParameter(RequestParameter.TUTOR_ID));
         FeedbackValidator feedbackValidator = FeedbackValidatorImpl.getInstance();
         FeedbackService feedbackService = FeedbackServiceImpl.getInstance();
-        if (feedbackValidator.validateFeedbackText(text) && rating != null) {
-            try {
-                Optional<Feedback> feedbackOptional = feedbackService.findFeedbackById(feedbackId);
-                if (feedbackOptional.isPresent()) {
-                    Feedback feedback = feedbackOptional.get();
-                    feedback.setText(text);
-                    feedback.setRating(Integer.parseInt(rating));
-                    feedback.setDate(LocalDate.now());
-                    feedbackService.updateFeedback(feedback);
+        if (text != null) {
+            text = text.replaceAll("\r\n", "\n");
+            if (feedbackValidator.validateFeedbackText(text) && rating != null) {
+                try {
+                    Optional<Feedback> feedbackOptional = feedbackService.findFeedbackById(feedbackId);
+                    if (feedbackOptional.isPresent()) {
+                        Feedback feedback = feedbackOptional.get();
+                        feedback.setText(text);
+                        feedback.setRating(Integer.parseInt(rating));
+                        feedback.setDate(LocalDate.now());
+                        feedbackService.updateFeedback(feedback);
+                    }
+                    request.getSession().setAttribute(RequestAttribute.TUTOR_ID, tutorId);
+                } catch (ServiceException e) {
+                    logger.error("Executing editFeedback command error", e);
+                    throw new CommandException("Executing editFeedback command error", e);
                 }
-                request.getSession().setAttribute(RequestAttribute.TUTOR_ID, tutorId);
-            } catch (ServiceException e) {
-                logger.error("Executing editFeedback command error", e);
-                throw new CommandException("Executing editFeedback command error", e);
             }
         }
+
         return new Router(PagePath.GO_TO_TUTOR_PROFILE_PAGE, Router.RouteType.REDIRECT);
     }
 }

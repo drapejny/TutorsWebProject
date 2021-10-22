@@ -1,9 +1,8 @@
 package by.slizh.tutorsweb.controller.command;
 
 /**
- * Class Router which instance encapsulates page path and transition type to this page.
+ * Class Router which instance encapsulates page path and route type to this page.
  *
- * @author Anton Pysk
  */
 
 public class Router {

@@ -33,9 +33,16 @@ public class GoToTutorProfilePage implements Command {
         String tutorIdParameter = request.getParameter(RequestParameter.TUTOR_ID);
         int tutorId;
         if (tutorIdParameter == null) {
+            if (request.getSession().getAttribute(RequestAttribute.TUTOR_ID) == null) {
+                return new Router(PagePath.TUTOR_PROFILE_PAGE, Router.RouteType.FORWARD);
+            }
             tutorId = (Integer) request.getSession().getAttribute(RequestAttribute.TUTOR_ID);
         } else {
-            tutorId = Integer.parseInt(tutorIdParameter);
+            try {
+                tutorId = Integer.parseInt(tutorIdParameter);
+            } catch (NumberFormatException e) {
+                return new Router(PagePath.SEARCH_PAGE, Router.RouteType.FORWARD);
+            }
             request.getSession().removeAttribute(RequestAttribute.TUTOR_ID);
         }
 
@@ -55,10 +62,12 @@ public class GoToTutorProfilePage implements Command {
                 request.setAttribute(RequestAttribute.SUBJECTS, subjects);
                 request.setAttribute(RequestAttribute.FEEDBACKS, feedbacks);
                 request.setAttribute(RequestAttribute.USERS, feedbackUserMap);
-
+                return new Router(PagePath.TUTOR_PROFILE_PAGE, Router.RouteType.FORWARD);
+            } else {
+                return new Router(PagePath.SEARCH_PAGE, Router.RouteType.FORWARD);
             }
 
-            return new Router(PagePath.TUTOR_PROFILE_PAGE, Router.RouteType.FORWARD);
+
         } catch (ServiceException e) {
             logger.error("Executing search command error", e);
             throw new CommandException("Executing search command error", e);
