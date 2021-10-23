@@ -20,12 +20,13 @@ public class UnblockUserCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final UserService userService = UserServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         String locale = (String) session.getAttribute(SessionAttribute.LOCALE);
         String userId = request.getParameter(RequestParameter.USER_ID);
-        UserService userService = UserServiceImpl.getInstance();
         try {
             Optional<User> unblockedUser = userService.unblockUser(Integer.parseInt(userId));
             if (unblockedUser.isPresent()) {

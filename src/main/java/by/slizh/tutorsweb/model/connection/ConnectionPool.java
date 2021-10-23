@@ -20,21 +20,21 @@ public class ConnectionPool {
     private static final ReentrantLock locker = new ReentrantLock();
     private BlockingQueue<ProxyConnection> freeConnections;
     private BlockingQueue<ProxyConnection> givenAwayConnections;
-    private static final int DEFAULT_POOL_SIZE = 4;
+    private static final int DEFAULT_POOL_SIZE = 32;
 
     private ConnectionPool() {
         freeConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
         givenAwayConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
-            ProxyConnection proxyConnection = null;
+            ProxyConnection proxyConnection;
             try {
-                proxyConnection = (ProxyConnection) ConnectionFactory.createConnection();
+                proxyConnection = ConnectionFactory.createConnection();
                 freeConnections.put(proxyConnection);
             } catch (SQLException e) {
                 logger.fatal("Can't create connection for connection pool", e);
                 throw new RuntimeException(e);
             } catch (InterruptedException e) {
-                logger.fatal("Something wrong with current thread",e);
+                logger.fatal("Something wrong with current thread", e);
                 throw new RuntimeException(e);
             }
         }
@@ -61,7 +61,7 @@ public class ConnectionPool {
             proxyConnection = freeConnections.take();
             givenAwayConnections.put(proxyConnection);
         } catch (InterruptedException e) {
-            logger.error("Can't put connection to givenAwayConnections",e);
+            logger.error("Can't put connection to givenAwayConnections", e);
             Thread.currentThread().interrupt();
         }
         return proxyConnection;
@@ -73,7 +73,7 @@ public class ConnectionPool {
             try {
                 freeConnections.put((ProxyConnection) connection);
             } catch (InterruptedException e) {
-                logger.error("Can't put connection to freeConnections",e);
+                logger.error("Can't put connection to freeConnections", e);
                 Thread.currentThread().interrupt();
             }
         } else {
@@ -87,9 +87,9 @@ public class ConnectionPool {
             try {
                 freeConnections.take().reallyClose();
             } catch (SQLException e) {
-                logger.error("Close connection when destroying pool", e);
+                logger.error("Failed to close connection when destroying pool", e);
             } catch (InterruptedException e) {
-                logger.error("Interrapted while waiting: ", e);
+                logger.error("Interrupted while waiting", e);
                 Thread.currentThread().interrupt();
             }
         }
@@ -101,7 +101,7 @@ public class ConnectionPool {
             try {
                 DriverManager.deregisterDriver(driver);
             } catch (SQLException e) {
-                logger.error("Exception when deregistering driver ", driver, e);
+                logger.error("Exception when deregister driver ", e);
             }
         });
     }

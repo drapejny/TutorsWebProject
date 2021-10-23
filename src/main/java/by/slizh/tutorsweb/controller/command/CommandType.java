@@ -7,7 +7,6 @@ import by.slizh.tutorsweb.controller.command.impl.go.*;
 /**
  * The enum CommandType provides {@link Command} instance.
  */
-
 public enum CommandType {
     DEFAULT(new DefaultCommand()),
     LOGIN(new LoginCommand()),

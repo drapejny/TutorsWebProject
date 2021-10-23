@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-public class ProxyConnection implements Connection {
+ class ProxyConnection implements Connection {
 
     Connection connection;
 
@@ -16,6 +16,14 @@ public class ProxyConnection implements Connection {
     void reallyClose() throws SQLException {
         connection.close();
     }
+
+     @Override
+     public void close() throws SQLException {
+         if (getAutoCommit() == false) {
+             setAutoCommit(true);
+         }
+         ConnectionPool.getInstance().releaseConnection(this);
+     }
 
     @Override
     public Statement createStatement() throws SQLException {
@@ -55,14 +63,6 @@ public class ProxyConnection implements Connection {
     @Override
     public void rollback() throws SQLException {
         connection.rollback();
-    }
-
-    @Override
-    public void close() throws SQLException {
-        if (getAutoCommit() == false) {
-            setAutoCommit(true);
-        }
-        ConnectionPool.getInstance().releaseConnection(this);
     }
 
     @Override

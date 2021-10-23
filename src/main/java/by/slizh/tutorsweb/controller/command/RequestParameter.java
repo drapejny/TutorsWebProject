@@ -1,10 +1,9 @@
 package by.slizh.tutorsweb.controller.command;
 
+/**
+ * Describes all request parameters.
+ */
 public final class RequestParameter {
-
-    /**
-     * Describes all request parameters.
-     */
 
     public static final String COMMAND = "command";
     public static final String FILE = "file";

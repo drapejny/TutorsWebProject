@@ -178,7 +178,7 @@ public class TutorServiceImpl implements TutorService {
         TutorDao tutorDao = new TutorDaoImpl();
         try {
             transaction.init(tutorDao);
-            int count = tutorDao.countSearchedRecords(subjectId, city, minPrice, maxPrice);
+            int count = tutorDao.countSearchedTutors(subjectId, city, minPrice, maxPrice);
             return count;
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -186,7 +186,7 @@ public class TutorServiceImpl implements TutorService {
             try {
                 transaction.end();
             } catch (DaoException e) {
-                logger.error("Failed to end transaction in countSearchedRecords method", e);
+                logger.error("Failed to end transaction in countSearchedTutors method", e);
             }
         }
     }

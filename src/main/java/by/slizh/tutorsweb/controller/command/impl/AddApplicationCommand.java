@@ -22,6 +22,8 @@ public class AddApplicationCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final TutorService service = TutorServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         String locale = (String) request.getSession().getAttribute(LOCALE);
@@ -29,7 +31,6 @@ public class AddApplicationCommand implements Command {
         TutorValidator tutorValidator = TutorValidatorImpl.getInstance();
         if (tutorValidator.validateTutorMap(tutorMap)) {
             User user = (User) request.getSession().getAttribute(SessionAttribute.USER);
-            TutorService service = TutorServiceImpl.getInstance();
             try {
                 service.createTutor(user, tutorMap);
             } catch (ServiceException e) {

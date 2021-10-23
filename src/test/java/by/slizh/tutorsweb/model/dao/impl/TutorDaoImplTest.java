@@ -77,9 +77,9 @@ public class TutorDaoImplTest {
 
     @Test
     public void countSearchedRecordsTest() throws DaoException {
-        when(tutorDao.countSearchedRecords(anyInt(), anyString(), anyInt(), anyInt())).thenReturn(10);
+        when(tutorDao.countSearchedTutors(anyInt(), anyString(), anyInt(), anyInt())).thenReturn(10);
         int expected = 10;
-        int actual = tutorDao.countSearchedRecords(1, "city", 1, 2);
+        int actual = tutorDao.countSearchedTutors(1, "city", 1, 2);
         assertEquals(expected, actual);
     }
 

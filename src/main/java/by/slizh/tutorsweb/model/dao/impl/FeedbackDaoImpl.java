@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,18 +51,16 @@ public class FeedbackDaoImpl extends FeedbackDao {
             WHERE feedback_id = ?;
             """;
 
-
     @Override
     public List<Feedback> findAll() throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_FEEDBACKS)) {
             List<Feedback> feedbacks = new ArrayList<>();
             ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    Feedback feedback = buildFeedback(resultSet);
-                    feedbacks.add(feedback);
-                }
-                return feedbacks;
-
+            while (resultSet.next()) {
+                Feedback feedback = buildFeedback(resultSet);
+                feedbacks.add(feedback);
+            }
+            return feedbacks;
         } catch (SQLException e) {
             logger.error("Failed to find all feedbacks", e);
             throw new DaoException("Failed to find all feedbacks", e);
@@ -75,13 +72,12 @@ public class FeedbackDaoImpl extends FeedbackDao {
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_FEEDBACK_BY_ID)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
-                if (resultSet.next()) {
-                    Feedback feedback = buildFeedback(resultSet);
-                    return Optional.of(feedback);
-                } else {
-                    return Optional.empty();
-                }
-
+            if (resultSet.next()) {
+                Feedback feedback = buildFeedback(resultSet);
+                return Optional.of(feedback);
+            } else {
+                return Optional.empty();
+            }
         } catch (SQLException e) {
             logger.error("Failed to find feedback by id", e);
             throw new DaoException("Failed to find feedback by id", e);
@@ -114,7 +110,6 @@ public class FeedbackDaoImpl extends FeedbackDao {
                 feedback.setFeedbackId(resultSet.getInt(1));
             }
             return result;
-
         } catch (SQLException e) {
             logger.error("Failed to create feedback", e);
             throw new DaoException("Failed to create feedback", e);
@@ -144,12 +139,11 @@ public class FeedbackDaoImpl extends FeedbackDao {
             statement.setInt(1, tutorId);
             List<Feedback> feedbacks = new ArrayList<>();
             ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    Feedback feedback = buildFeedback(resultSet);
-                    feedbacks.add(feedback);
-                }
-                return feedbacks;
-
+            while (resultSet.next()) {
+                Feedback feedback = buildFeedback(resultSet);
+                feedbacks.add(feedback);
+            }
+            return feedbacks;
         } catch (SQLException e) {
             logger.error("Failed to find feedbacks by tutorId", e);
             throw new DaoException("Failed to find feedbacks by tutorId", e);

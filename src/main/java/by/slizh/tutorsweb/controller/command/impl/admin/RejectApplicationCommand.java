@@ -17,10 +17,11 @@ public class RejectApplicationCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final TutorService tutorService = TutorServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         String tutorId = request.getParameter(RequestParameter.TUTOR_ID);
-        TutorService tutorService = TutorServiceImpl.getInstance();
         try {
             tutorService.deleteTutorById(Integer.parseInt(tutorId));
         } catch (ServiceException e) {

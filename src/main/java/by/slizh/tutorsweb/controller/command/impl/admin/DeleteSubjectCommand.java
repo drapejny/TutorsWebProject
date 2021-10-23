@@ -21,10 +21,11 @@ public class DeleteSubjectCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final SubjectService subjectService = SubjectServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         String locale = (String) request.getSession().getAttribute(SessionAttribute.LOCALE);
-        SubjectService subjectService = SubjectServiceImpl.getInstance();
         int subjectId = Integer.parseInt(request.getParameter(RequestParameter.SUBJECT_ID));
         try {
             if (subjectService.deleteSubjectById(subjectId)) {

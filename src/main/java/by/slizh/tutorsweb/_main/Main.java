@@ -21,13 +21,14 @@ public class Main {
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) throws DaoException {
-        User user = new User.UserBuilder()
-                .setFirstName("a")
-                .setLastName("a")
-                .setEmail("a@a.by")
-                .setRole(User.Role.TUTOR)
-                .setStatus(User.Status.ACTIVATED)
-                .createUser();
+        new A();
+//        User user = new User.UserBuilder()
+//                .setFirstName("a")
+//                .setLastName("a")
+//                .setEmail("a@a.by")
+//                .setRole(User.Role.TUTOR)
+//                .setStatus(User.Status.ACTIVATED)
+//                .createUser();
 //        User admin = new User.UserBuilder()
 //                .setFirstName("a")
 //                .setLastName("a")
@@ -37,19 +38,19 @@ public class Main {
 //                .setStatus(User.Status.ACTIVATED)
 //                .createUser();
 //
-        Tutor tutor = new Tutor.TutorBuilder()
-                .setFirstName("a")
-                .setLastName("a")
-                .setEmail("a@a.by")
-                .setPhone("+375294444444")
-                .setCity("Минск")
-                .setRole(User.Role.TUTOR)
-                .setStatus(User.Status.ACTIVATED)
-                .setEducation("BSUIR")
-                .setInfo("Some info")
-                .setPricePerHour(10)
-                .setIsActive(true)
-                .createTutor();
+//        Tutor tutor = new Tutor.TutorBuilder()
+//                .setFirstName("a")
+//                .setLastName("a")
+//                .setEmail("a@a.by")
+//                .setPhone("+375294444444")
+//                .setCity("Минск")
+//                .setRole(User.Role.TUTOR)
+//                .setStatus(User.Status.ACTIVATED)
+//                .setEducation("BSUIR")
+//                .setInfo("Some info")
+//                .setPricePerHour(10)
+//                .setIsActive(true)
+//                .createTutor();
 //
 //        UserDao userDao = new UserDaoImpl();
 //        TutorDao tutorDao = new TutorDaoImpl();

@@ -2,15 +2,13 @@ package by.slizh.tutorsweb.model.dao;
 
 import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.model.connection.ConnectionPool;
-import by.slizh.tutorsweb.model.connection.ProxyConnection;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class EntityTransaction {
 
-    private ProxyConnection connection;
+    private Connection connection;
 
     public void initTransaction(AbstractDao... daos) throws DaoException {
         if (connection == null) {

@@ -27,6 +27,11 @@ public class GoToTutorProfilePage implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final TutorService tutorService = TutorServiceImpl.getInstance();
+    private final SubjectService subjectService = SubjectServiceImpl.getInstance();
+    private final FeedbackService feedbackService = FeedbackServiceImpl.getInstance();
+    private final UserService userService = UserServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
@@ -45,11 +50,6 @@ public class GoToTutorProfilePage implements Command {
             }
             request.getSession().removeAttribute(RequestAttribute.TUTOR_ID);
         }
-
-        TutorService tutorService = TutorServiceImpl.getInstance();
-        SubjectService subjectService = SubjectServiceImpl.getInstance();
-        FeedbackService feedbackService = FeedbackServiceImpl.getInstance();
-        UserService userService = UserServiceImpl.getInstance();
         try {
             Optional<Tutor> tutor = tutorService.findTutorById(tutorId);
             if (tutor.isPresent() && tutor.get().getRole() == User.Role.TUTOR

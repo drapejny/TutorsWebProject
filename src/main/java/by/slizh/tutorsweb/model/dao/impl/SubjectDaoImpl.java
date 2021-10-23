@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,7 +65,6 @@ public class SubjectDaoImpl extends SubjectDao {
             DELETE FROM tutors_has_subject
             WHERE tutor_id = ? AND subject_id = ?;
             """;
-
 
     @Override
     public List<Subject> findAll() throws DaoException {
@@ -184,7 +182,6 @@ public class SubjectDaoImpl extends SubjectDao {
                 subjects.add(new Subject(subjectId, subjectName));
             }
             return subjects;
-
         } catch (SQLException e) {
             logger.error("Failed to find subjects by tutor id", e);
             throw new DaoException("Failed to find subjects by tutor id", e);

@@ -68,7 +68,13 @@ public class UserDaoImpl extends UserDao {
             JOIN role ON role.role_id = users.role_id
             JOIN status ON status.status_id = users.status_id
             WHERE last_name LIKE ? OR email LIKE ?
-            ORDER BY last_name, first_name;
+            ORDER BY last_name, first_name
+            LIMIT ?, ?;
+            """;
+    private static final String SQL_COUNT_SEARCH_USERS = """
+            SELECT COUNT(*) AS count
+            FROM users
+            WHERE last_name LIKE ? OR email LIKE ?;
             """;
     private static final String SQL_FIND_ALL_ADMINS = """
             SELECT user_id, first_name, last_name, email, photo, role_name, status_name
@@ -126,8 +132,7 @@ public class UserDaoImpl extends UserDao {
 
     @Override
     public boolean create(User user) throws DaoException {
-        throw new UnsupportedOperationException("This method unavailable in UserDao," +
-                " use method create(User user, String password)");
+        throw new UnsupportedOperationException("This method unavailable in UserDao, use method create(User user, String password)");
     }
 
     @Override
@@ -221,10 +226,13 @@ public class UserDaoImpl extends UserDao {
     }
 
     @Override
-    public List<User> searchUsers(String searchLine) throws DaoException {
+    public List<User> searchUsers(String searchLine, int offset, int rowCount) throws DaoException {
+        searchLine = "%" + searchLine + "%";
         try (PreparedStatement statement = connection.prepareStatement(SQL_SEARCH_USERS)) {
             statement.setString(1, searchLine);
             statement.setString(2, searchLine);
+            statement.setInt(3, offset);
+            statement.setInt(4, rowCount);
             ResultSet resultSet = statement.executeQuery();
             List<User> users = new ArrayList<>();
             while (resultSet.next()) {
@@ -235,6 +243,23 @@ public class UserDaoImpl extends UserDao {
             logger.error("Failed to search users", e);
             throw new DaoException("Failed to search users", e);
         }
+    }
+
+    @Override
+    public int countSearchUsers(String searchLine) throws DaoException {
+        searchLine = "%" + searchLine + "%";
+        try (PreparedStatement statement = connection.prepareStatement(SQL_COUNT_SEARCH_USERS)) {
+            statement.setString(1, searchLine);
+            statement.setString(2, searchLine);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            logger.error("Failed to count searched users", e);
+            throw new DaoException("Failed to count searched users", e);
+        }
+        return 0;
     }
 
     @Override

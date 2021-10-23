@@ -4,7 +4,7 @@ import by.slizh.tutorsweb.exception.CommandException;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
- * The interface Command for Controller.
+ * The interface Command.
  */
 public interface Command {
 

@@ -22,19 +22,16 @@ public class EditPasswordCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final UserService service = UserServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         String locale = (String) session.getAttribute(SessionAttribute.LOCALE);
-
         String password = request.getParameter(PASSWORD);
         String newPassword = request.getParameter(NEW_PASSWORD);
-
         UserValidator validator = UserValidatorImpl.getInstance();
-        UserService service = UserServiceImpl.getInstance();
-
         User user = (User) session.getAttribute(SessionAttribute.USER);
-
         if (validator.validatePassword(password) && validator.validatePassword(newPassword)) {
             boolean isCorrectPassword = false;
             try {

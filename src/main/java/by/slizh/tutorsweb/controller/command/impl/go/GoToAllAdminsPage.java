@@ -16,11 +16,11 @@ public class GoToAllAdminsPage implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private static final String MAIN_ADMIN_EMAIL = "admin@admin.com";
+    private final String MAIN_ADMIN_EMAIL = "admin@admin.com";
+    private final UserService userService = UserServiceImpl.getInstance();
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        UserService userService = UserServiceImpl.getInstance();
         User user = (User) request.getSession().getAttribute(SessionAttribute.USER);
         if (user.getEmail().equals(MAIN_ADMIN_EMAIL)) {
             try {

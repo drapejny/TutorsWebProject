@@ -11,17 +11,101 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.io.PipedReader;
+import java.util.EnumSet;
 import java.util.Locale;
 
+import static by.slizh.tutorsweb.controller.command.CommandType.*;
+
+/**
+ * The RoleFilter filter all requests and provide security access by user role.
+ */
 @WebFilter(urlPatterns = "/controller")
 public class RoleFilter implements Filter {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private EnumSet<CommandType> guestCommands = EnumSet.of(
+            DEFAULT,
+            CONFIRMATION_PAGE,
+            LOGIN_PAGE,
+            MAIN_PAGE,
+            REGISTRATION_PAGE,
+            SEARCH_PAGE,
+            TUTOR_PROFILE_PAGE,
+            LOGIN,
+            REGISTRATION,
+            SEARCH,
+            VERIFICATION,
+            CHANGE_LOCALE,
+            ABOUT_US_PAGE
+    );
+
+    private EnumSet<CommandType> userCommands = EnumSet.of(
+            DEFAULT,
+            EDIT_PROFILE_PAGE,
+            MAIN_PAGE,
+            SEARCH_PAGE,
+            TUTOR_PROFILE_PAGE,
+            ADD_APPLICATION,
+            ADD_FEEDBACK,
+            BECOME_TUTOR,
+            DELETE_FEEDBACK,
+            EDIT_FEEDBACK,
+            EDIT_PASSWORD,
+            EDIT_PROFILE,
+            LOGOUT,
+            SEARCH,
+            CHANGE_LOCALE,
+            ABOUT_US_PAGE
+    );
+
+    private EnumSet<CommandType> tutorCommands = EnumSet.of(
+            DEFAULT,
+            EDIT_TUTOR_PROFILE_PAGE,
+            MAIN_PAGE,
+            SEARCH_PAGE,
+            TUTOR_PROFILE_PAGE,
+            DELETE_FEEDBACK,
+            EDIT_PASSWORD,
+            EDIT_TUTOR_PROFILE,
+            LOGOUT,
+            SEARCH,
+            CHANGE_LOCALE,
+            ABOUT_US_PAGE
+    );
+
+    private EnumSet<CommandType> adminCommands = EnumSet.of(
+            DEFAULT,
+            ACCEPT_APPLICATION,
+            ADD_ADMIN,
+            ADD_SUBJECT,
+            BLOCK_USER,
+            DELETE_ADMIN,
+            DELETE_SUBJECT,
+            REJECT_APPLICATION,
+            SEARCH_USERS,
+            UNBLOCK_USER,
+            ALL_ADMINS_PAGE,
+            ALL_APPLICATIONS_PAGE,
+            ALL_SUBJECTS_PAGE,
+            APPLICATION_PAGE,
+            EDIT_PROFILE_PAGE,
+            MAIN_PAGE,
+            SEARCH_PAGE,
+            SEARCH_USERS_PAGE,
+            TUTOR_PROFILE_PAGE,
+            ADD_FEEDBACK,
+            DELETE_FEEDBACK,
+            EDIT_FEEDBACK,
+            EDIT_PASSWORD,
+            EDIT_PROFILE,
+            LOGOUT,
+            SEARCH,
+            CHANGE_LOCALE,
+            ABOUT_US_PAGE);
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("RoleFilter");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
@@ -50,13 +134,31 @@ public class RoleFilter implements Filter {
         } else {
             commandType = CommandType.DEFAULT;
         }
-        RoleCommandProvider roleCommandProvider = RoleCommandProvider.getInstance();
         User user = (User) session.getAttribute(SessionAttribute.USER);
-        if (!roleCommandProvider.checkCommand(user.getRole(), commandType)) {
+        if (!checkCommand(user.getRole(), commandType)) {
             response.sendRedirect(request.getContextPath() + PagePath.GO_TO_MAIN_PAGE);
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }
+    }
+
+    private boolean checkCommand(User.Role role, CommandType commandType) {
+        boolean checkFlag = false;
+        switch (role) {
+            case GUEST:
+                checkFlag = guestCommands.contains(commandType);
+                break;
+            case USER:
+                checkFlag = userCommands.contains(commandType);
+                break;
+            case TUTOR:
+                checkFlag = tutorCommands.contains(commandType);
+                break;
+            case ADMIN:
+                checkFlag = adminCommands.contains(commandType);
+                break;
+        }
+        return checkFlag;
     }
 
 }

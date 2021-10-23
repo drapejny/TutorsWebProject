@@ -33,7 +33,9 @@ public interface UserService {
 
     void makeUserToTutor(int userId) throws ServiceException;
 
-    List<User> searchUsers(String searchLine) throws ServiceException;
+    List<User> searchUsers(String searchLine, int offset, int rowsCount) throws ServiceException;
+
+    int countSearchUsers(String searchLine) throws ServiceException;
 
     Optional<User> blockUser(int userId) throws ServiceException;
 

@@ -19,6 +19,8 @@ public class EditFeedbackCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final FeedbackService feedbackService = FeedbackServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         int feedbackId = Integer.parseInt(request.getParameter(RequestParameter.FEEDBACK_ID));
@@ -26,7 +28,6 @@ public class EditFeedbackCommand implements Command {
         String rating = request.getParameter(RequestParameter.RATING);
         int tutorId = Integer.parseInt(request.getParameter(RequestParameter.TUTOR_ID));
         FeedbackValidator feedbackValidator = FeedbackValidatorImpl.getInstance();
-        FeedbackService feedbackService = FeedbackServiceImpl.getInstance();
         if (text != null) {
             text = text.replaceAll("\r\n", "\n");
             if (feedbackValidator.validateFeedbackText(text) && rating != null) {

@@ -1,10 +1,9 @@
 package by.slizh.tutorsweb.controller.command;
 
+/**
+ * Describes all request attributes.
+ */
 public final class RequestAttribute {
-
-    /**
-     * Describes all request attributes.
-     */
 
     public static String TUTOR = "tutor";
     public static String SUBJECTS = "subjects";
@@ -16,6 +15,7 @@ public final class RequestAttribute {
     public static String APPLICATION = "application";
     public static final String PAGE_COUNT = "pageCount";
     public static final String PAGE_NUM = "pageNumber";
+    public static final String SEARCH_LINE = "searchLine";
     public static final String SORT = "sort";
     public static final String CITY = "city";
     public static final String MIN_PRICE = "minPrice";
@@ -39,10 +39,9 @@ public final class RequestAttribute {
     public static final String SUCCESSFUL_DELETE_SUBJECT = "successDeleteSubjectMessage";
     public static final String ERROR_DELETE_SUBJECT = "errorDeleteSubjectMessage";
     public static final String SUCCESS_REGISTRATION_MESSAGE = "successRegistrationMessage";
-    public static final int APPLICATIONS_ON_PAGE_NUMBER = 1;
+    public static final int APPLICATIONS_ON_PAGE_NUMBER = 3;
     public static final int TUTORS_ON_SEARCH_PAGE_NUMBER = 2;
     public static final int DEFAULT_OFFSET = 0;
-
 
     private RequestAttribute() {
     }

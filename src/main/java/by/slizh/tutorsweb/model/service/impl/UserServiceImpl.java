@@ -288,12 +288,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> searchUsers(String searchLine) throws ServiceException {
+    public List<User> searchUsers(String searchLine, int offset, int rowsCount) throws ServiceException {
         EntityTransaction transaction = new EntityTransaction();
         UserDao userDao = new UserDaoImpl();
         try {
             transaction.init(userDao);
-            return userDao.searchUsers(searchLine);
+            return userDao.searchUsers(searchLine, offset, rowsCount);
         } catch (DaoException e) {
             throw new ServiceException(e);
         } finally {
@@ -301,6 +301,25 @@ public class UserServiceImpl implements UserService {
                 transaction.end();
             } catch (DaoException e) {
                 logger.error("Can't end transaction in searchUsers method", e);
+            }
+        }
+    }
+
+    @Override
+    public int countSearchUsers(String searchLine) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
+        try {
+            transaction.init(userDao);
+            int cout = userDao.countSearchUsers(searchLine);
+            return cout;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                transaction.end();
+            } catch (DaoException e) {
+                logger.error("Can't end transaction in countSearchUsers method", e);
             }
         }
     }
@@ -380,7 +399,7 @@ public class UserServiceImpl implements UserService {
         try {
             transaction.init(userDao);
             Optional<User> user = userDao.findById(userId);
-            if(user.isPresent()){
+            if (user.isPresent()) {
                 user.get().setRole(User.Role.ADMIN);
                 userDao.update(user.get());
                 return true;

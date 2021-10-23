@@ -21,11 +21,11 @@ public class BecomeTutorCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final TutorService tutorService = TutorServiceImpl.getInstance();
+    private final SubjectService subjectService = SubjectServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        TutorService tutorService = TutorServiceImpl.getInstance();
-        SubjectService subjectService = SubjectServiceImpl.getInstance();
-
         User user = (User) request.getSession().getAttribute(SessionAttribute.USER);
         try {
             Optional<Tutor> tutor = tutorService.findTutorByEmail(user.getEmail());

@@ -21,10 +21,11 @@ public class AddSubjectCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final SubjectService subjectService = SubjectServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         String locale = (String) request.getSession().getAttribute(SessionAttribute.LOCALE);
-        SubjectService subjectService = SubjectServiceImpl.getInstance();
         SubjectValidator subjectValidator = SubjectValidatorImpl.getInstance();
         String subjectName = request.getParameter(RequestParameter.SUBJECT_NAME);
         if (subjectValidator.validateSubjectName(subjectName)) {

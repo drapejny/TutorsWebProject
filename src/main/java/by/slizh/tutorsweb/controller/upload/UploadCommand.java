@@ -7,15 +7,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.io.InputStream;
 
 /**
- * The interface UploadCommand for Controller.
+ * The interface UploadCommand.
  */
 public interface UploadCommand {
 
     /**
      * Method, which run command code.
      *
-     * @param request instance of {@link HttpServletRequest} from controller.
-     * @param inputStream inputStream of content
+     * @param request instance of {@link HttpServletRequest}.
+     * @param inputStream inputStream of content.
      * @return {@link Router} instance.
      * @throws CommandException in case of any exceptions in method
      */

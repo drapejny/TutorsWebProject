@@ -15,6 +15,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The type Servlet context listener.
+ */
 @WebListener
 public class ServletContextListenerImpl implements ServletContextListener {
 
@@ -29,12 +32,17 @@ public class ServletContextListenerImpl implements ServletContextListener {
         final String CITIES = "cities";
         try {
             List<Subject> subjects = subjectService.findAllSubjects();
-            List<String> cities = tutorService.findAllCities();
             event.getServletContext().setAttribute(SUBJECTS, subjects);
-            event.getServletContext().setAttribute(CITIES, cities);
         } catch (ServiceException e) {
             logger.error("Can't find subjects while context initialized", e);
             //// TODO: 20.09.2021 какой exception кидать и стоит ли
+        }
+        try {
+            List<String> cities = tutorService.findAllCities();
+            event.getServletContext().setAttribute(CITIES, cities);
+        } catch (ServiceException e) {
+            logger.error("Can't find cities while context initialized", e);
+            //// // TODO: 23.10.2021 какой эксепшн кидать и стоит ли
         }
     }
 

@@ -14,11 +14,12 @@ public class DeleteFeedbackCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final FeedbackService feedbackService = FeedbackServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         int feedbackId = Integer.parseInt(request.getParameter(RequestParameter.FEEDBACK_ID));
         int tutorId = Integer.parseInt(request.getParameter(RequestParameter.TUTOR_ID));
-        FeedbackService feedbackService = FeedbackServiceImpl.getInstance();
         try {
             feedbackService.deleteFeedbackById(feedbackId);
             request.getSession().setAttribute(RequestAttribute.TUTOR_ID,tutorId);

@@ -27,16 +27,17 @@ public class LoginCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final UserService userService = UserServiceImpl.getInstance();
+    private final TutorService tutorService = TutorServiceImpl.getInstance();
+    private final SubjectService subjectService = SubjectServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         String locale = (String) session.getAttribute(SessionAttribute.LOCALE);
-        Router router = null;
+        Router router;
         String email = request.getParameter(RequestParameter.EMAIL);
         String password = request.getParameter(RequestParameter.PASSWORD);
-        UserService userService = UserServiceImpl.getInstance();
-        TutorService tutorService = TutorServiceImpl.getInstance();
-        SubjectService subjectService = SubjectServiceImpl.getInstance();
         try {
             Optional<User> user = userService.authenticate(email, password);
             if (user.isPresent()) {

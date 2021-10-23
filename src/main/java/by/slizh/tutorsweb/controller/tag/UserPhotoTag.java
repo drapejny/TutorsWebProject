@@ -6,6 +6,7 @@ import jakarta.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
 public class UserPhotoTag extends TagSupport {
+
     private String photo;
     private int height;
     private int width;
@@ -18,7 +19,7 @@ public class UserPhotoTag extends TagSupport {
         this.height = height;
     }
 
-    public void setWidth(int width){
+    public void setWidth(int width) {
         this.width = width;
     }
 

@@ -23,17 +23,15 @@ public class EditProfileCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final UserService service = UserServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         String locale = (String) session.getAttribute(SessionAttribute.LOCALE);
-
         String firstName = request.getParameter(FIRST_NAME);
         String lastName = request.getParameter(LAST_NAME);
-
         UserValidator validator = UserValidatorImpl.getInstance();
-        UserService service = UserServiceImpl.getInstance();
-
         User user = (User) session.getAttribute(SessionAttribute.USER);
         if (validator.validateFirstName(firstName) && validator.validateLastName(lastName)) {
             user.setFirstName(firstName);

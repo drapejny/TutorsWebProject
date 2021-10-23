@@ -21,6 +21,8 @@ public class RegistrationCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final UserService service = UserServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
@@ -29,10 +31,7 @@ public class RegistrationCommand implements Command {
         String lastName = request.getParameter(LAST_NAME);
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
-
-        UserService service = UserServiceImpl.getInstance();
         UserValidator userValidator = UserValidatorImpl.getInstance();
-
         try {
             if (service.isEmailExist(email)) {
                 request.setAttribute(ERROR_EMAIL_EXISTS, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_EMAIL_EXISTS));
@@ -43,9 +42,7 @@ public class RegistrationCommand implements Command {
             logger.error("Executing registration command error", e);
             throw new CommandException("Executing registration command error", e);
         }
-
         String passwordRepeat = request.getParameter(PASSWORD_REPEAT);
-
         if (userValidator.validateFirstName(firstName) && userValidator.validateLastName(lastName)
                 && userValidator.validateEmail(email) && userValidator.validatePassword(password)
                 && password.equals(passwordRepeat)) {

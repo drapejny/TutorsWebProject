@@ -18,11 +18,13 @@ public class GoToAllApplicationsPage implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final TutorService tutorService = TutorServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         String pageNumber = request.getParameter(RequestParameter.PAGE_NUMBER);
 
-        TutorService tutorService = TutorServiceImpl.getInstance();
+
         int offset;
         int page;
         try {

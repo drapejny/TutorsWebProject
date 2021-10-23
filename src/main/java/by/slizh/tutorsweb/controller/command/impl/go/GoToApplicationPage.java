@@ -21,6 +21,9 @@ public class GoToApplicationPage implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final TutorService tutorService = TutorServiceImpl.getInstance();
+    private final SubjectService subjectService = SubjectServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         String tutorId = request.getParameter(RequestParameter.TUTOR_ID);
@@ -32,8 +35,6 @@ public class GoToApplicationPage implements Command {
         } catch (NumberFormatException e) {
             return new Router(PagePath.GO_TO_ALL_APPLICATIONS_PAGE, Router.RouteType.FORWARD);
         }
-        TutorService tutorService = TutorServiceImpl.getInstance();
-        SubjectService subjectService = SubjectServiceImpl.getInstance();
         try {
             Optional<Tutor> tutor = tutorService.findTutorById(Integer.parseInt(tutorId));
             if (tutor.isPresent() && tutor.get().getRole() == User.Role.USER

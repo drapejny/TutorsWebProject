@@ -22,9 +22,9 @@ public class CommandFactory {
     }
 
     /**
-     * Create {@link Command} instance by {@link HttpServletRequest} request from Controller.
+     * Create {@link Command} instance by {@link HttpServletRequest} request.
      *
-     * @param request the {@link HttpServletRequest} request from Controller
+     * @param request the {@link HttpServletRequest} request
      * @return the command
      */
     public Command createCommand(HttpServletRequest request) {
@@ -37,7 +37,6 @@ public class CommandFactory {
             } catch (IllegalArgumentException e) {
                 command = CommandType.DEFAULT.getCommand();
             }
-
         } else {
             command = CommandType.DEFAULT.getCommand();
         }

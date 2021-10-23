@@ -20,25 +20,21 @@ public class SearchCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private static final String DEFAULT_SORT = "default_sort";
+    private final String DEFAULT_SORT = "default_sort";
+    private final TutorService tutorService = TutorServiceImpl.getInstance();
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         TutorValidator tutorValidator = TutorValidatorImpl.getInstance();
-        TutorService tutorService = TutorServiceImpl.getInstance();
-
-
         String sort = request.getParameter(RequestParameter.SORT);
         String city = request.getParameter(RequestParameter.CITY);
         String minPrice = request.getParameter(RequestParameter.MIN_PRICE);
         String maxPrice = request.getParameter(RequestParameter.MAX_PRICE);
         String subjectIdString = request.getParameter(RequestParameter.SUBJECT);
         String pageNumberString = request.getParameter(RequestParameter.PAGE_NUMBER);
-
         if (sort == null) {
             sort = DEFAULT_SORT;
         }
-
         if (city != null && minPrice != null && maxPrice != null && subjectIdString != null) {
             if (tutorValidator.validateCity(city) && tutorValidator.validatePrice(minPrice) && tutorValidator.validatePrice(maxPrice)) {
                 int subjectId;
@@ -88,7 +84,6 @@ public class SearchCommand implements Command {
             }
 
         }
-
         request.setAttribute(SUBJECT_ID, subjectIdString);
         request.setAttribute(CITY, city);
         request.setAttribute(MIN_PRICE, minPrice);

@@ -31,28 +31,24 @@ public class EditTutorProfileCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final TutorService tutorService = TutorServiceImpl.getInstance();
+    private final SubjectService subjectService = SubjectServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         String locale = (String) session.getAttribute(SessionAttribute.LOCALE);
-
         TutorValidator tutorValidator = TutorValidatorImpl.getInstance();
         UserValidator userValidator = UserValidatorImpl.getInstance();
-
-        TutorService tutorService = TutorServiceImpl.getInstance();
-        SubjectService subjectService = SubjectServiceImpl.getInstance();
-
         String firstName = request.getParameter(FIRST_NAME);
         String lastName = request.getParameter(LAST_NAME);
         String phone = request.getParameter(PHONE);
         String info = request.getParameter(INFORMATION);
         String price = request.getParameter(PRICE);
-
         boolean isActive = false;
         if (request.getParameter(IS_ACTIVE) != null) {
             isActive = true;
         }
-
         String[] subjectIds = request.getParameterValues(SUBJECT);
         if (info != null) {
             info = info.replaceAll("\r\n", "\n");

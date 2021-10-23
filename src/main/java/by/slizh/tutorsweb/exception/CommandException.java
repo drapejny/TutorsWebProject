@@ -1,6 +1,7 @@
 package by.slizh.tutorsweb.exception;
 
 public class CommandException extends Exception {
+
     public CommandException() {
         super();
     }

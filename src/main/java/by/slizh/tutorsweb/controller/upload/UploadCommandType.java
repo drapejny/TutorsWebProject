@@ -1,9 +1,13 @@
 package by.slizh.tutorsweb.controller.upload;
 
+import by.slizh.tutorsweb.controller.command.Command;
 import by.slizh.tutorsweb.controller.upload.impl.DefaultUploadCommand;
 import by.slizh.tutorsweb.controller.upload.impl.UploadTutorPhotoCommand;
 import by.slizh.tutorsweb.controller.upload.impl.UploadUserPhotoCommand;
 
+/**
+ * The enum UploadCommandType provides {@link UploadCommand} instance.
+ */
 public enum UploadCommandType {
     DEFAULT(new DefaultUploadCommand()),
     UPLOAD_USER_PHOTO(new UploadUserPhotoCommand()),
