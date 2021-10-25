@@ -35,8 +35,8 @@ public class SubjectServiceImpl implements SubjectService {
             transaction.init(subjectDao);
             return subjectDao.findAll();
         } catch (DaoException e) {
-            logger.error("Failed to find all subjects in findAllSubjects method", e);
-            throw new ServiceException("Failed to find all subjects in findAllSubjects method", e);
+            logger.error("Failed to make transaction in findAllSubjects method", e);
+            throw new ServiceException("Failed to make transaction in findAllSubjects method", e);
         } finally {
             try {
                 transaction.end();
@@ -54,8 +54,8 @@ public class SubjectServiceImpl implements SubjectService {
             transaction.init(subjectDao);
             return subjectDao.deleteById(id);
         } catch (DaoException e) {
-            logger.error("Failed ot delete subject in deleteSubjectById method", e);
-            throw new ServiceException("Failed ot delete subject in deleteSubjectById method", e);
+            logger.error("Failed to make transaction in deleteSubjectById method", e);
+            throw new ServiceException("Failed to make transaction in deleteSubjectById method", e);
         } finally {
             try {
                 transaction.end();
@@ -72,13 +72,13 @@ public class SubjectServiceImpl implements SubjectService {
         try {
             transaction.init(subjectDao);
             Optional<Subject> optionalSubject = subjectDao.findSubjectByName(subject.getSubjectName());
-            if(optionalSubject.isPresent()){
+            if (optionalSubject.isPresent()) {
                 return false;
             }
             return subjectDao.create(subject);
         } catch (DaoException e) {
-            logger.error("Failed ot add subject in addSubject method", e);
-            throw new ServiceException("Failed ot add subject in addSubject method", e);
+            logger.error("Failed make transaction in addSubject method", e);
+            throw new ServiceException("Failed make transaction in addSubject method", e);
         } finally {
             try {
                 transaction.end();
@@ -96,7 +96,8 @@ public class SubjectServiceImpl implements SubjectService {
             transaction.init(subjectDao);
             return subjectDao.findSubjectsByTutorId(tutorId);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in findSubjectsByTutorId method", e);
+            throw new ServiceException("Failed to make transaction in findSubjectsByTutorId method", e);
         } finally {
             try {
                 transaction.end();
@@ -108,15 +109,14 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public void editTutorSubjects(int tutorId, List<Integer> oldSubjectIds, List<Integer> newSubjectIds) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        SubjectDao subjectDao = new SubjectDaoImpl();
         List<Integer> deletedSubjects = new ArrayList<>(oldSubjectIds);
         deletedSubjects.removeAll(newSubjectIds);
         List<Integer> addedSubjects = new ArrayList<>(newSubjectIds);
         addedSubjects.removeAll(oldSubjectIds);
-        List<Integer> savedSubjects = new ArrayList<>(newSubjectIds);
-        EntityTransaction transaction = new EntityTransaction();
-        SubjectDao subjectDao = new SubjectDaoImpl();
         try {
-            transaction.init(subjectDao);
+            transaction.initTransaction(subjectDao);
             for (Integer id : deletedSubjects) {
                 subjectDao.deleteTutorSubject(tutorId, id);
             }
@@ -124,10 +124,16 @@ public class SubjectServiceImpl implements SubjectService {
                 subjectDao.createTutorSubject(tutorId, id);
             }
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            try {
+                transaction.rollback();
+            } catch (DaoException ex) {
+                logger.error("Failed to rollback transaction in editTutorSubjects method", e);
+            }
+            logger.error("Failed to make transaction in editTutorSubjects method", e);
+            throw new ServiceException("Failed to make transaction in editTutorSubjects method", e);
         } finally {
-            try{
-                transaction.end();
+            try {
+                transaction.endTransaction();
             } catch (DaoException e) {
                 logger.error("Failed to end transaction in editTutorSubjects method", e);
             }

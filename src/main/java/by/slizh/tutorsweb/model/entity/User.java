@@ -1,8 +1,7 @@
 package by.slizh.tutorsweb.model.entity;
 
-import java.io.InputStream;
+public class User extends AbstractEntity {
 
-public class User extends Entity {
     private int userId;
     private String firstName;
     private String lastName;
@@ -13,7 +12,6 @@ public class User extends Entity {
 
     public User() {
     }
-
 
     public int getUserId() {
         return userId;
@@ -75,7 +73,7 @@ public class User extends Entity {
         ADMIN("admin", 1),
         USER("user", 2),
         TUTOR("tutor", 3),
-        GUEST("guest",0);
+        GUEST("guest", 0);
 
         private String value;
         private int id;
@@ -134,7 +132,6 @@ public class User extends Entity {
                 user.photo == null ? photo == null : photo.equals(user.photo) &&
                 user.role == null ? role == null : role.equals(user.role) &&
                 user.status == null ? status == null : status.equals(user.status);
-
     }
 
     @Override
@@ -150,7 +147,7 @@ public class User extends Entity {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder stringBuilder = new StringBuilder("User{");
         stringBuilder.append("userId=").append(userId);
         stringBuilder.append(", firstName='").append(firstName).append("'");

@@ -1,6 +1,6 @@
 package by.slizh.tutorsweb.model.dao;
 
-import by.slizh.tutorsweb.model.entity.Entity;
+import by.slizh.tutorsweb.model.entity.AbstractEntity;
 import by.slizh.tutorsweb.exception.DaoException;
 
 import java.sql.Connection;
@@ -12,7 +12,7 @@ import java.util.Optional;
  *
  * @param <T> the entity type
  */
-public abstract class AbstractDao< T extends Entity> {
+public abstract class AbstractDao< T extends AbstractEntity> {
 
     /**
      * The Connection.

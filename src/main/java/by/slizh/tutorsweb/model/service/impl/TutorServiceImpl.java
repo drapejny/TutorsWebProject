@@ -75,6 +75,9 @@ public class TutorServiceImpl implements TutorService {
 
     @Override
     public void createTutor(User user, Map<String, String[]> tutorMap) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        TutorDao tutorDao = new TutorDaoImpl();
+        SubjectDao subjectDao = new SubjectDaoImpl();
         Tutor tutor = new Tutor.TutorBuilder()
                 .setUserId(user.getUserId())
                 .setPhone(tutorMap.get(PHONE)[0])
@@ -84,9 +87,6 @@ public class TutorServiceImpl implements TutorService {
                 .setPricePerHour(Integer.parseInt(tutorMap.get(PRICE)[0]))
                 .setIsActive(true)
                 .createTutor();
-        EntityTransaction transaction = new EntityTransaction();
-        TutorDao tutorDao = new TutorDaoImpl();
-        SubjectDao subjectDao = new SubjectDaoImpl();
         try {
             transaction.initTransaction(tutorDao, subjectDao);
             tutorDao.create(tutor);
@@ -119,7 +119,8 @@ public class TutorServiceImpl implements TutorService {
             transaction.init(tutorDao);
             tutorDao.update(tutor);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in updateTutor method", e);
+            throw new ServiceException("Failed to make transaction in updateTutor method", e);
         } finally {
             try {
                 transaction.end();
@@ -162,7 +163,8 @@ public class TutorServiceImpl implements TutorService {
             List<Tutor> tutors = tutorDao.searchTutors(subjectId, city, minPrice, maxPrice, offset, numberOfRecords, sort);
             return tutors;
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in searchTutors method", e);
+            throw new ServiceException("Failed to make transaction in searchTutors method", e);
         } finally {
             try {
                 transaction.end();
@@ -181,7 +183,8 @@ public class TutorServiceImpl implements TutorService {
             int count = tutorDao.countSearchedTutors(subjectId, city, minPrice, maxPrice);
             return count;
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in countSearchedRecords method", e);
+            throw new ServiceException("Failed to make transaction in countSearchedRecords method", e);
         } finally {
             try {
                 transaction.end();
@@ -200,7 +203,8 @@ public class TutorServiceImpl implements TutorService {
             List<String> cities = tutorDao.findAllCities();
             return cities;
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in findAllCities method", e);
+            throw new ServiceException("Failed to make transaction in findAllCities method", e);
         } finally {
             try {
                 transaction.end();
@@ -219,7 +223,8 @@ public class TutorServiceImpl implements TutorService {
             List<Tutor> tutors = tutorDao.findApplications(offset, numberOfRecords);
             return tutors;
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in findApplications method", e);
+            throw new ServiceException("Failed to make transaction in findApplications method", e);
         } finally {
             try {
                 transaction.end();
@@ -243,7 +248,8 @@ public class TutorServiceImpl implements TutorService {
                 }
             }
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in findTutorsByUsers method", e);
+            throw new ServiceException("Failed to make transaction in findTutorsByUsers method", e);
         } finally {
             try {
                 transaction.end();
@@ -262,7 +268,8 @@ public class TutorServiceImpl implements TutorService {
             transaction.init(tutorDao);
             return tutorDao.countApplications();
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in countApplications method", e);
+            throw new ServiceException("Failed to make transaction in countApplications method", e);
         } finally {
             try {
                 transaction.end();
@@ -280,7 +287,8 @@ public class TutorServiceImpl implements TutorService {
             transaction.init(tutorDao);
             return tutorDao.deleteById(tutorId);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in deleteTutorById method", e);
+            throw new ServiceException("Failed to make transaction in deleteTutorById method", e);
         } finally {
             try {
                 transaction.end();

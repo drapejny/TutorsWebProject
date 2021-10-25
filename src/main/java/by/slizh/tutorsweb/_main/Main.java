@@ -4,8 +4,10 @@ import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.model.dao.EntityTransaction;
 import by.slizh.tutorsweb.model.dao.FeedbackDao;
 import by.slizh.tutorsweb.model.dao.SubjectDao;
+import by.slizh.tutorsweb.model.dao.UserDao;
 import by.slizh.tutorsweb.model.dao.impl.FeedbackDaoImpl;
 import by.slizh.tutorsweb.model.dao.impl.SubjectDaoImpl;
+import by.slizh.tutorsweb.model.dao.impl.UserDaoImpl;
 import by.slizh.tutorsweb.model.entity.Feedback;
 import by.slizh.tutorsweb.model.entity.Subject;
 import by.slizh.tutorsweb.model.entity.Tutor;
@@ -22,21 +24,32 @@ public class Main {
 
     public static void main(String[] args) throws DaoException {
         new A();
-//        User user = new User.UserBuilder()
-//                .setFirstName("a")
-//                .setLastName("a")
-//                .setEmail("a@a.by")
-//                .setRole(User.Role.TUTOR)
-//                .setStatus(User.Status.ACTIVATED)
-//                .createUser();
-//        User admin = new User.UserBuilder()
-//                .setFirstName("a")
-//                .setLastName("a")
-//                .setEmail("a@a.by")
-//                .setCity("Минск")
-//                .setRole(User.Role.USER)
-//                .setStatus(User.Status.ACTIVATED)
-//                .createUser();
+        User user = new User.UserBuilder()
+                .setFirstName("a")
+                .setLastName("a")
+                .setEmail("yy@yy.by")
+                .setRole(User.Role.USER)
+                .setStatus(User.Status.ACTIVATED)
+                .createUser();
+        User admin = new User.UserBuilder()
+                .setFirstName("a")
+                .setLastName("a")
+                .setEmail("yyy@yyy.by")
+                .setRole(User.Role.USER)
+                .setStatus(User.Status.ACTIVATED)
+                .createUser();
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
+        try{
+            transaction.initTransaction(userDao);
+            userDao.create(user,"123123");
+            userDao.create(admin,"123123");
+            transaction.commit();
+        }catch (DaoException e){
+            transaction.rollback();
+        } finally {
+            transaction.endTransaction();
+        }
 //
 //        Tutor tutor = new Tutor.TutorBuilder()
 //                .setFirstName("a")

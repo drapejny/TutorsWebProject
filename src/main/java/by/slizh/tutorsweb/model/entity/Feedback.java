@@ -1,9 +1,8 @@
 package by.slizh.tutorsweb.model.entity;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
-public class Feedback extends Entity {
+public class Feedback extends AbstractEntity {
     private int feedbackId;
     private String text;
     private LocalDate date;

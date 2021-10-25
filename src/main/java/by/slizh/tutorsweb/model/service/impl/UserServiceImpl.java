@@ -28,25 +28,21 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private static UserServiceImpl instance;
+    private static UserServiceImpl instance = new UserServiceImpl();
 
     private UserServiceImpl() {
     }
 
     public static UserServiceImpl getInstance() {
-        if (instance == null) {
-            instance = new UserServiceImpl();
-        }
         return instance;
     }
 
-
     @Override
     public Optional<User> authenticate(String email, String password) throws ServiceException {
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
         Optional<User> result = Optional.empty();
         String passwordHash;
-        UserDao userDao = new UserDaoImpl();
-        EntityTransaction transaction = new EntityTransaction();
         try {
             transaction.init(userDao);
             Optional<User> optionalUser = userDao.findUserByEmail(email);
@@ -57,6 +53,7 @@ public class UserServiceImpl implements UserService {
                 }
             }
         } catch (DaoException e) {
+            logger.error("Failed to make transaction in authenticate method", e);
             throw new ServiceException("Failed to make transaction in authenticate method", e);
         } finally {
             try {
@@ -71,7 +68,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registrate(String firstName, String lastName, String email, String password) throws ServiceException {
-
+        EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
         User user = new User.UserBuilder()
                 .setFirstName(firstName)
                 .setLastName(lastName)
@@ -79,13 +77,11 @@ public class UserServiceImpl implements UserService {
                 .setRole(User.Role.USER)
                 .setStatus(User.Status.NON_ACTIVATED)
                 .createUser();
-
-        UserDao userDao = new UserDaoImpl();
-        EntityTransaction transaction = new EntityTransaction();
         try {
             transaction.init(userDao);
             userDao.create(user, password);
         } catch (DaoException e) {
+            logger.error("Failed to make transaaction in checkEmail method", e);
             throw new ServiceException("Failed to make transaction in checkEmail method", e);
         } finally {
             try {
@@ -100,8 +96,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isEmailExist(String email) throws ServiceException {
-        UserDao userDao = new UserDaoImpl();
         EntityTransaction transaction = new EntityTransaction();
+        UserDao userDao = new UserDaoImpl();
         try {
             transaction.init(userDao);
             Optional<User> optionalUser = userDao.findUserByEmail(email);
@@ -109,12 +105,13 @@ public class UserServiceImpl implements UserService {
                 return true;
             }
         } catch (DaoException e) {
-            throw new ServiceException("Failed to make transaction in checkEmail method", e);
+            logger.error("Failed to make transaction in isEmailExist method", e);
+            throw new ServiceException("Failed to make transaction in isEmailExist method", e);
         } finally {
             try {
                 transaction.end();
             } catch (DaoException e) {
-                logger.error("Can't end transaction in checkEmail method", e);
+                logger.error("Can't end transaction in isEmailExist method", e);
             }
         }
         return false;
@@ -130,6 +127,7 @@ public class UserServiceImpl implements UserService {
             String userPasswordHash = userDao.findUserPassword(user);
             result = PasswordEncoder.checkPassword(password, userPasswordHash);
         } catch (DaoException e) {
+            logger.error("Failed to make transaction in checkPassword method", e);
             throw new ServiceException("Failed to make transaction in checkPassword method", e);
         } finally {
             try {
@@ -159,6 +157,7 @@ public class UserServiceImpl implements UserService {
                 }
             }
         } catch (DaoException e) {
+            logger.error("Failed to make transaction in verify method", e);
             throw new ServiceException("Failed to make transaction in verify method", e);
         } finally {
             try {
@@ -179,6 +178,7 @@ public class UserServiceImpl implements UserService {
             transaction.init(userDao);
             userDao.update(user);
         } catch (DaoException e) {
+            logger.error("Failed to make transaction in updatePhoto method", e);
             throw new ServiceException("Failed to make transaction in updatePhoto method", e);
         } finally {
             try {
@@ -277,7 +277,8 @@ public class UserServiceImpl implements UserService {
             } catch (DaoException ex) {
                 logger.error("Can't rollback transaction in makeUserToTutor method", e);
             }
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in makeUserToTutor method", e);
+            throw new ServiceException("Failed to make transaction in makeUserToTutor method", e);
         } finally {
             try {
                 transaction.endTransaction();
@@ -295,7 +296,8 @@ public class UserServiceImpl implements UserService {
             transaction.init(userDao);
             return userDao.searchUsers(searchLine, offset, rowsCount);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction n searchUsers method", e);
+            throw new ServiceException("Failed to make transaction n searchUsers method", e);
         } finally {
             try {
                 transaction.end();
@@ -306,7 +308,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int countSearchUsers(String searchLine) throws ServiceException {
+    public int countSearchedUsers(String searchLine) throws ServiceException {
         EntityTransaction transaction = new EntityTransaction();
         UserDao userDao = new UserDaoImpl();
         try {
@@ -314,12 +316,13 @@ public class UserServiceImpl implements UserService {
             int cout = userDao.countSearchUsers(searchLine);
             return cout;
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in countSearchedUsers method", e);
+            throw new ServiceException("Failed to make transaction in countSearchedUsers method", e);
         } finally {
             try {
                 transaction.end();
             } catch (DaoException e) {
-                logger.error("Can't end transaction in countSearchUsers method", e);
+                logger.error("Can't end transaction in countSearchedUsers method", e);
             }
         }
     }
@@ -338,7 +341,8 @@ public class UserServiceImpl implements UserService {
             }
 
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in blockUser method", e);
+            throw new ServiceException("Failed to make transaction in blockUser method", e);
         } finally {
             try {
                 transaction.end();
@@ -362,7 +366,8 @@ public class UserServiceImpl implements UserService {
                 return user;
             }
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in unblockUser method", e);
+            throw new ServiceException("Failed to make transaction in unblockUser method", e);
         } finally {
             try {
                 transaction.end();
@@ -382,7 +387,8 @@ public class UserServiceImpl implements UserService {
             List<User> admins = userDao.findAllAdmins();
             return admins;
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in findAllAdmins method", e);
+            throw new ServiceException("Failed to make transaction in findAllAdmins method", e);
         } finally {
             try {
                 transaction.end();
@@ -405,7 +411,8 @@ public class UserServiceImpl implements UserService {
                 return true;
             }
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in makeAdmin method", e);
+            throw new ServiceException("Failed to make transaction in makeAdmin method", e);
         } finally {
             try {
                 transaction.end();
@@ -429,7 +436,8 @@ public class UserServiceImpl implements UserService {
                 return true;
             }
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.error("Failed to make transaction in deleteAdmin method", e);
+            throw new ServiceException("Failed to make transaction in deleteAdmin method", e);
         } finally {
             try {
                 transaction.end();

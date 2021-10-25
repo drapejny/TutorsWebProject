@@ -1,6 +1,6 @@
 package by.slizh.tutorsweb.model.entity;
 
-public class Subject extends Entity {
+public class Subject extends AbstractEntity {
     private int subjectId;
     private String subjectName;
 

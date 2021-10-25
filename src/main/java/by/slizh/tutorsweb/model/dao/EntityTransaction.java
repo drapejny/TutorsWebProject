@@ -19,8 +19,8 @@ public class EntityTransaction {
         } catch (SQLException e) {
             throw new DaoException("Failed to disable auto-commit for transaction", e);
         }
-        for (AbstractDao daoElement : daos) {
-            daoElement.setConnection(connection);
+        for (AbstractDao dao : daos) {
+            dao.setConnection(connection);
         }
     }
 
@@ -40,15 +40,23 @@ public class EntityTransaction {
         } catch (SQLException e) {
             throw new DaoException("Failed to enable auto-commit for transaction", e);
         }
-        ConnectionPool.getInstance().releaseConnection(connection);
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new DaoException("Can't close connection", e);
+        }
         connection = null;
     }
 
     public void end() throws DaoException {
         if (connection == null) {
-            throw new DaoException("Failed to end, connection=null");
+            throw new DaoException("Failed to end, connection is null");
         }
-        ConnectionPool.getInstance().releaseConnection(connection);
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new DaoException("Can't close connection", e);
+        }
         connection = null;
     }
 

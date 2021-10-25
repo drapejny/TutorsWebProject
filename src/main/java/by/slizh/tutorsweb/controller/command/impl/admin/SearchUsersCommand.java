@@ -51,7 +51,7 @@ public class SearchUsersCommand implements Command {
         try {
             List<User> users = userService.searchUsers(searchLine, offset, APPLICATIONS_ON_PAGE_NUMBER); //// TODO: 22.10.2021  тоже заменить
             Map<User, Tutor> tutorsMap = tutorService.findTutorsByUsers(users);
-            int usersCount = userService.countSearchUsers(searchLine);
+            int usersCount = userService.countSearchedUsers(searchLine);
             int pageCount = usersCount % APPLICATIONS_ON_PAGE_NUMBER == 0 ? usersCount / APPLICATIONS_ON_PAGE_NUMBER : usersCount / APPLICATIONS_ON_PAGE_NUMBER + 1;
             request.setAttribute(RequestAttribute.USERS, users);
             request.setAttribute(RequestAttribute.TUTORS_MAP, tutorsMap);

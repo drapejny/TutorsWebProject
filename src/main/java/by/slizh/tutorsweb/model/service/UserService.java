@@ -16,7 +16,6 @@ public interface UserService {
 
     void registrate(String firstName, String lastName, String email, String password) throws ServiceException;
 
-
     boolean isEmailExist(String email) throws ServiceException;
 
     boolean checkPassword(User user, String password) throws ServiceException;
@@ -35,7 +34,7 @@ public interface UserService {
 
     List<User> searchUsers(String searchLine, int offset, int rowsCount) throws ServiceException;
 
-    int countSearchUsers(String searchLine) throws ServiceException;
+    int countSearchedUsers(String searchLine) throws ServiceException;
 
     Optional<User> blockUser(int userId) throws ServiceException;
 

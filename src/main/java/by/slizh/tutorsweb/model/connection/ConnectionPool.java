@@ -61,7 +61,7 @@ public class ConnectionPool {
             proxyConnection = freeConnections.take();
             givenAwayConnections.put(proxyConnection);
         } catch (InterruptedException e) {
-            logger.error("Can't put connection to givenAwayConnections", e);
+            logger.error("Can't put connection to givenAwayConnections queue", e);
             Thread.currentThread().interrupt();
         }
         return proxyConnection;
@@ -73,7 +73,7 @@ public class ConnectionPool {
             try {
                 freeConnections.put((ProxyConnection) connection);
             } catch (InterruptedException e) {
-                logger.error("Can't put connection to freeConnections", e);
+                logger.error("Can't put connection to freeConnections queue", e);
                 Thread.currentThread().interrupt();
             }
         } else {
