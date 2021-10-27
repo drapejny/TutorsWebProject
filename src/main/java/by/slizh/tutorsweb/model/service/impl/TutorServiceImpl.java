@@ -131,30 +131,6 @@ public class TutorServiceImpl implements TutorService {
     }
 
     @Override
-    public boolean deleteTutorByEmail(String email) throws ServiceException {
-        EntityTransaction transaction = new EntityTransaction();
-        TutorDao tutorDao = new TutorDaoImpl();
-        try {
-            transaction.init(tutorDao);
-            Optional<Tutor> tutor = tutorDao.findTutorByEmail(email);
-            if (tutor.isPresent()) {
-                return tutorDao.deleteById(tutor.get().getTutorId());
-            }
-            return false;
-        } catch (DaoException e) {
-            logger.error("Failed to make transaction in deleteTutorByEmail method", e);
-            throw new ServiceException("Failed to make transaction in deleteTutorByEmail method", e);
-        } finally {
-            try {
-                transaction.end();
-            } catch (DaoException e) {
-                logger.error("Failed to end transaction in deleteTutorByEmail method", e);
-            }
-
-        }
-    }
-
-    @Override
     public List<Tutor> searchTutors(int subjectId, String city, int minPrice, int maxPrice, int offset, int numberOfRecords, String sort) throws ServiceException {
         EntityTransaction transaction = new EntityTransaction();
         TutorDao tutorDao = new TutorDaoImpl();
