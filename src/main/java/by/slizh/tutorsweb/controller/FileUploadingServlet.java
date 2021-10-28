@@ -13,6 +13,9 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * The type FileUploadingServlet.
+ */
 @WebServlet(name = "FileUploadingServlet", value = "/uploadServlet")
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 1,

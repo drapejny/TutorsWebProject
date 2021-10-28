@@ -58,7 +58,6 @@ public class GoToTutorProfilePage implements Command {
                 List<Subject> subjects = subjectService.findSubjectsByTutorId(tutorId);
                 List<Feedback> feedbacks = feedbackService.findFeedbacksByTutor(tutorId);
                 Map<Feedback, User> feedbackUserMap = userService.findUsersForFeedbacks(feedbacks);
-
                 request.setAttribute(RequestAttribute.SUBJECTS, subjects);
                 request.setAttribute(RequestAttribute.FEEDBACKS, feedbacks);
                 request.setAttribute(RequestAttribute.USERS, feedbackUserMap);

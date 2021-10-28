@@ -10,6 +10,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * The type ConnectionFactory.
+ */
 class ConnectionFactory {
 
     private static final Logger logger = LogManager.getLogger();
@@ -28,8 +31,8 @@ class ConnectionFactory {
             Class.forName(driverName);
             DATABASE_URL = (String) properties.get(DATABASE_URL_ATTRIBUTE_NAME);
             if (DATABASE_URL == null) {
-                logger.fatal("Missing database url tag in propeties, file=" + PATH_TO_PROPERTIES);
-                throw new ExceptionInInitializerError("Missing database url tag in propeties, file=" + PATH_TO_PROPERTIES);
+                logger.fatal("Missing database url tag in property file, file=" + PATH_TO_PROPERTIES);
+                throw new ExceptionInInitializerError("Missing database url tag in property file, file=" + PATH_TO_PROPERTIES);
             }
         } catch (ClassNotFoundException e) {
             logger.fatal("Register driver fatal error: ", e);
@@ -44,6 +47,12 @@ class ConnectionFactory {
     private ConnectionFactory() {
     }
 
+    /**
+     * Create proxy connection.
+     *
+     * @return the proxy connection
+     * @throws SQLException the sql exception
+     */
     static ProxyConnection createConnection() throws SQLException {
         Connection connection = DriverManager.getConnection(DATABASE_URL, properties);
         ProxyConnection proxyConnection = new ProxyConnection(connection);

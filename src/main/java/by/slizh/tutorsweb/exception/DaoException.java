@@ -1,5 +1,8 @@
 package by.slizh.tutorsweb.exception;
 
+/**
+ * The type DaoException.
+ */
 public class DaoException extends Exception {
 
     public DaoException() {

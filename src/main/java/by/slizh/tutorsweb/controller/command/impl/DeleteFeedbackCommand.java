@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.regex.Pattern;
+
 
 public class DeleteFeedbackCommand implements Command {
 
@@ -22,11 +24,12 @@ public class DeleteFeedbackCommand implements Command {
         int tutorId = Integer.parseInt(request.getParameter(RequestParameter.TUTOR_ID));
         try {
             feedbackService.deleteFeedbackById(feedbackId);
-            request.getSession().setAttribute(RequestAttribute.TUTOR_ID,tutorId);
+            request.getSession().setAttribute(RequestAttribute.TUTOR_ID, tutorId);
         } catch (ServiceException e) {
             logger.error("Executing deleteFeedback command error", e);
             throw new CommandException("Executing deleteFeedback command error", e);
         }
-        return new Router(PagePath.GO_TO_TUTOR_PROFILE_PAGE, Router.RouteType.REDIRECT);
+        String pagePath = PagePath.GO_TO_TUTOR_PROFILE_PAGE + tutorId;
+        return new Router(pagePath, Router.RouteType.REDIRECT);
     }
 }

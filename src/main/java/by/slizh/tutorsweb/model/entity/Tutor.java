@@ -1,5 +1,8 @@
 package by.slizh.tutorsweb.model.entity;
 
+/**
+ * The type Tutor entity class.
+ */
 public class Tutor extends User {
     private int tutorId;
     private String phone;

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The type Abstract dao.
+ * The type AbstractDao.
  *
  * @param <T> the entity type
  */

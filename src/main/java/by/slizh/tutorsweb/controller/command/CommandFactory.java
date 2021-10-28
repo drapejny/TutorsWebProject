@@ -3,7 +3,7 @@ package by.slizh.tutorsweb.controller.command;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
- * The CommandFactory creates {@link Command}.
+ * The CommandFactory creates command.
  */
 public class CommandFactory {
 
@@ -22,7 +22,7 @@ public class CommandFactory {
     }
 
     /**
-     * Create {@link Command} instance by {@link HttpServletRequest} request.
+     * Create command instance by.
      *
      * @param request the {@link HttpServletRequest} request
      * @return the command

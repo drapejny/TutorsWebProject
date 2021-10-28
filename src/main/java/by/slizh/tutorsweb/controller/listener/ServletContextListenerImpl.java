@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 /**
- * The type Servlet context listener.
+ * The type ServletContextListener.
  */
 @WebListener
 public class ServletContextListenerImpl implements ServletContextListener {

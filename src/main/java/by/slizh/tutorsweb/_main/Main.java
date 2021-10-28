@@ -23,33 +23,33 @@ public class Main {
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) throws DaoException {
-        new A();
-        User user = new User.UserBuilder()
-                .setFirstName("a")
-                .setLastName("a")
-                .setEmail("yy@yy.by")
-                .setRole(User.Role.USER)
-                .setStatus(User.Status.ACTIVATED)
-                .createUser();
-        User admin = new User.UserBuilder()
-                .setFirstName("a")
-                .setLastName("a")
-                .setEmail("yyy@yyy.by")
-                .setRole(User.Role.USER)
-                .setStatus(User.Status.ACTIVATED)
-                .createUser();
-        EntityTransaction transaction = new EntityTransaction();
-        UserDao userDao = new UserDaoImpl();
-        try{
-            transaction.initTransaction(userDao);
-            userDao.create(user,"123123");
-            userDao.create(admin,"123123");
-            transaction.commit();
-        }catch (DaoException e){
-            transaction.rollback();
-        } finally {
-            transaction.endTransaction();
-        }
+//        new A();
+//        User user = new User.UserBuilder()
+//                .setFirstName("a")
+//                .setLastName("a")
+//                .setEmail("yy@yy.by")
+//                .setRole(User.Role.USER)
+//                .setStatus(User.Status.ACTIVATED)
+//                .createUser();
+//        User admin = new User.UserBuilder()
+//                .setFirstName("a")
+//                .setLastName("a")
+//                .setEmail("yyy@yyy.by")
+//                .setRole(User.Role.USER)
+//                .setStatus(User.Status.ACTIVATED)
+//                .createUser();
+//        EntityTransaction transaction = new EntityTransaction();
+//        UserDao userDao = new UserDaoImpl();
+//        try{
+//            transaction.initTransaction(userDao);
+//            userDao.create(user,"123123");
+//            userDao.create(admin,"123123");
+//            transaction.commit();
+//        }catch (DaoException e){
+//            transaction.rollback();
+//        } finally {
+//            transaction.endTransaction();
+//        }
 //
 //        Tutor tutor = new Tutor.TutorBuilder()
 //                .setFirstName("a")

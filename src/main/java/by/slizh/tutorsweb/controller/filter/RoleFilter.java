@@ -160,5 +160,4 @@ public class RoleFilter implements Filter {
         }
         return checkFlag;
     }
-
 }

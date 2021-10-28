@@ -45,8 +45,11 @@ public class SearchUsersCommand implements Command {
             offset = 0;
         }
         if (searchLine == null) {
-            searchLine = (String) request.getSession().getAttribute(SEARCH_LINE);
-
+            if (request.getSession().getAttribute(SEARCH_LINE) != null) {
+                searchLine = (String) request.getSession().getAttribute(SEARCH_LINE);
+            } else {
+                searchLine = "";
+            }
         }
         try {
             List<User> users = userService.searchUsers(searchLine, offset, APPLICATIONS_ON_PAGE_NUMBER); //// TODO: 22.10.2021  тоже заменить

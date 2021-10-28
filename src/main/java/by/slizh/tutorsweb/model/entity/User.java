@@ -1,5 +1,8 @@
 package by.slizh.tutorsweb.model.entity;
 
+/**
+ * The User entity class.
+ */
 public class User extends AbstractEntity {
 
     private int userId;

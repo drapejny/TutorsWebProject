@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpSessionListener;
 import java.util.Locale;
 
 /**
- * The type Http session listener.
+ * The type HttpSessionListener.
  */
 @WebListener
 public class HttpSessionListenerImpl implements HttpSessionListener {

@@ -1,5 +1,8 @@
 package by.slizh.tutorsweb.exception;
 
+/**
+ * The type CommandException.
+ */
 public class CommandException extends Exception {
 
     public CommandException() {

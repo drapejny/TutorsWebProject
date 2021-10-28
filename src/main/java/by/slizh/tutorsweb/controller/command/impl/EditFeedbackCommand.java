@@ -47,7 +47,7 @@ public class EditFeedbackCommand implements Command {
                 }
             }
         }
-
-        return new Router(PagePath.GO_TO_TUTOR_PROFILE_PAGE, Router.RouteType.REDIRECT);
+        String pagePath = PagePath.GO_TO_TUTOR_PROFILE_PAGE + tutorId;
+        return new Router(pagePath, Router.RouteType.REDIRECT);
     }
 }

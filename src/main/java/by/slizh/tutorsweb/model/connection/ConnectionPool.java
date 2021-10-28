@@ -11,12 +11,19 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * The multithreading safe ConnectionPool.
+ */
 public class ConnectionPool {
 
     private static final Logger logger = LogManager.getLogger();
 
+    /**
+     * Connection pool instance
+     */
     private static ConnectionPool instance;
-    private static AtomicBoolean isCreated = new AtomicBoolean(false);
+
+    private static final AtomicBoolean isCreated = new AtomicBoolean(false);
     private static final ReentrantLock locker = new ReentrantLock();
     private BlockingQueue<ProxyConnection> freeConnections;
     private BlockingQueue<ProxyConnection> givenAwayConnections;
@@ -40,6 +47,12 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Gets instance of connection pool.
+     * Safe for multithreading use.
+     *
+     * @return the instance of connection pool
+     */
     public static ConnectionPool getInstance() {
         if (!isCreated.get()) {
             locker.lock();
@@ -55,6 +68,12 @@ public class ConnectionPool {
         return instance;
     }
 
+    /**
+     * Gets free connection from queue.
+     * Using blocking queue to store free connections.
+     *
+     * @return the connection
+     */
     public ProxyConnection getConnection() {
         ProxyConnection proxyConnection = null;
         try {
@@ -67,6 +86,12 @@ public class ConnectionPool {
         return proxyConnection;
     }
 
+    /**
+     * Release connection. Method move connection
+     * from given away connections queue to free connections queue.
+     *
+     * @param connection the connection
+     */
     public void releaseConnection(Connection connection) {
         if (connection instanceof ProxyConnection) {
             givenAwayConnections.remove(connection);
@@ -82,6 +107,10 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Destroy pool.
+     * Close all connections and deregister drivers.
+     */
     public void destroyPool() {
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {

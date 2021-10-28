@@ -1,6 +1,5 @@
 package by.slizh.tutorsweb.model.validator.impl;
 
-import by.slizh.tutorsweb.model.service.impl.TutorServiceImpl;
 import by.slizh.tutorsweb.model.validator.TutorValidator;
 
 import java.util.Map;
@@ -51,8 +50,8 @@ public class TutorValidatorImpl implements TutorValidator {
 
     @Override
     public boolean validateTutorMap(Map<String, String[]> tutorMap) {
-        tutorMap.get(EDUCATION)[0].replaceAll("\r\n","\n");
-        tutorMap.get(INFORMATION)[0].replaceAll("\r\n","\n");
+        tutorMap.get(EDUCATION)[0].replaceAll("\r\n", "\n");
+        tutorMap.get(INFORMATION)[0].replaceAll("\r\n", "\n");
         if (validatePhone(tutorMap.get(PHONE)[0]) && validateCity(tutorMap.get(CITY)[0])
                 && validateEducation(tutorMap.get(EDUCATION)[0])
                 && validateInfo(tutorMap.get(INFORMATION)[0]) && validatePrice(tutorMap.get(PRICE)[0])

@@ -13,7 +13,7 @@ public interface Command {
      *
      * @param request instance of {@link HttpServletRequest} from controller.
      * @return {@link Router} instance.
-     * @throws CommandException in case of any exceptions in method
+     * @throws CommandException in case of any service exceptions in method
      */
     Router execute(HttpServletRequest request) throws CommandException;
 }

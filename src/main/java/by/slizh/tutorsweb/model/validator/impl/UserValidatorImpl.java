@@ -2,10 +2,6 @@ package by.slizh.tutorsweb.model.validator.impl;
 
 import by.slizh.tutorsweb.model.validator.UserValidator;
 
-import java.util.Map;
-
-import static by.slizh.tutorsweb.controller.command.RequestParameter.*;
-
 public class UserValidatorImpl implements UserValidator {
 
     private static UserValidatorImpl instance = new UserValidatorImpl();

@@ -74,7 +74,6 @@ public class TutorDaoImpl extends TutorDao {
             WHERE tutors.tutor_id IN (SELECT tutor_id FROM tutors_has_subject WHERE subject_id = ?) AND
             city LIKE ? AND
             price_per_hour > ? AND tutors.price_per_hour < ? AND
-            is_active = true AND
             role_name = 'tutor' AND
             status_name = 'activated' 
             """;
@@ -88,7 +87,6 @@ public class TutorDaoImpl extends TutorDao {
              WHERE tutors.tutor_id IN (SELECT tutor_id FROM tutors_has_subject WHERE subject_id = ?) AND
              city LIKE ? AND
              price_per_hour > ? AND tutors.price_per_hour < ? AND
-             is_active = true AND
              role_name = 'tutor' AND
              status_name = 'activated';
             """;

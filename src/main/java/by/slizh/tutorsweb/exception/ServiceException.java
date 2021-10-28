@@ -1,5 +1,8 @@
 package by.slizh.tutorsweb.exception;
 
+/**
+ * The type ServiceException.
+ */
 public class ServiceException extends Exception {
 
     public ServiceException() {

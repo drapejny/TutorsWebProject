@@ -10,6 +10,10 @@ import jakarta.servlet.annotation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
+/**
+ * The type MainServlet.
+ */
 @WebServlet(name = "mainServlet", urlPatterns = "/controller")
 public class MainServlet extends HttpServlet {
 

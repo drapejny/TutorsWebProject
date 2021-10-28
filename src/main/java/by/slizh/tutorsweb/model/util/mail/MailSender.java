@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * The type MailSender.
+ */
 public class MailSender {
 
     private static final Logger logger = LogManager.getLogger();
@@ -26,6 +29,9 @@ public class MailSender {
     private Properties properties = new Properties();
     private MimeMessage message;
 
+    /**
+     * Instantiates a new Mail sender.
+     */
     public MailSender() {
         try (InputStream inputStream = MailSender.class.getClassLoader().getResourceAsStream(PROPERTIES_PATH)) {
             properties.load(inputStream);
@@ -34,6 +40,12 @@ public class MailSender {
         }
     }
 
+    /**
+     * Send verification message.
+     *
+     * @param userId    the user id
+     * @param userEmail the user email
+     */
     public void send(int userId, String userEmail) {
         try {
             initMessage(userId, userEmail);

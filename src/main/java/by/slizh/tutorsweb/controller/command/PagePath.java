@@ -22,7 +22,7 @@ public final class PagePath {
     public static final String CONFIRMATION_PAGE = "/jsp/confirmation.jsp";
     public static final String ABOUT_US_PAGE = "jsp/about_us.jsp";
     public static final String GO_TO_LOGIN_PAGE = "/controller?command=login_page";
-    public static final String GO_TO_TUTOR_PROFILE_PAGE = "/controller?command=tutor_profile_page";
+    public static final String GO_TO_TUTOR_PROFILE_PAGE = "/controller?command=tutor_profile_page&tutor_id=";
     public static final String GO_TO_EDIT_TUTOR_PROFILE_PAGE = "/controller?command=edit_tutor_profile_page";
     public static final String GO_TO_EDIT_PROFILE_PAGE = "/controller?command=edit_profile_page";
     public static final String GO_TO_APPLICATION_PAGE = "/controller?command=become_tutor";
