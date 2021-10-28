@@ -16,7 +16,9 @@
     <main class="main">
         <c:choose>
             <c:when test="${empty applications}">
-                <span class="no-apps"><fmt:message key="application.noapps"/></span>
+                <div style="text-align: center">
+                    <span class="no-apps"><fmt:message key="application.noapps"/></span>
+                </div>
             </c:when>
             <c:otherwise>
                 <div class="applications__container">
@@ -42,11 +44,11 @@
                     </c:forEach>
                     <div class="pages-block">
                         <c:if test="${pageNumber != 1}">
-                            <a href="${pageContext.request.contextPath}/controller?command=all_applications_page&page_number=${pageNumber - 1}">предыдущая</a>
+                            <a href="${pageContext.request.contextPath}/controller?command=all_applications_page&page_number=${pageNumber - 1}"><fmt:message key="search.prev"/></a>
                         </c:if>
                             ${pageNumber}из${pageCount}
                         <c:if test="${pageNumber != pageCount}">
-                            <a href="${pageContext.request.contextPath}/controller?command=all_applications_page&page_number=${pageNumber + 1}">следующая</a>
+                            <a href="${pageContext.request.contextPath}/controller?command=all_applications_page&page_number=${pageNumber + 1}"><fmt:message key="search.next"/></a>
                         </c:if>
                     </div>
                 </div>

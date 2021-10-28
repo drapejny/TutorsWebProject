@@ -13,7 +13,7 @@
 <div class="wrapper">
     <c:import url="fragment/header.jsp"/>
     <main class="main">
-        <h3><fmt:message key="confirmation.text"/></h3>
+        <div class="confirmation-text"><h3><fmt:message key="confirmation.text"/></h3></div>
     </main>
     <c:import url="fragment/footer.jsp"/>
 </div>

@@ -28,7 +28,7 @@
             </div>
             <div class="right_part">
                 <div class="name">${requestScope.tutor.firstName} ${requestScope.tutor.lastName}</div>
-                <c:if test="${tutor.userId eq user.userId}">
+                <c:if test="${tutor.userId eq user.userId || tutor.role eq 'ADMIN'}">
                     <div class="email">${requestScope.tutor.email}</div>
                 </c:if>
                 <div class="phone">${application.phone}</div>
@@ -39,7 +39,7 @@
                             <a href="${pageContext.request.contextPath}/controller?command=login_page"><fmt:message
                                     key="header.login"/></a>
                         </c:when>
-                        <c:when test="${tutor.isActive}">
+                        <c:when test="${user.role eq 'ADMIN' || tutor.isActive}">
                             ${tutor.phone}
                         </c:when>
                         <c:otherwise>

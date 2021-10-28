@@ -28,7 +28,7 @@
             <span class="fail-message">${errorDeleteSubjectMessage}</span>
             <form action="${pageContext.request.contextPath}/controller" method="post">
                 <input type="hidden" name="command" value="add_subject"><br>
-                <input type="text" name="subject_name" required pattern="^[А-я]{1,32}$" maxlength="32">
+                <input type="text" name="subject_name" required pattern="^[а-яА-Я ]{1,32}$" maxlength="32">
                 <button type="submit" class="simple-btn"><fmt:message key="subjects.add"/></button>
                 <br>
             </form>

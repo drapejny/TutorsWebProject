@@ -20,19 +20,23 @@
                 <form action="${pageContext.request.contextPath}/controller" method="get">
                     <input type="hidden" name="command" value="search_users">
                     <input type="hidden" name="page_number" value="1">
-                    <input type="text" class="search-line" name="search_line" required maxlength="100">
+                    <input type="text" class="search-line" name="search_line" maxlength="100">
                     <button type="submit" class="simple-btn"><fmt:message key="search.button"/></button>
                 </form>
             </div>
-            <span class="success-message">${successBlockUserMessage}</span>
-            <span class="success-message">${successUnblockUserMessage}</span>
-            <div class="main_table">
-                <div class="table_body">
-                    <c:choose>
-                        <c:when test="${empty users}">
-                            <span class="no-apps"><fmt:message key="search.notfound"/></span>
-                        </c:when>
-                        <c:otherwise>
+            <div style="text-align: center">
+                <span class="success-message">${successBlockUserMessage}</span>
+                <span class="success-message">${successUnblockUserMessage}</span>
+            </div>
+            <c:choose>
+                <c:when test="${empty users && users != null}">
+                    <div class="no-apps">
+                        <span><fmt:message key="search.notfound"/></span>
+                    </div>
+                </c:when>
+                <c:when test="${not empty users}">
+                    <div class="main_table">
+                        <div class="table_body">
                             <c:forEach var="element" items="${users}">
                                 <div class="table_row">
                                     <c:choose>
@@ -58,7 +62,8 @@
                                         <c:if test="${element.role ne 'ADMIN'}">
                                             <c:choose>
                                                 <c:when test="${element.status eq 'ACTIVATED'}">
-                                                    <form action="${pageContext.request.contextPath}/controller" method="post">
+                                                    <form action="${pageContext.request.contextPath}/controller"
+                                                          method="post">
                                                         <input type="hidden" name="command" value="block_user">
                                                         <input type="hidden" name="user_id" value="${element.userId}">
                                                         <button type="submit" class="block_btn"><fmt:message
@@ -68,14 +73,16 @@
                                                         <form action="${pageContext.request.contextPath}/controller"
                                                               method="post">
                                                             <input type="hidden" name="command" value="add_admin">
-                                                            <input type="hidden" name="user_id" value="${element.userId}">
+                                                            <input type="hidden" name="user_id"
+                                                                   value="${element.userId}">
                                                             <button type="submit" class="unblock_btn"><fmt:message
                                                                     key="admin.add-admin"/></button>
                                                         </form>
                                                     </c:if>
                                                 </c:when>
                                                 <c:when test="${element.status eq 'BLOCKED'}">
-                                                    <form action="${pageContext.request.contextPath}/controller" method="post">
+                                                    <form action="${pageContext.request.contextPath}/controller"
+                                                          method="post">
                                                         <input type="hidden" name="command" value="unblock_user">
                                                         <input type="hidden" name="user_id" value="${element.userId}">
                                                         <button type="submit" class="unblock_btn"><fmt:message
@@ -90,17 +97,17 @@
                             </c:forEach>
                             <div class="pages-block">
                                 <c:if test="${pageNumber != 1}">
-                                    <a href="${pageContext.request.contextPath}/controller?command=search_users&page_number=${pageNumber - 1}&search_line=${requestScope.searchLine}">предыдущая</a>
+                                    <a href="${pageContext.request.contextPath}/controller?command=search_users&page_number=${pageNumber - 1}&search_line=${requestScope.searchLine}"><fmt:message key="search.prev"/></a>
                                 </c:if>
                                     ${pageNumber} <fmt:message key="search.of"/> ${pageCount}
                                 <c:if test="${pageNumber != pageCount}">
-                                    <a href="${pageContext.request.contextPath}/controller?command=search_users&page_number=${pageNumber + 1}&search_line=${requestScope.searchLine}">следующая</a>
+                                    <a href="${pageContext.request.contextPath}/controller?command=search_users&page_number=${pageNumber + 1}&search_line=${requestScope.searchLine}"><fmt:message key="search.next"/></a>
                                 </c:if>
                             </div>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
+                        </div>
+                    </div>
+                </c:when>
+            </c:choose>
         </div>
     </main>
     <c:import url="/jsp/fragment/footer.jsp"/>

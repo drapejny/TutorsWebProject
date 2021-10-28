@@ -19,8 +19,11 @@
                     <div class="form_input_container subjects">
                         <span class="validation-message"><fmt:message key="validation.subjects"/></span>
                         <c:forEach var="element" items="${applicationScope.subjects}">
-                            <input class="subject_checkbox" type="checkbox" name="subject"
-                                   value="${element.subjectId}"> ${element.subjectName}<br>
+                            <div class="checkbox-subject-block">
+                                <input class="subject_checkbox" type="checkbox" name="subject" value="${element.subjectId}">
+                                <span>${element.subjectName}</span>
+                                <br>
+                            </div>
                         </c:forEach>
                     </div>
                 </div>

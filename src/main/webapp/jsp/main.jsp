@@ -17,8 +17,13 @@
                 <img src="${pageContext.request.contextPath}/img/main.jpg" alt="main" width="600" height="450">
             </div>
             <div class="main__right_part">
-                <h3>tutorz.by - площадка для поиска репетиторов</h3>
-                <p>Более 500 репетиторов из 50+ городов Беларуси</p>
+                <div style="margin-bottom: 50px">
+                    <span class="main-tutorz-by-text"><b><fmt:message key="main.tutorz.by"/></b></span>
+                    <span class="main-platform-text"><b><fmt:message key="main.platform.text"/></b></span>
+                </div>
+                <p class="main-platform-subtext"><fmt:message key="main.subtext1"/></p>
+                <p class="main-platform-subtext"><fmt:message key="main.subtext2"/></p>
+                <p class="main-platform-subtext"><fmt:message key="main.subtext3"/></p>
             </div>
         </div>
     </main>

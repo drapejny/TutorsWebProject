@@ -16,7 +16,7 @@
     <c:import url="fragment/header.jsp"/>
     <main class="main">
         <c:if test="${user.role eq 'USER'}">
-            <span class="success-message"><fmt:message key="application.wait"/></span>
+            <div style="text-align: center"><span class="success-message"><fmt:message key="application.wait"/></span></div>
         </c:if>
         <div class="tutor_profile">
             <div class="left_part">
