@@ -4,7 +4,7 @@ This platform should help users in choosing the best tutor option,
 based on price, city, teaching experience. Users can search tutors they need and leave feedbacks.
 Tutors have opportunity to create and manage own account. Admin can manage users, feedbacks, tutor applications.
 Super admin also can manage admins.
-##User roles
+## User roles
 * Guest:
   * Sign in
   * Sign up
