@@ -135,21 +135,21 @@ public class UserDaoImplTest {
         assertEquals(expected, actual);
     }
 
-//    @Test
-//    public void searchUsersTest() throws DaoException {
-//        when(userDao.searchUsers("searchLine")).thenReturn(List.of(new User()));
-//        List<User> expected = List.of(new User());
-//        List<User> actual = userDao.searchUsers("searchLine");
-//        assertEquals(expected,actual);
-//    }
-//
-//    @Test
-//    public void searchUsersEmptyTest() throws DaoException{
-//        when(userDao.searchUsers("emptySearchLine")).thenReturn(Collections.emptyList());
-//        List<User> expected = Collections.emptyList();
-//        List<User> actual = userDao.searchUsers("emptySearchLine");
-//        assertEquals(expected,actual);
-//    }
+    @Test
+    public void searchUsersTest() throws DaoException {
+        when(userDao.searchUsers("searchLine",0,5)).thenReturn(List.of(new User()));
+        List<User> expected = List.of(new User());
+        List<User> actual = userDao.searchUsers("searchLine",0,5);
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void searchUsersEmptyTest() throws DaoException{
+        when(userDao.searchUsers("emptySearchLine",0,5)).thenReturn(Collections.emptyList());
+        List<User> expected = Collections.emptyList();
+        List<User> actual = userDao.searchUsers("emptySearchLine",0,5);
+        assertEquals(expected,actual);
+    }
     @Test
     public void findAllAdminsTest() throws DaoException{
         when(userDao.findAllAdmins()).thenReturn(List.of(new User()));

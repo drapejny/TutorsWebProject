@@ -2,7 +2,6 @@ package by.slizh.tutorsweb.model.dao.impl;
 
 import by.slizh.tutorsweb.exception.DaoException;
 import by.slizh.tutorsweb.model.entity.Feedback;
-import by.slizh.tutorsweb.model.entity.Subject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
