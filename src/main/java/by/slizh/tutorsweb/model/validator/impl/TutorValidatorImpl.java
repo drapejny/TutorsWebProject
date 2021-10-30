@@ -1,5 +1,6 @@
 package by.slizh.tutorsweb.model.validator.impl;
 
+import by.slizh.tutorsweb.model.entity.User;
 import by.slizh.tutorsweb.model.validator.TutorValidator;
 
 import java.util.Map;
