@@ -34,8 +34,8 @@ public class UserPhotoTag extends TagSupport {
             stringBuilder.append(photo);
             stringBuilder.append("' ");
         }
-        stringBuilder.append("width='" + width + "' ");
-        stringBuilder.append("height='" + height + "'>");
+        stringBuilder.append("width='").append(width).append("' ");
+        stringBuilder.append("height='").append(height).append("'>");
         try {
             pageContext.getOut().write(stringBuilder.toString());
         } catch (IOException e) {

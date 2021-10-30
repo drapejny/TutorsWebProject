@@ -36,7 +36,7 @@ public class FeedbackDaoImpl extends FeedbackDao {
             JOIN users ON users.user_id = feedbacks.user_id
             WHERE tutor_id = ? AND
             status_id = 1
-            ORDER BY date DESC;
+            ORDER BY date DESC, feedback_id DESC;
             """;
     private static final String SQL_DELETE_FEEDBACK_BY_ID = """
             DELETE FROM feedbacks WHERE feedback_id = ?;
@@ -88,8 +88,7 @@ public class FeedbackDaoImpl extends FeedbackDao {
     public boolean deleteById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_FEEDBACK_BY_ID)) {
             statement.setInt(1, id);
-            boolean result = statement.executeUpdate() == 1;
-            return result;
+            return statement.executeUpdate() == 1;
         } catch (SQLException e) {
             logger.error("Failed to delete feedback by id", e);
             throw new DaoException("Failed to delete feedback by id", e);
@@ -168,7 +167,7 @@ public class FeedbackDaoImpl extends FeedbackDao {
     }
 
     private Feedback buildFeedback(ResultSet resultSet) throws SQLException {
-        Feedback feedback = new Feedback.FeedbackBuilder()
+        return new Feedback.FeedbackBuilder()
                 .setFeedbackId(resultSet.getInt(ColumnName.FEEDBACK_ID))
                 .setText(resultSet.getString(ColumnName.TEXT))
                 .setDate(resultSet.getDate(ColumnName.DATE).toLocalDate())
@@ -176,6 +175,5 @@ public class FeedbackDaoImpl extends FeedbackDao {
                 .setUserId(resultSet.getInt(ColumnName.USER_ID))
                 .setTutorId(resultSet.getInt(ColumnName.TUTOR_ID))
                 .createFeedback();
-        return feedback;
     }
 }

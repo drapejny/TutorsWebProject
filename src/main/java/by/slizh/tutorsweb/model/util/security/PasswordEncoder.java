@@ -17,8 +17,7 @@ public final class PasswordEncoder {
      * @return hashed password
      */
     public static String encodePassword(String password) {
-        String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
-        return hashed;
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     /**

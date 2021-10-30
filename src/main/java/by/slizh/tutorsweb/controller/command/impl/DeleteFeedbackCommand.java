@@ -9,9 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.regex.Pattern;
-
-
 public class DeleteFeedbackCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();

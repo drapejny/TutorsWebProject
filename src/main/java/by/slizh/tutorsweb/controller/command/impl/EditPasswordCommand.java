@@ -33,7 +33,7 @@ public class EditPasswordCommand implements Command {
         UserValidator validator = UserValidatorImpl.getInstance();
         User user = (User) session.getAttribute(SessionAttribute.USER);
         if (validator.validatePassword(password) && validator.validatePassword(newPassword)) {
-            boolean isCorrectPassword = false;
+            boolean isCorrectPassword;
             try {
                 isCorrectPassword = service.checkPassword(user, password);
             } catch (ServiceException e) {

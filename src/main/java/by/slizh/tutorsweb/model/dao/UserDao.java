@@ -76,5 +76,4 @@ public abstract class UserDao extends AbstractDao<User> {
      * @throws DaoException in case of any SQL errors
      */
     public abstract List<User> findAllAdmins() throws DaoException;
-
 }

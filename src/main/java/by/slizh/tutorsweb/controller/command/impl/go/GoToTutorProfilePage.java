@@ -34,7 +34,6 @@ public class GoToTutorProfilePage implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-
         String tutorIdParameter = request.getParameter(RequestParameter.TUTOR_ID);
         int tutorId;
         if (tutorIdParameter == null) {
@@ -65,8 +64,6 @@ public class GoToTutorProfilePage implements Command {
             } else {
                 return new Router(PagePath.SEARCH_PAGE, Router.RouteType.FORWARD);
             }
-
-
         } catch (ServiceException e) {
             logger.error("Executing search command error", e);
             throw new CommandException("Executing search command error", e);

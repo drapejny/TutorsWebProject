@@ -20,7 +20,6 @@ public class SearchCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private final String DEFAULT_SORT = "default_sort";
     private final TutorService tutorService = TutorServiceImpl.getInstance();
 
     @Override
@@ -33,7 +32,7 @@ public class SearchCommand implements Command {
         String subjectIdString = request.getParameter(RequestParameter.SUBJECT);
         String pageNumberString = request.getParameter(RequestParameter.PAGE_NUMBER);
         if (sort == null) {
-            sort = DEFAULT_SORT;
+            sort = "default_sort";
         }
         if (city != null && minPrice != null && maxPrice != null && subjectIdString != null) {
             if (tutorValidator.validateCity(city) && tutorValidator.validatePrice(minPrice) && tutorValidator.validatePrice(maxPrice)) {
@@ -82,7 +81,6 @@ public class SearchCommand implements Command {
                     }
                 }
             }
-
         }
         request.setAttribute(SUBJECT_ID, subjectIdString);
         request.setAttribute(CITY, city);

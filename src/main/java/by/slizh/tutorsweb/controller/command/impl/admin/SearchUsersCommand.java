@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Map;
 
-import static by.slizh.tutorsweb.controller.command.RequestAttribute.APPLICATIONS_ON_PAGE_NUMBER;
+import static by.slizh.tutorsweb.controller.command.RequestAttribute.USERS_ON_SEARCH_USERS_PAGE_NUMBER;
 import static by.slizh.tutorsweb.controller.command.RequestParameter.PAGE_NUMBER;
 import static by.slizh.tutorsweb.controller.command.RequestParameter.SEARCH_LINE;
 
@@ -35,7 +35,7 @@ public class SearchUsersCommand implements Command {
         int page;
         try {
             page = Integer.parseInt(pageNumber);
-            offset = (page - 1) * APPLICATIONS_ON_PAGE_NUMBER; //// TODO: 22.10.2021 заменить, вместо числа заявлений
+            offset = (page - 1) * USERS_ON_SEARCH_USERS_PAGE_NUMBER;
             if (page < 1) {
                 page = 1;
                 offset = 0;
@@ -52,10 +52,10 @@ public class SearchUsersCommand implements Command {
             }
         }
         try {
-            List<User> users = userService.searchUsers(searchLine, offset, APPLICATIONS_ON_PAGE_NUMBER); //// TODO: 22.10.2021  тоже заменить
+            List<User> users = userService.searchUsers(searchLine, offset, USERS_ON_SEARCH_USERS_PAGE_NUMBER);
             Map<User, Tutor> tutorsMap = tutorService.findTutorsByUsers(users);
             int usersCount = userService.countSearchedUsers(searchLine);
-            int pageCount = usersCount % APPLICATIONS_ON_PAGE_NUMBER == 0 ? usersCount / APPLICATIONS_ON_PAGE_NUMBER : usersCount / APPLICATIONS_ON_PAGE_NUMBER + 1;
+            int pageCount = usersCount % USERS_ON_SEARCH_USERS_PAGE_NUMBER == 0 ? usersCount / USERS_ON_SEARCH_USERS_PAGE_NUMBER : usersCount / USERS_ON_SEARCH_USERS_PAGE_NUMBER + 1;
             request.setAttribute(RequestAttribute.USERS, users);
             request.setAttribute(RequestAttribute.TUTORS_MAP, tutorsMap);
             request.setAttribute(RequestAttribute.SEARCH_LINE, searchLine);

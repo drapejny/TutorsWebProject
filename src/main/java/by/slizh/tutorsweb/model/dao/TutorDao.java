@@ -72,5 +72,4 @@ public abstract class TutorDao extends AbstractDao<Tutor> {
      * @throws DaoException in case of any SQL errors
      */
     public abstract int countApplications() throws DaoException;
-
 }

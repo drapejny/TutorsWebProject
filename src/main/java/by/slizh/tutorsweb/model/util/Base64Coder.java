@@ -40,7 +40,6 @@ public final class Base64Coder {
      */
     public static InputStream decode(String base64String) {
         byte[] bytes = Base64.getDecoder().decode(base64String);
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
-        return inputStream;
+        return new ByteArrayInputStream(bytes);
     }
 }

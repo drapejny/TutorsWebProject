@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
     public boolean checkPassword(User user, String password) throws ServiceException {
         EntityTransaction transaction = new EntityTransaction();
         UserDao userDao = new UserDaoImpl();
-        boolean result = false;
+        boolean result;
         try {
             transaction.init(userDao);
             String userPasswordHash = userDao.findUserPassword(user);
@@ -313,8 +313,7 @@ public class UserServiceImpl implements UserService {
         UserDao userDao = new UserDaoImpl();
         try {
             transaction.init(userDao);
-            int cout = userDao.countSearchUsers(searchLine);
-            return cout;
+            return userDao.countSearchUsers(searchLine);
         } catch (DaoException e) {
             logger.error("Failed to make transaction in countSearchedUsers method", e);
             throw new ServiceException("Failed to make transaction in countSearchedUsers method", e);
@@ -384,8 +383,7 @@ public class UserServiceImpl implements UserService {
         UserDao userDao = new UserDaoImpl();
         try {
             transaction.init(userDao);
-            List<User> admins = userDao.findAllAdmins();
-            return admins;
+            return userDao.findAllAdmins();
         } catch (DaoException e) {
             logger.error("Failed to make transaction in findAllAdmins method", e);
             throw new ServiceException("Failed to make transaction in findAllAdmins method", e);

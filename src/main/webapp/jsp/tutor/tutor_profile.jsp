@@ -28,7 +28,7 @@
             </div>
             <div class="right_part">
                 <div class="name">${requestScope.tutor.firstName} ${requestScope.tutor.lastName}</div>
-                <c:if test="${tutor.userId eq user.userId || tutor.role eq 'ADMIN'}">
+                <c:if test="${tutor.userId eq user.userId || sessionScope.user.role eq 'ADMIN'}">
                     <div class="email">${requestScope.tutor.email}</div>
                 </c:if>
                 <div class="phone">${application.phone}</div>

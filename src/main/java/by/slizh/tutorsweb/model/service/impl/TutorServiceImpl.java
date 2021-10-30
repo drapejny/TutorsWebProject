@@ -136,8 +136,7 @@ public class TutorServiceImpl implements TutorService {
         TutorDao tutorDao = new TutorDaoImpl();
         try {
             transaction.init(tutorDao);
-            List<Tutor> tutors = tutorDao.searchTutors(subjectId, city, minPrice, maxPrice, offset, numberOfRecords, sort);
-            return tutors;
+            return tutorDao.searchTutors(subjectId, city, minPrice, maxPrice, offset, numberOfRecords, sort);
         } catch (DaoException e) {
             logger.error("Failed to make transaction in searchTutors method", e);
             throw new ServiceException("Failed to make transaction in searchTutors method", e);
@@ -156,8 +155,7 @@ public class TutorServiceImpl implements TutorService {
         TutorDao tutorDao = new TutorDaoImpl();
         try {
             transaction.init(tutorDao);
-            int count = tutorDao.countSearchedTutors(subjectId, city, minPrice, maxPrice);
-            return count;
+            return tutorDao.countSearchedTutors(subjectId, city, minPrice, maxPrice);
         } catch (DaoException e) {
             logger.error("Failed to make transaction in countSearchedRecords method", e);
             throw new ServiceException("Failed to make transaction in countSearchedRecords method", e);
@@ -176,8 +174,7 @@ public class TutorServiceImpl implements TutorService {
         TutorDao tutorDao = new TutorDaoImpl();
         try {
             transaction.init(tutorDao);
-            List<String> cities = tutorDao.findAllCities();
-            return cities;
+            return tutorDao.findAllCities();
         } catch (DaoException e) {
             logger.error("Failed to make transaction in findAllCities method", e);
             throw new ServiceException("Failed to make transaction in findAllCities method", e);
@@ -196,8 +193,7 @@ public class TutorServiceImpl implements TutorService {
         TutorDao tutorDao = new TutorDaoImpl();
         try {
             transaction.init(tutorDao);
-            List<Tutor> tutors = tutorDao.findApplications(offset, numberOfRecords);
-            return tutors;
+            return tutorDao.findApplications(offset, numberOfRecords);
         } catch (DaoException e) {
             logger.error("Failed to make transaction in findApplications method", e);
             throw new ServiceException("Failed to make transaction in findApplications method", e);

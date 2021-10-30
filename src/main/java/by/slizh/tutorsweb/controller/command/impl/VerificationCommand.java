@@ -35,6 +35,5 @@ public class VerificationCommand implements Command {
             throw new CommandException("Executing verify command error", e);
         }
         return new Router(PagePath.MAIN_PAGE, Router.RouteType.FORWARD);
-
     }
 }

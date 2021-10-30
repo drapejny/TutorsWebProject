@@ -107,8 +107,7 @@ public class SubjectDaoImpl extends SubjectDao {
     public boolean deleteById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_SUBJECT_BY_ID)) {
             statement.setInt(1, id);
-            boolean result = statement.executeUpdate() == 1;
-            return result;
+            return statement.executeUpdate() == 1;
         } catch (SQLException e) {
             logger.error("Failed to delete subject by if", e);
             throw new DaoException("Failed to delete subject by if", e);

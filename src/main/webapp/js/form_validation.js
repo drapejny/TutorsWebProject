@@ -50,8 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         })
-
-
         if (!errors) {
             form.submit()
         }

@@ -10,7 +10,7 @@ public enum MessageManager {
     EN_EN(ResourceBundle.getBundle("prop.message", new Locale("en", "EN"), ResourceBundle.Control.getNoFallbackControl(ResourceBundle.Control.FORMAT_PROPERTIES))),
     RU_RU(ResourceBundle.getBundle("prop.message", new Locale("ru", "RU")));
 
-    private ResourceBundle bundle;
+    private final ResourceBundle bundle;
 
     MessageManager(ResourceBundle bundle) {
         this.bundle = bundle;

@@ -19,7 +19,7 @@
                 <c:forEach var="element" items="${admins}">
                     <div class="table_row">
                         <div class="table_item"><ctg:user-photo photo="${element.photo}" height="50" width="50"/></div>
-                        <div class="table_item">${element.lastName} ${element.firstName}</div>
+                        <div class="table_item">${element.firstName} ${element.lastName}</div>
                         <div class="table_item">${element.email}</div>
                         <div class="table_item">${element.role}</div>
                         <div class="table_item">${element.status}</div>

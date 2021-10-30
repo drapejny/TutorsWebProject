@@ -51,7 +51,7 @@
                                         <c:otherwise>
                                             <div class="table_item"><ctg:user-photo photo="${element.photo}" height="50"
                                                                                     width="50"/></div>
-                                            <div class="table_item">${element.lastName} ${element.firstName}</div>
+                                            <div class="table_item">${element.firstName} ${element.lastName}</div>
                                         </c:otherwise>
                                     </c:choose>
 

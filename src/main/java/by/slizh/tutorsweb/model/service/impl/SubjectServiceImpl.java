@@ -41,7 +41,7 @@ public class SubjectServiceImpl implements SubjectService {
             try {
                 transaction.end();
             } catch (DaoException e) {
-                throw new ServiceException("Failed to end transaction in findAllSubjects method", e);
+                logger.error("Failed to end transaction in findAllSubjects method", e);
             }
         }
     }

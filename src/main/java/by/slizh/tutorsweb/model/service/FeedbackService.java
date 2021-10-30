@@ -55,5 +55,4 @@ public interface FeedbackService {
      * @throws ServiceException in case of any dao errors
      */
     boolean deleteFeedbackById(int id) throws ServiceException;
-
 }

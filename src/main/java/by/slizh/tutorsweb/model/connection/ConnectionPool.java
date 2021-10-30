@@ -25,8 +25,8 @@ public class ConnectionPool {
 
     private static final AtomicBoolean isCreated = new AtomicBoolean(false);
     private static final ReentrantLock locker = new ReentrantLock();
-    private BlockingQueue<ProxyConnection> freeConnections;
-    private BlockingQueue<ProxyConnection> givenAwayConnections;
+    private final BlockingQueue<ProxyConnection> freeConnections;
+    private final BlockingQueue<ProxyConnection> givenAwayConnections;
     private static final int DEFAULT_POOL_SIZE = 32;
 
     private ConnectionPool() {
@@ -134,6 +134,4 @@ public class ConnectionPool {
             }
         });
     }
-
-
 }

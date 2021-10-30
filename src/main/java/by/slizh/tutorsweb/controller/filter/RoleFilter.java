@@ -17,14 +17,14 @@ import java.util.Locale;
 import static by.slizh.tutorsweb.controller.command.CommandType.*;
 
 /**
- * The RoleFilter filter all requests and provide security access by user role.
+ * The RoleFilter filter all requests and provide secure access by user role.
  */
 @WebFilter(urlPatterns = "/controller")
 public class RoleFilter implements Filter {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private EnumSet<CommandType> guestCommands = EnumSet.of(
+    private final EnumSet<CommandType> guestCommands = EnumSet.of(
             DEFAULT,
             CONFIRMATION_PAGE,
             LOGIN_PAGE,
@@ -40,7 +40,7 @@ public class RoleFilter implements Filter {
             ABOUT_US_PAGE
     );
 
-    private EnumSet<CommandType> userCommands = EnumSet.of(
+    private final EnumSet<CommandType> userCommands = EnumSet.of(
             DEFAULT,
             EDIT_PROFILE_PAGE,
             MAIN_PAGE,
@@ -59,7 +59,7 @@ public class RoleFilter implements Filter {
             ABOUT_US_PAGE
     );
 
-    private EnumSet<CommandType> tutorCommands = EnumSet.of(
+    private final EnumSet<CommandType> tutorCommands = EnumSet.of(
             DEFAULT,
             EDIT_TUTOR_PROFILE_PAGE,
             MAIN_PAGE,
@@ -74,7 +74,7 @@ public class RoleFilter implements Filter {
             ABOUT_US_PAGE
     );
 
-    private EnumSet<CommandType> adminCommands = EnumSet.of(
+    private final EnumSet<CommandType> adminCommands = EnumSet.of(
             DEFAULT,
             ACCEPT_APPLICATION,
             ADD_ADMIN,
@@ -127,10 +127,8 @@ public class RoleFilter implements Filter {
             if (commandType != CommandType.CHANGE_LOCALE) {
                 if (request.getQueryString() != null) {
                     session.setAttribute(SessionAttribute.CURRENT_URL, "/controller?" + request.getQueryString());
-                    System.out.println(session.getAttribute(SessionAttribute.CURRENT_URL));
                 }
             }
-
         } else {
             commandType = CommandType.DEFAULT;
         }
@@ -143,21 +141,11 @@ public class RoleFilter implements Filter {
     }
 
     private boolean checkCommand(User.Role role, CommandType commandType) {
-        boolean checkFlag = false;
-        switch (role) {
-            case GUEST:
-                checkFlag = guestCommands.contains(commandType);
-                break;
-            case USER:
-                checkFlag = userCommands.contains(commandType);
-                break;
-            case TUTOR:
-                checkFlag = tutorCommands.contains(commandType);
-                break;
-            case ADMIN:
-                checkFlag = adminCommands.contains(commandType);
-                break;
-        }
-        return checkFlag;
+        return switch (role) {
+            case GUEST -> guestCommands.contains(commandType);
+            case USER -> userCommands.contains(commandType);
+            case TUTOR -> tutorCommands.contains(commandType);
+            case ADMIN -> adminCommands.contains(commandType);
+        };
     }
 }

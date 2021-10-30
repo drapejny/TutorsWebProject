@@ -19,9 +19,10 @@ public class UploadUserPhotoCommand implements UploadCommand {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final UserService userService = UserServiceImpl.getInstance();
+
     @Override
     public Router execute(HttpServletRequest request, InputStream inputStream) throws CommandException {
-        UserService userService = UserServiceImpl.getInstance();
         User user = (User) request.getSession().getAttribute(SessionAttribute.USER);
         try {
             userService.updatePhoto(user, inputStream);

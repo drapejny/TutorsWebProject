@@ -4,7 +4,6 @@
 <%@ taglib uri="customtags" prefix="ctg" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="prop.pagecontent"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
 

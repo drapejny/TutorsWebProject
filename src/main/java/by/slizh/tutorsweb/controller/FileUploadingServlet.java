@@ -7,8 +7,6 @@ import by.slizh.tutorsweb.exception.CommandException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,8 +21,6 @@ import java.io.InputStream;
         maxRequestSize = 1024 * 1024 * 100
 )
 public class FileUploadingServlet extends HttpServlet {
-
-    private static final Logger logger = LogManager.getLogger();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,12 +38,8 @@ public class FileUploadingServlet extends HttpServlet {
             router = new Router(PagePath.ERROR_PAGE, Router.RouteType.REDIRECT);
         }
         switch (router.getRouteType()) {
-            case FORWARD:
-                request.getRequestDispatcher(router.getPagePath()).forward(request, response);
-                break;
-            case REDIRECT:
-                response.sendRedirect(request.getContextPath() + router.getPagePath());
-                break;
+            case FORWARD -> request.getRequestDispatcher(router.getPagePath()).forward(request, response);
+            case REDIRECT -> response.sendRedirect(request.getContextPath() + router.getPagePath());
         }
     }
 }

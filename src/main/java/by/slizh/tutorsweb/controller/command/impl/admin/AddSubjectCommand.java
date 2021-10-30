@@ -48,6 +48,5 @@ public class AddSubjectCommand implements Command {
             request.setAttribute(RequestAttribute.ERROR_WRONG_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_DATA));
             return new Router(PagePath.ALL_SUBJECTS_PAGE, Router.RouteType.FORWARD);
         }
-
     }
 }

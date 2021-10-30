@@ -36,15 +36,12 @@ public class MainServlet extends HttpServlet {
         try {
             router = command.execute(request);
             switch (router.getRouteType()) {
-                case FORWARD:
-                    request.getRequestDispatcher(router.getPagePath()).forward(request, response);
-                    break;
-                case REDIRECT:
-                    response.sendRedirect(request.getContextPath() + router.getPagePath());
-                    break;
-                default:
+                case FORWARD -> request.getRequestDispatcher(router.getPagePath()).forward(request, response);
+                case REDIRECT -> response.sendRedirect(request.getContextPath() + router.getPagePath());
+                default -> {
                     logger.error("Incorrect route type " + router.getRouteType());
                     response.sendRedirect(request.getContextPath() + PagePath.ERROR_PAGE);
+                }
             }
         } catch (CommandException e) {
             request.setAttribute(RequestAttribute.EXCEPTION, e);

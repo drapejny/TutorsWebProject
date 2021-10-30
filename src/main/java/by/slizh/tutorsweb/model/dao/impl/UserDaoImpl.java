@@ -122,8 +122,7 @@ public class UserDaoImpl extends UserDao {
     public boolean deleteById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_USER_BY_ID)) {
             statement.setInt(1, id);
-            boolean result = statement.executeUpdate() == 1;
-            return result;
+            return statement.executeUpdate() == 1;
         } catch (SQLException e) {
             logger.error("Failed to delete user by id", e);
             throw new DaoException("Failed to delete user by id", e);
@@ -138,7 +137,6 @@ public class UserDaoImpl extends UserDao {
     @Override
     public boolean create(User user, String password) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_USER, Statement.RETURN_GENERATED_KEYS)) {
-            System.out.println(user.getPhoto());
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getEmail());
@@ -181,8 +179,7 @@ public class UserDaoImpl extends UserDao {
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_USER_PASSWORD)) {
             statement.setString(1, PasswordEncoder.encodePassword(password));
             statement.setInt(2, user.getUserId());
-            boolean result = statement.executeUpdate() == 1;
-            return result;
+            return statement.executeUpdate() == 1;
         } catch (SQLException e) {
             logger.error("Failed to update user password", e);
             throw new DaoException("Failed to update user password", e);
@@ -279,7 +276,7 @@ public class UserDaoImpl extends UserDao {
     }
 
     private User buildUser(ResultSet resultSet) throws SQLException {
-        User user = new User.UserBuilder()
+        return new User.UserBuilder()
                 .setUserId(resultSet.getInt(USER_ID))
                 .setFirstName(resultSet.getString(FIRST_NAME))
                 .setLastName(resultSet.getString(LAST_NAME))
@@ -288,6 +285,5 @@ public class UserDaoImpl extends UserDao {
                 .setRole(User.Role.valueOf(resultSet.getString(ROLE_NAME).toUpperCase(Locale.ROOT)))
                 .setStatus(User.Status.valueOf(resultSet.getString(STATUS_NAME).toUpperCase(Locale.ROOT)))
                 .createUser();
-        return user;
     }
 }

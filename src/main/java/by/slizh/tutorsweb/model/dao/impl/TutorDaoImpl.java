@@ -51,7 +51,8 @@ public class TutorDaoImpl extends TutorDao {
     private static final String SQL_FIND_ALL_CITIES = """
             SELECT DISTINCT city, role_id FROM tutors
             JOIN users ON tutors.user_id = users.user_id
-            WHERE role_id = 3;
+            WHERE role_id = 3
+            ORDER BY city;
             """;
     private static final String SQL_DELETE_TUTOR_BY_ID = """
             DELETE FROM tutors WHERE tutor_id = ?;
@@ -250,8 +251,7 @@ public class TutorDaoImpl extends TutorDao {
     public boolean deleteById(int id) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_TUTOR_BY_ID)) {
             statement.setInt(1, id);
-            boolean result = statement.executeUpdate() == 1;
-            return result;
+            return statement.executeUpdate() == 1;
         } catch (SQLException e) {
             logger.error("Failed to delete tutor by id", e);
             throw new DaoException("Failed to delete tutor by id", e);
@@ -301,13 +301,13 @@ public class TutorDaoImpl extends TutorDao {
     }
 
     private Tutor buildTutor(ResultSet resultSet) throws SQLException {
-        Tutor tutor = new Tutor.TutorBuilder()
+        return new Tutor.TutorBuilder()
                 .setTutorId(resultSet.getInt(TUTOR_ID))
                 .setPhone(resultSet.getString(PHONE))
                 .setEducation(resultSet.getString(EDUCATION))
                 .setInfo(resultSet.getString(INFO))
                 .setPricePerHour(resultSet.getInt(PRICE_PER_HOUR))
-                .setIsActive(resultSet.getByte(IS_ACTIVE) == 1 ? true : false)
+                .setIsActive(resultSet.getByte(IS_ACTIVE) == 1)
                 .setUserId(resultSet.getInt(USER_ID))
                 .setFirstName(resultSet.getString(FIRST_NAME))
                 .setLastName(resultSet.getString(LAST_NAME))
@@ -317,22 +317,15 @@ public class TutorDaoImpl extends TutorDao {
                 .setRole(User.Role.valueOf(resultSet.getString(ROLE_NAME).toUpperCase()))
                 .setStatus(User.Status.valueOf(resultSet.getString(STATUS_NAME).toUpperCase()))
                 .createTutor();
-        return tutor;
     }
 
     private String buildSearchQuery(String sort) {
         StringBuilder stringBuilder = new StringBuilder(SQL_SEARCH_TUTORS_FIRST_PART);
-        String orderBy;
-        switch (sort) {
-            case "price_asc":
-                orderBy = "ORDER BY " + PRICE_PER_HOUR + " ASC ";
-                break;
-            case "price_desc":
-                orderBy = "ORDER BY " + PRICE_PER_HOUR + " DESC ";
-                break;
-            default:
-                orderBy = "ORDER BY " + TUTOR_ID + " ";
-        }
+        String orderBy = switch (sort) {
+            case "price_asc" -> "ORDER BY " + PRICE_PER_HOUR + " ASC ";
+            case "price_desc" -> "ORDER BY " + PRICE_PER_HOUR + " DESC ";
+            default -> "ORDER BY " + TUTOR_ID + " ";
+        };
         stringBuilder.append(orderBy);
         stringBuilder.append(SQL_SEARCH_TUTORS_LIMIT_PART);
         return stringBuilder.toString();

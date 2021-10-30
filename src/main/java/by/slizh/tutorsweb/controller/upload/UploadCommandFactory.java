@@ -10,7 +10,7 @@ import java.util.Locale;
  */
 public class UploadCommandFactory {
 
-    private static UploadCommandFactory instance = new UploadCommandFactory();
+    private static final UploadCommandFactory instance = new UploadCommandFactory();
 
     private UploadCommandFactory() {
     }

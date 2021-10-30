@@ -42,7 +42,5 @@ public class AddApplicationCommand implements Command {
             request.setAttribute(RequestAttribute.ERROR_WRONG_DATA, MessageManager.valueOf(locale.toUpperCase(Locale.ROOT)).getMessage(ERROR_WRONG_DATA));
             return new Router(PagePath.ADD_APPLICATION_PAGE, Router.RouteType.FORWARD);
         }
-
-
     }
 }

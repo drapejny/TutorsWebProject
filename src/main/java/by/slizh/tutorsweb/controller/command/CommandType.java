@@ -47,7 +47,7 @@ public enum CommandType {
     CONFIRMATION_PAGE(new GoToConfirmationPage()),
     ABOUT_US_PAGE(new GoToAboutUsPage());
 
-    private Command command;
+    private final Command command;
 
     CommandType(Command command) {
         this.command = command;

@@ -18,6 +18,7 @@ public final class RequestAttribute {
     public static final String SEARCH_LINE = "searchLine";
     public static final String SORT = "sort";
     public static final String CITY = "city";
+    public static final String CITIES = "cities";
     public static final String MIN_PRICE = "minPrice";
     public static final String MAX_PRICE = "maxPrice";
     public static final String SUBJECT_ID = "subjectId";
@@ -39,8 +40,9 @@ public final class RequestAttribute {
     public static final String SUCCESSFUL_DELETE_SUBJECT = "successDeleteSubjectMessage";
     public static final String ERROR_DELETE_SUBJECT = "errorDeleteSubjectMessage";
     public static final String SUCCESS_REGISTRATION_MESSAGE = "successRegistrationMessage";
-    public static final int APPLICATIONS_ON_PAGE_NUMBER = 3;
-    public static final int TUTORS_ON_SEARCH_PAGE_NUMBER = 2;
+    public static final int APPLICATIONS_ON_PAGE_NUMBER = 5;
+    public static final int TUTORS_ON_SEARCH_PAGE_NUMBER = 5;
+    public static final int USERS_ON_SEARCH_USERS_PAGE_NUMBER = 5;
     public static final int DEFAULT_OFFSET = 0;
 
     private RequestAttribute() {

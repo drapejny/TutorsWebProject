@@ -32,8 +32,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         FeedbackDao feedbackDao = new FeedbackDaoImpl();
         try {
             transaction.init(feedbackDao);
-            List<Feedback> feedbacks = feedbackDao.findByTutorId(tutorId);
-            return feedbacks;
+            return feedbackDao.findByTutorId(tutorId);
         } catch (DaoException e) {
             logger.error("Failed to make transaction in findFeedbacksByTutorId method", e);
             throw new ServiceException("Failed to make transaction in findFeedbacksByTutorId method", e);

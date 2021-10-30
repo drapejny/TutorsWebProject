@@ -6,7 +6,7 @@ public class SubjectValidatorImpl implements SubjectValidator {
 
     private static SubjectValidatorImpl instance = new SubjectValidatorImpl();
 
-    private static final String REGEXP_SUBJECT_NAME = "^[а-яА-Я ]{1,32}$";
+    private static final String REGEXP_SUBJECT_NAME = "^[а-яА-Я ]{1,64}$";
 
     private SubjectValidatorImpl() {
     }

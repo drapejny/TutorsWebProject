@@ -50,11 +50,11 @@ public class TutorValidatorImpl implements TutorValidator {
 
     @Override
     public boolean validateTutorMap(Map<String, String[]> tutorMap) {
-        tutorMap.get(EDUCATION)[0].replaceAll("\r\n", "\n");
-        tutorMap.get(INFORMATION)[0].replaceAll("\r\n", "\n");
+        String education = tutorMap.get(EDUCATION)[0].replaceAll("\r\n", "\n");
+        String information = tutorMap.get(INFORMATION)[0].replaceAll("\r\n", "\n");
         if (validatePhone(tutorMap.get(PHONE)[0]) && validateCity(tutorMap.get(CITY)[0])
-                && validateEducation(tutorMap.get(EDUCATION)[0])
-                && validateInfo(tutorMap.get(INFORMATION)[0]) && validatePrice(tutorMap.get(PRICE)[0])
+                && validateEducation(education)
+                && validateInfo(information) && validatePrice(tutorMap.get(PRICE)[0])
                 && tutorMap.get(SUBJECT).length > 0 && tutorMap.get(SUBJECT).length <= 8) {
             return true;
         }
