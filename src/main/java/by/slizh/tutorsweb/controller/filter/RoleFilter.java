@@ -26,6 +26,7 @@ public class RoleFilter implements Filter {
 
     private final EnumSet<CommandType> guestCommands = EnumSet.of(
             DEFAULT,
+            ABOUT_US_PAGE,
             CONFIRMATION_PAGE,
             LOGIN_PAGE,
             MAIN_PAGE,
@@ -36,12 +37,12 @@ public class RoleFilter implements Filter {
             REGISTRATION,
             SEARCH,
             VERIFICATION,
-            CHANGE_LOCALE,
-            ABOUT_US_PAGE
+            CHANGE_LOCALE
     );
 
     private final EnumSet<CommandType> userCommands = EnumSet.of(
             DEFAULT,
+            ABOUT_US_PAGE,
             EDIT_PROFILE_PAGE,
             MAIN_PAGE,
             SEARCH_PAGE,
@@ -55,12 +56,12 @@ public class RoleFilter implements Filter {
             EDIT_PROFILE,
             LOGOUT,
             SEARCH,
-            CHANGE_LOCALE,
-            ABOUT_US_PAGE
+            CHANGE_LOCALE
     );
 
     private final EnumSet<CommandType> tutorCommands = EnumSet.of(
             DEFAULT,
+            ABOUT_US_PAGE,
             EDIT_TUTOR_PROFILE_PAGE,
             MAIN_PAGE,
             SEARCH_PAGE,
@@ -70,8 +71,7 @@ public class RoleFilter implements Filter {
             EDIT_TUTOR_PROFILE,
             LOGOUT,
             SEARCH,
-            CHANGE_LOCALE,
-            ABOUT_US_PAGE
+            CHANGE_LOCALE
     );
 
     private final EnumSet<CommandType> adminCommands = EnumSet.of(
@@ -94,9 +94,7 @@ public class RoleFilter implements Filter {
             SEARCH_PAGE,
             SEARCH_USERS_PAGE,
             TUTOR_PROFILE_PAGE,
-            ADD_FEEDBACK,
             DELETE_FEEDBACK,
-            EDIT_FEEDBACK,
             EDIT_PASSWORD,
             EDIT_PROFILE,
             LOGOUT,
