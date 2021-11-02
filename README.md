@@ -29,4 +29,5 @@ Super admin also can manage admins.
 * Super-admin:
   * Admin capabilities
   * Manage admins
-  * ![image](https://user-images.githubusercontent.com/71284696/139826202-186b16ea-7f69-4314-baf0-dc26ee8e147a.png)
+##DB scheme
+![image](https://user-images.githubusercontent.com/71284696/139826202-186b16ea-7f69-4314-baf0-dc26ee8e147a.png)
